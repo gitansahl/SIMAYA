@@ -1,4 +1,4 @@
-package com.a05.simaya.testing.model;
+package com.a05.simaya.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -13,7 +13,7 @@ import javax.persistence.*;
 @Setter
 @Getter
 @Table(name="test")
-public class test_model {
+public class TestingModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_test")
