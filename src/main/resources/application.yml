@@ -1,5 +1,11 @@
 
-
+spring:
+  config:
+    activate:
+      on-profile: prod
+environment: production
+enabled: true
+---
 spring:
   profiles:
     default: dev
