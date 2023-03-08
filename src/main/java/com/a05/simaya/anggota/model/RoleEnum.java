@@ -4,5 +4,6 @@ public enum RoleEnum {
     ADMIN,
     SDM_OPERASIONAL,
     PENGEMBANGAN_USAHA,
+    KEUANGAN_PROGRAM,
     ANGGOTA,
 }
