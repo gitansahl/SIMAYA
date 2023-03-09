@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SIMAYA</title>
+
+    <!--    Fontawesome CDN Link-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"
+          integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ=="
+          crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <!-- Link Swiper's CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" />
+
+    <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+    <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+
+    <style>
+
+        *{
+            margin: 0;
+            padding: 0;
+            font-family: "Segoe UI", "Segoe UI Semibold", "Segoe UI Black", sans-serif;
+            box-sizing: border-box;
+        }
+
+        body{
+            background-image: url("https://www.linkpicture.com/q/bg_17.png");
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-size: cover;
+            font-family: "Segoe UI", "Segoe UI Semibold", "Segoe UI Black", sans-serif;
+        }
+
+        .container{
+            position: relative;
+            height: 450px;
+            width: 1075px;
+            display: flex;
+            align-items: center;
+        }
+
+        .swiper{
+            width: 950px;
+        }
+
+        section .card .image{
+            height: 60px;
+            width: 60px;
+            border-radius: 50%;
+            padding: 3px;
+            background: #17A870;
+        }
+
+        section .card .image img{
+            height: 50%;
+            width: 50%;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 3px solid #17A870;
+        }
+
+        .card{
+            position: relative;
+            border-radius: 20px;
+            background: #E0EFEF;
+            margin: 20px 10px;
+            width: 280px;
+
+        }
+
+        .card::before{
+            content: "";
+            position: absolute;
+            height: 55%;
+            width: 100%;
+            border-radius: 20px 20px 0 0;
+
+        }
+
+        .card .card-content{
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            z-index: 100;
+        }
+
+        .card .name-description{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 10px;
+            color: #373435;
+        }
+
+        .name-description .name{
+            font-size: 15px;
+            font-weight: bold;
+        }
+
+        .name-description .description{
+            font-size: 12px;
+        }
+
+        .card .button{
+            display: flex;
+            justify-content: space-around;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        .card .button button {
+            background: #37814F;
+            outline: none;
+            border: none;
+            color: #FFFFFF;
+            padding: 8px 22px;
+            border-radius: 15px;
+            font-size: 12px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .button .button:hover{
+            background: #373435;
+        }
+
+        .swiper-pagination-bullet{
+            height: 7px;
+            width: 26px;
+            border-radius: 25px;
+            background: #37814F;
+        }
+
+        .card-img-top {
+            height: 10vw;
+            object-fit: cover;
+            border-radius: 20px 20px 0 0;
+        }
+
+    </style>
+
+</head>
+<body>
+<nav th:replace="fragments/fragment :: navbar('home')"></nav>
+<br>
+<div class="d-flex justify-content-center">
+    <h2>Selamat Datang!</h2>
+</div>
+
+<section>
+    <div class="swiper mySwiper container card-group">
+        <div class="swiper-wrapper content">
+            <div class="card swiper-slide">
+                <img class="card-img-top" src="https://www.linkpicture.com/q/Frame-1-1_5.png" alt="Card image cap">
+                <div class="card-body">
+                    <h5 class="card-title">Manajemen User</h5>
+                    <p class="card-text">
+                        Fitur ini merupakan fitur yang digunakan untuk mengelola anggota yang ada di Sistem Informasi Manajemen Yayasan (SIMAYA).
+                    </p>
+                    <button type="button" class="btn" style="background-color: #37814F; color: white; border-radius: 7px">Klik di sini</button>
+                </div>
+            </div>
+            <div class="card swiper-slide">
+                <img class="card-img-top" src="https://www.linkpicture.com/q/Frame-2_9.png" alt="Card image cap">
+                <div class="card-body">
+                    <h5 class="card-title">Event</h5>
+                    <p class="card-text">
+                        Fitur ini merupakan fitur yang digunakan untuk mengelola event yang ada di Sistem Informasi Manajemen Yayasan (SIMAYA).
+                    </p>
+                    <button type="button" class="btn" style="background-color: #37814F; color: white; border-radius: 7px">Klik di sini</button>
+                </div>
+            </div>
+            <div class="card swiper-slide">
+                <img class="card-img-top" src="https://www.linkpicture.com/q/Frame-3_5.png" alt="Card image cap">
+                <div class="card-body">
+                    <h5 class="card-title">Katalog Usaha</h5>
+                    <p class="card-text">
+                        Fitur ini merupakan fitur yang digunakan untuk mengelola usaha yang ada di Sistem Informasi Manajemen Yayasan (SIMAYA).
+                    </p>
+                    <button type="button" class="btn" style="background-color: #37814F; color: white; border-radius: 7px">Klik di sini</button>
+                </div>
+            </div>
+            <div class="card swiper-slide">
+                <img class="card-img-top" src="https://www.linkpicture.com/q/Frame-4_12.png" alt="Card image cap">
+                <div class="card-body">
+                    <h5 class="card-title">Donasi Ziswaf</h5>
+                    <p class="card-text">
+                        Fitur ini merupakan fitur yang digunakan untuk mengelola donasi yang ada di Sistem Informasi Manajemen Yayasan (SIMAYA).
+                    </p>
+                    <button type="button" class="btn" style="background-color: #37814F; color: white; border-radius: 7px">Klik di sini</button>
+                </div>
+            </div>
+            <div class="card swiper-slide">
+                <img class="card-img-top" src="https://www.linkpicture.com/q/Frame-5_8.png" alt="Card image cap">
+                <div class="card-body">
+                    <h5 class="card-title">Keuangan</h5>
+                    <p class="card-text">
+                        Fitur ini digunakan untuk mengelola keuangan yang ada di Sistem Informasi Manajemen Yayasan (SIMAYA).
+                    </p>
+                    <button type="button" class="btn" style="background-color: #37814F; color: white; border-radius: 7px">Klik di sini</button>
+                </div>
+            </div>
+        </div>
+        <div class="swiper-button-next"></div>
+        <div class="swiper-button-prev"></div>
+<!--        <div class="swiper-pagination"></div>-->
+        <div class="swiper-scrollbar"></div>
+
+    </div>
+
+
+</section>
+<!-- Swiper JS -->
+<script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
+
+<!-- Initialize Swiper -->
+<script>
+    var swiper = new Swiper(".mySwiper", {
+        slidesPerView: 1,
+        centeredSlides: false,
+        slidesPerGroupSkip: 1,
+        grabCursor: true,
+        keyboard: {
+            enabled: true,
+        },
+        breakpoints: {
+            769: {
+                slidesPerView: 3,
+                slidesPerGroup: 3,
+            },
+        },
+        scrollbar: {
+            el: ".swiper-scrollbar",
+        },
+        navigation: {
+            nextEl: ".swiper-button-next",
+            prevEl: ".swiper-button-prev",
+        },
+        pagination: {
+            el: ".swiper-pagination",
+            clickable: true,
+        },
+    });
+</script>
+</body>
+</html>
