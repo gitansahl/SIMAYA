@@ -1,6 +1,5 @@
 package com.a05.simaya.anggota.controller;
 
-
 import com.a05.simaya.anggota.payload.CreateAnggotaDTO;
 import com.a05.simaya.anggota.service.AnggotaService;
 import org.springframework.beans.factory.annotation.Autowired;
