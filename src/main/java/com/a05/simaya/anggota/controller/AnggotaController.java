@@ -1,5 +1,6 @@
 package com.a05.simaya.anggota.controller;
 
+
 import com.a05.simaya.anggota.payload.CreateAnggotaDTO;
 import com.a05.simaya.anggota.service.AnggotaService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,5 +27,9 @@ public class AnggotaController {
     public String postForm(CreateAnggotaDTO anggota) {
         anggotaService.tambahAnggota(anggota);
         return "hello_world";
+    }
+    @GetMapping(value = "/anggota/viewall")
+    public String viewAllAnggota() {
+        return "anggota/daftar-anggota";
     }
 }
