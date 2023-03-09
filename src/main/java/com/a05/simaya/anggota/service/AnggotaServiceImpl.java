@@ -8,7 +8,6 @@ import com.a05.simaya.anggota.repository.AnggotaDb;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
@@ -31,12 +30,13 @@ public class AnggotaServiceImpl implements AnggotaService {
         anggotaModel.setTempatLahir(anggota.getTempatLahir());
         anggotaModel.setGolonganDarah(GolDarEnum.valueOf(anggota.getGolonganDarah()));
         anggotaModel.setJenisKelamin(anggota.getJenisKelamin());
-        anggotaModel.setNamaDepan(anggota.getNamaDepan());
+        anggotaModel.setNamaDepan(anggota.getTempatLahir());
         anggotaModel.setNamaBelakang(anggota.getNamaBelakang());
         anggotaModel.setNomorHP(anggota.getNomorHP());
 
         return anggotaModel;
     }
+
 
     @Override
     public List<AnggotaModel> getListAnggota() {
