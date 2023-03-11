@@ -78,4 +78,8 @@ public class AnggotaModel {
 
     @OneToMany(mappedBy = "penanggungJawab", fetch = FetchType.LAZY)
     private List<EventModel> listEvent;
+
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "id_profile", referencedColumnName = "id_profile")
+    private ProfileModel profile;
 }
