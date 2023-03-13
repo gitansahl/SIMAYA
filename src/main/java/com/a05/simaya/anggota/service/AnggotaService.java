@@ -10,4 +10,6 @@ public interface AnggotaService {
     List<AnggotaModel> getListAnggota();
     AnggotaDTO getInfoAnggota(String id);
     void updateDataAnggota(AnggotaDTO updateAnggota);
+
+    String encrypt(String password);
 }

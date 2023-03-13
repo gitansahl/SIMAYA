@@ -5,6 +5,7 @@ import com.a05.simaya.anggota.payload.AnggotaDTO;
 import com.a05.simaya.anggota.repository.AnggotaDb;
 import com.a05.simaya.anggota.repository.ProfileAnggotaDb;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -67,10 +68,16 @@ public class AnggotaServiceImpl implements AnggotaService {
         profileAnggotaDb.save(updateProfile);
     }
 
+    @Override
+    public String encrypt(String password) {
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        return encoder.encode(password);
+    }
+
     private AnggotaModel setAnggotaModel(AnggotaDTO anggotaDTO, AnggotaModel anggotaModel) {
         anggotaModel.setRole(RoleEnum.valueOf(anggotaDTO.getRole()));
         anggotaModel.setUsername(anggotaDTO.getUsername());
-        anggotaModel.setPassword(anggotaDTO.getPassword());
+        anggotaModel.setPassword(encrypt(anggotaDTO.getPassword()));
         anggotaModel.setEmail(anggotaDTO.getEmail());
         anggotaModel.setTanggalLahir(anggotaDTO.getTanggalLahir());
         anggotaModel.setTempatLahir(anggotaDTO.getTempatLahir());
