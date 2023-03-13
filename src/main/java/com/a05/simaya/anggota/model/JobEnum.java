@@ -1,9 +1,9 @@
 package com.a05.simaya.anggota.model;
 
 public enum JobEnum {
-    PNS,
-    BUMN,
+    ASN,
     SWASTA,
     WIRAUSAHA,
-    IRT
+    IRT,
+    LAINNYA
 }

@@ -33,7 +33,6 @@ public class EventModel {
 
     @NotNull
     @Column(name = "direktorat")
-    @Enumerated(EnumType.STRING)
     private DirektoratEnum direktorat;
 
     @NotNull

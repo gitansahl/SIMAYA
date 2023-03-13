@@ -1,6 +1,7 @@
 package com.a05.simaya.anggota.model;
 
 import com.a05.simaya.event.model.DirektoratEnum;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -50,5 +51,6 @@ public class ProfileModel {
 //    private String photoUrl;
 
     @OneToOne(fetch = FetchType.LAZY, mappedBy = "profile")
+    @JsonIgnore
     private AnggotaModel anggota;
 }
