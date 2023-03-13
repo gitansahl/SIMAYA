@@ -5,7 +5,7 @@
     <title>Daftar Anggota</title>
     <object th:include="fragments/fragment :: css" th:remove="tag"></object>
     <object th:include="fragments/fragment :: js" th:remove="tag"></object>
-<!--    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.css">-->
+    <!--    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.css">-->
     <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.8.4/moment.min.js"></script>
@@ -64,6 +64,25 @@
 </head>
 <body>
 <div class="container my-5">
+
+    <div th:if="${modal_add}">
+        <!-- Modal -->
+        <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="staticBackdropLabel">Tambah Anggota</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body"><p th:text="${modal_add}"></p></div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-success" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="card" style="width: 100%;">
         <div class="card-header text-center" style="background-color: #DBEFE1">
             <h3 class="my-auto">Daftar Anggota</h3>
@@ -103,6 +122,8 @@
 </div>
 <script th:inline="javascript">
     $(document).ready(function (){
+        $('#staticBackdrop').modal('show');
+
         $('#table_anggota').DataTable({
             "ajax": {
                 "url": "/api/anggota/viewall",
@@ -117,18 +138,18 @@
             "columns": [
                 {"data": null,
                     "render": function(data){
-                    return data.namaDepan + " " + data.namaBelakang;
+                        return data.namaDepan + " " + data.namaBelakang;
                     }
                 },
                 {"data": "tempatLahir"},
                 {"data": "tanggalLahir"},
                 {"data": null,
                     "render": function (data){
-                    if (data.jenisKelamin == 0){
-                        return "Laki-Laki";
-                    } else {
-                        return "Perempuan";
-                    }
+                        if (data.jenisKelamin == 0){
+                            return "Laki-Laki";
+                        } else {
+                            return "Perempuan";
+                        }
                     }
                 },
                 {"data": null,
