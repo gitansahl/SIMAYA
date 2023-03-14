@@ -74,6 +74,11 @@ public class AnggotaServiceImpl implements AnggotaService {
         return encoder.encode(password);
     }
 
+    @Override
+    public AnggotaModel getAnggotaByUsername(String username) {
+        return anggotaDb.findByUsername(username);
+    }
+
     private AnggotaModel setAnggotaModel(AnggotaDTO anggotaDTO, AnggotaModel anggotaModel) {
         anggotaModel.setRole(RoleEnum.valueOf(anggotaDTO.getRole()));
         anggotaModel.setUsername(anggotaDTO.getUsername());
