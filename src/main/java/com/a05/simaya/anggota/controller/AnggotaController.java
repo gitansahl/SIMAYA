@@ -109,9 +109,9 @@ public class AnggotaController {
     }
 
     public String getDivisi(DirektoratEnum direktorat) {
+        if (direktorat == null) return "Unknown";
         if (direktorat.equals(DirektoratEnum.KEUANGAN_PROGRAM)) return "Keuangan dan Program";
         if (direktorat.equals(DirektoratEnum.SDM_OPERASIONAL)) return "SDM dan Operasional";
-        if (direktorat.equals(DirektoratEnum.PENGEMBANGAN_USAHA)) return "Pengembangan Usaha";
-        else return "Unknown";
+        else return "Pengembangan Usaha";
     }
 }
