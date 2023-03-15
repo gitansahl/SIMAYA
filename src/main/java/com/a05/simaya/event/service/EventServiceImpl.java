@@ -4,8 +4,11 @@ import com.a05.simaya.event.model.DirektoratEnum;
 import com.a05.simaya.event.model.EventModel;
 import com.a05.simaya.event.payload.CreateEventDTO;
 import com.a05.simaya.event.repository.EventDb;
+import jdk.jfr.Event;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 public class EventServiceImpl implements EventService{
@@ -30,5 +33,21 @@ public class EventServiceImpl implements EventService{
         eventModel.setPenanggungJawab(eventDTO.getPenanggungJawab());
 
         return eventModel;
+    }
+
+    @Override
+    public EventModel getEventById(Long idEvent) {
+        Optional<EventModel> eventModel = eventDb.findById(idEvent);
+        return eventModel.orElse(null);
+    }
+
+    @Override
+    public void deleteEvent(Long idEvent) {
+        Optional<EventModel> eventModel = eventDb.findById(idEvent);
+        EventModel event = eventModel.orElse(null);
+        if (event != null){
+            event.setIsDeleted(Boolean.TRUE);
+            eventDb.save(event);
+        }
     }
 }

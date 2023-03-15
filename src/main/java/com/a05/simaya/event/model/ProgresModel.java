@@ -1,5 +1,6 @@
 package com.a05.simaya.event.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -30,6 +31,7 @@ public class ProgresModel {
     @Column(name = "status")
     private Boolean status = Boolean.FALSE;
 
+    @JsonBackReference
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "id_event", referencedColumnName = "id_event")
     @OnDelete(action = OnDeleteAction.NO_ACTION)

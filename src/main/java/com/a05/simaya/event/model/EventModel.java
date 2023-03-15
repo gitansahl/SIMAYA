@@ -1,6 +1,8 @@
 package com.a05.simaya.event.model;
 
 import com.a05.simaya.anggota.model.AnggotaModel;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -65,6 +67,7 @@ public class EventModel {
     @OnDelete(action = OnDeleteAction.NO_ACTION)
     private AnggotaModel penanggungJawab;
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "event", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<ProgresModel> listProgres;
 }
