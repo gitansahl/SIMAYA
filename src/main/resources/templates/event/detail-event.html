@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Detail Event</title>
+    <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+    <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js"
+            integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+    <script type="text/javascript" charset="utf8"
+            src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.8.4/moment.min.js"></script>
+    <script type="text/javascript"
+            src="https://cdn.datatables.net/plug-ins/1.10.16/sorting/datetime-moment.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/plug-ins/1.10.21/dataRender/datetime.js"></script>
+    <link href="https://nightly.datatables.net/css/jquery.dataTables.css" rel="stylesheet" type="text/css"/>
+
+
+    <style>
+        body {
+            background-image: url("https://www.linkpicture.com/q/bg_17.png");
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-size: cover;
+            font-family: "Segoe UI", "Segoe UI Semibold", "Segoe UI Black", sans-serif;
+        }
+
+        .icon ~ .icon-label {
+            display: inline-block;
+        }
+
+        .icon {
+            padding-left: 15px;
+            vertical-align: text-bottom;
+        }
+
+        .icon-label {
+            font-size: 20px;
+        }
+
+        .btn-tambah:hover, .btn-tambah:focus, .btn-tambah:active {
+            color: #fff;
+            background-color: #17A870;
+            border-color: #37814F; /*set the color you want here*/
+        }
+
+        .btn-tambah {
+            color: #FFFFFF;
+            background-color: #17A870
+        }
+
+
+    </style>
+</head>
+<body>
+
+<nav th:replace="fragments/fragment :: navbar('event')"></nav>
+
+<div class="container-fluid" th:if="${event.isDeleted.booleanValue() == false}">
+    <div class="card" style="margin: 50px 50px 0px 50px; padding-bottom:20px;background-color: rgba(255, 255, 255, 0.5)">
+        <div class="row">
+            <div class="col" style="margin-left: 50px;">
+                <div class="container-fluid">
+                    <div class="row" style="margin: 20px 0px">
+                        <div class="col" style="padding-left: 0px">
+                            <h1 th:text="${event.namaEvent}"
+                                style="padding-right: 5px; padding-bottom: 5px; border-bottom: 3px solid; display: inline-block"></h1>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <span class="material-symbols-outlined icon">Today</span>
+                            <p class="icon-label"
+                               th:text="${#temporals.format(event.waktuMulai, 'dd MMMM yyyy HH:mm')}"></p>
+
+                        </div>
+                        <div class="col">
+                            <span class="material-symbols-outlined icon">person</span>
+                            <p class="icon-label"
+                               th:text="${event.penanggungJawab.getNamaDepan()} + ' ' + ${event.penanggungJawab.getNamaBelakang()}"></p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <span class="material-symbols-outlined icon">event_available</span>
+                            <p class="icon-label"
+                               th:text="${#temporals.format(event.waktuAkhir, 'dd MMMM yyyy HH:mm')}"></p>
+                        </div>
+                        <div class="col">
+                            <span class="material-symbols-outlined icon">task</span>
+                            <p class="icon-label" th:text="${event.programKerja}"></p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <span class="material-symbols-outlined icon">location_on</span>
+                            <p th:text="${event.tempatPelaksanaan}" class="icon-label"></p>
+                        </div>
+                        <div class="col">
+                            <span class="material-symbols-outlined icon">location_city</span>
+                            <p class="icon-label" th:if="${event.direktorat.name()} == SDM_OPERASIONAL">SDM &
+                                Operasional</p>
+                            <p class="icon-label" th:if="${event.direktorat.name()} == KEUANGAN_PROGRAM">Keuangan &
+                                Program</p>
+                            <p class="icon-label" th:if="${event.direktorat.name()} == PENGEMBANGAN_USAHA">Pengembangan
+                                Usaha</p>
+                        </div>
+                    </div>
+                    <div class="row" style="margin-top: 70px">
+                        <div class="col">
+                            <h4>Deskripsi</h4>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <p th:text="${event.deskripsi}"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card" style="margin:40px">
+                    <div class="card-header text-center" style="background-color: #DBEFE1">
+                        <h5>Progres Event</h5>
+                    </div>
+                    <div class="card-body">
+
+                        <table id="table_progres" class="hover row-border stripe">
+                            <thead>
+                            <tr>
+                                <th>Deskripsi Progres</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>Data 1</td>
+                                <td>Data 2</td>
+                                <td>Data 3</td>
+                            </tr>
+                            </tbody>
+                        </table>
+
+                        <div>
+                            <input id="idEvent" type="hidden" th:value="${event.idEvent}">
+                        </div>
+
+                        <!--                        <div th:unless="${listProgres.size() != 0}">-->
+                        <!--                            <p style="color: dimgray">Belum ada progres...</p>-->
+                        <div class="d-flex justify-content-center">
+                            <button type="button" class="btn btn-tambah" data-toggle="modal"
+                                    data-target="#exampleModalCenter">Tambah progres
+                            </button>
+                            <!--                                th:href="@{/event/{id}/ubah (id = ${event.idEvent})}"-->
+                        </div>
+
+                        <!--                        </div>-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="d-flex justify-content-center">
+        <button type="button" class="btn btn-danger btn-lg" data-toggle="modal" data-target="#deleteConfirmationModal" style="margin: 20px">Hapus
+            Event
+        </button>
+    </div>
+</div>
+
+<div class="container" th:unless="${event.isDeleted.booleanValue() == false}">
+    <div class="card" style="margin: 30px">
+        <div class="card-header">
+            <h4 class="text-center">Event ini telah dihapus!</h4>
+        </div>
+        <div class="card-body">
+            <img src="https://drive.google.com/uc?id=1OhUIp1PgpWz026RWWxX5fAMFqh2Xt6c-" alt="gif-deleted" style="width: 200px;" class="rounded mx-auto d-block">
+            <br>
+            <p>Sayang sekali kamu sudah <b>tidak dapat mengakses</b> informasi mengenai event ini. Hal ini karena event telah dihapus oleh <b>SDM & Operasional</b>. Nantikan
+            Event-event kami selanjutnya ya!!</p>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Konfirmasi Hapus -->
+<div class="modal fade" id="deleteConfirmationModal" tabindex="-1" role="dialog" aria-labelledby="deleteConfirmationModal"
+     aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="confDeleteModalLongTitle"> <span class="material-symbols-outlined" style="color: red;vertical-align: text-bottom">warning</span> Hapus Event?</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Apakah Anda yakin untuk menghapus event ini? </p>
+                <p>Semua detail event, termasuk progres akan terhapus dari database dan tidak bisa ditampilkan kembali! </p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Tidak</button>
+                <a type="submit" class="btn btn-danger" th:href="@{/event/hapus/{id}(id = ${event.idEvent})}">Hapus
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+<!--MODAL-->
+
+<!-- Modal Tambah Progres -->
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+     aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Tambah Progres Event</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="form-progress">
+                    <div class="form-group">
+                        <label for="nama" class="col-form-label">Deskripsi:</label>
+                        <input name="nama" type="text" class="form-control" id="nama">
+
+                        <input name="event" type="hidden" th:value="${event.idEvent}" id="event">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-success" data-dismiss="modal" onclick="addProgres()">Tambah
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--MODAL-->
+
+<!--SCRIPT-->
+<script th:inline="javascript">
+
+    function addProgres() {
+        var data = {}
+        data["nama"] = $("#nama").val()
+        data["idEvent"] = $("#event").val()
+        // alert(formData)
+        $.ajax({
+            url: "/api/progres/save",
+            contentType: "application/json",
+            type: 'POST',
+            data: JSON.stringify(data),
+            success: function (data) {
+                window.location.reload();
+            }
+        })
+    }
+
+    function updateClick(obj) {
+        var id = $(obj).attr('id');
+        // var id = $(obj).closest('tr').find('td:first').html();
+
+        $.ajax({
+            url: '/api/progres/update/' + id,
+            contentType: "application/json",
+            type: 'PUT',
+            success: function (data) {
+                window.location.reload();
+            }
+        })
+    }
+
+    $(document).ready(function () {
+        $('#staticBackdrop').modal('show');
+        const id = [[${event.idEvent}]];
+
+        $('#table_progres').DataTable({
+            "ajax": {
+                "url": '/api/progres/view/' + id,
+                "dataSrc": ''
+            },
+            "searching": true,
+            "ordering": false,
+            "columns": [
+                {
+                    "data": null,
+                    "render": function (data) {
+                        return data.nama;
+                    }
+                },
+                {
+                    "data": null,
+                    "render": function (data) {
+                        if (data.status == false) {
+                            return "Belum Selesai"
+                        } else {
+                            return "Selesai"
+                        }
+                    }
+                },
+                {
+                    "data": null,
+                    "render": function (data, type) {
+                        if (data.status) {
+                            return '<span class="material-symbols-outlined" style="color: green;">\n' + 'check_circle\n' + '</span>';
+                        }
+
+                        return '<button id="' + data.idProgres + '" class="btn btn-outline-success updateButton" onclick="updateClick(this)">' + 'Selesaikan' + '</button>';
+                    }
+                }
+
+            ],
+        });
+    });
+</script>
+<!--SCRIPT-->
+
+</body>
+</html>
