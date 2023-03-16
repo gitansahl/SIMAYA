@@ -20,7 +20,7 @@ public class WebSecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http
+        http.csrf().ignoringAntMatchers("/api/**").and()
                 .authorizeRequests()
                 .antMatchers("/css/**", "/js/**", "/tambah-anggota", "/anggota/**", "/api/**").permitAll()
                 .anyRequest().authenticated()
