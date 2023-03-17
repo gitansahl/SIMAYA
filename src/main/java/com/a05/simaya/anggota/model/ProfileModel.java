@@ -47,8 +47,15 @@ public class ProfileModel {
     @Column(name = "catatan")
     private String catatan;
 
-//    @Column(name = "photo")
-//    private String photoUrl;
+    @Column(name = "photo")
+    private String photoUrl;
+
+    @Transient
+    public String getPhotosImagePath() {
+        if (photoUrl == null) return null;
+
+        return "/user-photos/" + photoUrl;
+    }
 
     @OneToOne(fetch = FetchType.LAZY, mappedBy = "profile")
     @JsonIgnore
