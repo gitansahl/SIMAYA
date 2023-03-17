@@ -1,6 +1,7 @@
 package com.a05.simaya.anggota.model;
 
 import com.a05.simaya.event.model.EventModel;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -76,6 +77,7 @@ public class AnggotaModel {
     @Column(name = "status_keanggotaan")
     private Boolean statusKeanggotaan = Boolean.TRUE;
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "penanggungJawab", fetch = FetchType.LAZY)
     private List<EventModel> listEvent;
 

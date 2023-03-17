@@ -13,6 +13,14 @@
     <script type="text/javascript" src="https://cdn.datatables.net/plug-ins/1.10.21/dataRender/datetime.js"></script>
     <link href="https://nightly.datatables.net/css/jquery.dataTables.css" rel="stylesheet" type="text/css" />
     <style>
+        body{
+            background-image: url("https://www.linkpicture.com/q/bg_17.png");
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-size: cover;
+        }
+
         .dataTables_wrapper .dataTables_filter input:focus-visible{
             box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.25);
             border-color: #28a745;
@@ -63,6 +71,7 @@
 
 </head>
 <body>
+<nav th:replace="fragments/fragment :: navbar('anggota')"></nav>
 <div class="container my-5">
 
     <div th:if="${modal_add}">
@@ -120,6 +129,7 @@
         </div>
     </div>
 </div>
+<footer th:replace="fragments/fragment :: footer"></footer>
 <script th:inline="javascript">
     $(document).ready(function (){
         $('#staticBackdrop').modal('show');

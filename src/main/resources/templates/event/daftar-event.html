@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Daftar Event</title>
+    <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+    <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+    <!--    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.css">-->
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js"
+            integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+    <script type="text/javascript" charset="utf8"
+            src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.8.4/moment.min.js"></script>
+    <script type="text/javascript"
+            src="https://cdn.datatables.net/plug-ins/1.10.16/sorting/datetime-moment.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/plug-ins/1.10.21/dataRender/datetime.js"></script>
+    <link href="https://nightly.datatables.net/css/jquery.dataTables.css" rel="stylesheet" type="text/css"/>
+    <style>
+        body {
+            background-image: url("https://www.linkpicture.com/q/bg_17.png");
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-size: cover;
+        }
+
+        .dataTables_wrapper .dataTables_filter input:focus-visible {
+            box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.25);
+            border-color: #28a745;
+        }
+
+        .dataTables_wrapper .dataTables_filter input {
+            border-color: #28a745;
+            margin-left: 10px;
+        }
+
+        table.dataTable.hover tbody tr:hover {
+            background-color: #DBEFE1;
+        }
+
+        .dataTables_wrapper .dataTables_paginate .paginate_button.current {
+            background-color: #E0EFEF !important;
+        }
+
+        .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+            background-color: #E0EFEF !important;
+            background: -webkit-gradient(linear, left top, left bottom, color-stop(30%, #FFF), color-stop(100%, #E0EFEF));
+            color: black !important;
+            border-color: #28a745;
+        }
+
+        .dataTables_wrapper .dataTables_paginate .paginate_button.disabled:hover {
+            background-color: transparent !important;
+        }
+
+        tbody, td, tfoot, th, thead, tr {
+            border-color: #28a745 !important;
+        }
+
+        .dataTables_wrapper .dataTables_length select {
+            border-color: #28a745;
+        }
+
+        .dataTables_wrapper .dataTables_length select:focus-visible {
+            border-color: #28a745;
+            box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.25);
+        }
+
+        th.sorting.sorting_desc, th.sorting.sorting_asc {
+            color: #37814F;
+        }
+
+    </style>
+
+</head>
+<body>
+<nav th:replace="fragments/fragment :: navbar('event')"></nav>
+<div class="container my-5">
+
+    <div class="card" style="width: 100%;">
+        <div class="card-header text-center" style="background-color: #DBEFE1">
+            <h3 class="my-auto">Daftar Event</h3>
+        </div>
+        <div class="card-body">
+            <div class="justify-content-center">
+                <br>
+                <table id="table_event" class="hover row-border stripe">
+                    <thead>
+                    <tr>
+                        <th>Nama Event</th>
+                        <th>Tanggal Mulai</th>
+                        <th>Tanggal Berakhir</th>
+                        <th>Tempat</th>
+                        <th>Program Kerja</th>
+                        <th>Departemen</th>
+                        <th>Action</th>
+                    </tr>
+
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>Data 1</td>
+                        <td>Data 2</td>
+                        <td>Data 3</td>
+                        <td>Data 4</td>
+                        <td>Data 5</td>
+                        <td>Data 6</td>
+                        <td>Data 7</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <br>
+            </div>
+        </div>
+    </div>
+</div>
+<footer th:replace="fragments/fragment :: footer"></footer>
+<script th:inline="javascript">
+
+    $(document).ready(function () {
+
+        $('#table_event thead tr')
+            .clone(true)
+            .addClass('filters')
+            .appendTo('#table_event thead');
+
+        $('#table_event').DataTable({
+            "ajax": {
+                "url": "/api/event/viewall",
+                "dataSrc": ''
+            },
+            "searching": false,
+            "ordering": true,
+            columnDefs: [{
+                targets: 1,
+                render: $.fn.dataTable.render.moment('YYYY-MM-DDTHH:mm:ss', 'DD MMM YYYY HH:mm')
+            }, {
+                targets: 2,
+                render: $.fn.dataTable.render.moment('YYYY-MM-DDTHH:mm:ss', 'DD MMM YYYY HH:mm')
+            },
+                {targets: 6,
+                orderable: false}
+            ],
+            "columns": [
+                {"data": "namaEvent"},
+                {"data": "waktuMulai"},
+                {"data": "waktuAkhir"},
+                {"data": "tempatPelaksanaan"},
+                {"data": "programKerja"},
+                {
+                    "data": null,
+                    "render": function (data) {
+                        if (data.direktorat == 'SDM_OPERASIONAL') {
+                            return "SDM & Operasional"
+                        } else if (data.direktorat == "KEUANGAN_PROGRAM") {
+                            return "Keuangan & Program"
+                        } else {
+                            return "Pengembangan Usaha"
+                        }
+                    }
+                },
+                {
+                    "data": null,
+                    "render": function (data, type) {
+                        return '<a class="btn btn-success" href="/event/'+ data.idEvent +'">' + 'Detail' + '</a>';
+                    }
+                }
+            ],
+            initComplete: function () {
+                var api = this.api();
+
+                // For each column
+                api
+                    .columns()
+                    .eq(0)
+                    .each(function (colIdx) {
+                        // Set the header cell to contain the input element
+                        var cell = $('.filters th').eq(
+                            $(api.column(colIdx).header()).index()
+                        );
+                        var title = $(cell).text();
+
+                        if (title != "Action"){
+                            $(cell).html('<input class="form-control" type="text" placeholder="' + title + '" />');
+                        } else{
+                            $(cell).html('<p></p>');
+                        }
+
+                        // On every keypress in this input
+                        $(
+                            'input',
+                            $('.filters th').eq($(api.column(colIdx).header()).index())
+                        )
+                            .off('keyup change')
+                            .on('change', function (e) {
+                                // Get the search value
+                                $(this).attr('title', $(this).val());
+                                var regexr = '({search})'; //$(this).parents('th').find('select').val();
+
+                                var cursorPosition = this.selectionStart;
+                                // Search the column for that value
+                                api
+                                    .column(colIdx)
+                                    .search(
+                                        this.value != ''
+                                            ? regexr.replace('{search}', '(((' + this.value + ')))')
+                                            : '',
+                                        this.value != '',
+                                        this.value == ''
+                                    )
+                                    .draw();
+                            })
+                            .on('keyup', function (e) {
+                                e.stopPropagation();
+
+                                $(this).trigger('change');
+                                $(this)
+                                    .focus()[0]
+                                    .setSelectionRange(cursorPosition, cursorPosition);
+                            });
+                    });
+            },
+        });
+    })
+</script>
+
+</body>
+</html>
