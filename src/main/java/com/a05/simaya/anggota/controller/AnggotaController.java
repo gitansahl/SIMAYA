@@ -14,8 +14,11 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.io.IOException;
 import java.security.Principal;
 
 @Controller
@@ -54,7 +57,12 @@ public class AnggotaController {
     }
 
     @PostMapping(value = "/ubah-profil")
-    public String ubahProfile(AnggotaDTO updateAnggota) {
+    public String ubahProfile(AnggotaDTO updateAnggota,
+                              Principal principal,
+                              @RequestParam("upload") MultipartFile image) throws IOException {
+        String fileName = anggotaService.uploadProfile(image, principal.getName());
+
+        updateAnggota.getProfile().setPhotoUrl(fileName);
         anggotaService.updateDataAnggota(updateAnggota);
         return "redirect:/profil";
     }
