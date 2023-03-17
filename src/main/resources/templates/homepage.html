@@ -30,7 +30,6 @@
             background-repeat: no-repeat;
             background-attachment: fixed;
             background-size: cover;
-            font-family: "Segoe UI", "Segoe UI Semibold", "Segoe UI Black", sans-serif;
         }
 
         .container{
@@ -141,16 +140,26 @@
             border-radius: 20px 20px 0 0;
         }
 
+        h6{
+            font-family: "Segoe UI";
+            color: #37814F;
+        }
+        p{
+            font-family: "Segoe UI";
+            color: #373435;
+        }
     </style>
 
 </head>
 <body>
 <nav th:replace="fragments/fragment :: navbar('home')"></nav>
 <br>
+<br>
 <div class="d-flex justify-content-center">
     <h2>Selamat Datang!</h2>
 </div>
-
+<br>
+<br>
 <section>
     <div class="swiper mySwiper container card-group">
         <div class="swiper-wrapper content">
@@ -209,11 +218,64 @@
         <div class="swiper-button-prev"></div>
 <!--        <div class="swiper-pagination"></div>-->
         <div class="swiper-scrollbar"></div>
-
     </div>
-
-
 </section>
+<br><br><br>
+
+<footer class="text-center text-lg-start bg-white text-muted">
+    <!-- Section: Social media -->
+    <section class="justify-content-center justify-content-lg-between p-4 border-bottom">
+        <!-- CENTER -->
+        <div>
+            <a href="https://satuasapeduli.id/" class="btn btn-outline-success btn-floating m-1" role="button">
+                <i class="fab fa-google"></i>
+            </a>
+            <a href="https://www.facebook.com/satuasapeduli" class="btn btn-outline-success btn-floating m-1" role="button">
+                <i class="fab fa-facebook-f"></i>
+            </a>
+            <a href="https://www.instagram.com/satuasapeduli/" class="btn btn-outline-success btn-floating m-1" role="button">
+                <i class="fab fa-instagram"></i>
+            </a>
+        </div>
+    </section>
+    <!-- Section: Social media -->
+
+    <!-- Section: Tentang dan Lokasi Kami -->
+    <section class="justify-content-center justify-content-lg-between p-4 border-bottom">
+        <div class="row mt-2">
+            <div>
+                <img src="https://drive.google.com/uc?id=1nzs-oK0IV1wIoxteticf1nMvbyvhuaOP"
+                     width="350px" alt="Logo" class="d-inline-block align-text-top">
+            </div>
+        </div>
+        <div class="row mt-2">
+            <div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
+                <h6 class="text-uppercase fw-bold mb-4" style="font-family: 'Segoe UI'">
+                    Yayasan Satuasa Peduli Bangsa
+                </h6>
+                <p style="color: #37814F; font-family: 'Segoe UI'">
+                    Yayasan Satuasa Peduli Bangsa (Satuasa) adalah lembaga filantropi yang mendedikasikan diri
+                    pada peningkatan mutu pendidikan dan pembinaan karakter pelajar.
+                </p>
+            </div>
+            <div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
+                <h6 class="text-uppercase fw-bold mb-4" style="font-family: 'Segoe UI'">Lokasi kami</h6>
+                <p style="color: #37814F; font-family: 'Segoe UI'">
+                    <i class="fas fa-home me-3" style="color: #37814F"></i>
+                    Jl. Bina Marga No.42, RT.3/RW.6, Kel. Cipayung,
+                    Kec. Cipayung, Kota Jakarta Timur, DKI Jakarta 13840
+                </p>
+            </div>
+        </div>
+    </section>
+    <!-- Section: Tentang dan Lokasi Kami -->
+
+    <!-- Copyright -->
+    <div class="text-center p-4 fw-bold" style="color: #37814F">
+        © 2023 Rosan Solutions - Sistem Informasi Manajemen Yayasan
+    </div>
+</footer>
+
 <!-- Swiper JS -->
 <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
 

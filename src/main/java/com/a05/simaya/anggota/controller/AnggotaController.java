@@ -3,6 +3,7 @@ package com.a05.simaya.anggota.controller;
 import com.a05.simaya.anggota.model.AnggotaModel;
 import com.a05.simaya.anggota.model.ProfileModel;
 import com.a05.simaya.anggota.payload.AnggotaDTO;
+import com.a05.simaya.anggota.payload.UbahPasswordDTO;
 import com.a05.simaya.anggota.repository.AnggotaDb;
 import com.a05.simaya.anggota.service.AnggotaService;
 import com.a05.simaya.event.model.DirektoratEnum;
@@ -79,10 +80,31 @@ public class AnggotaController {
     public String profilPage(Model model,
                              Principal principal) {
         AnggotaModel anggota = anggotaService.getAnggotaByUsername(principal.getName());
+        UbahPasswordDTO ubahPasswordDTO = new UbahPasswordDTO();
+        ubahPasswordDTO.setId(anggota.getId());
 
         model.addAttribute("anggota", anggota);
         model.addAttribute("aset", getAset(anggota.getProfile()));
         model.addAttribute("divisi", getDivisi(anggota.getProfile().getDivisi()));
+        model.addAttribute("ubahPassword", ubahPasswordDTO);
+
+        return "anggota/profile";
+    }
+
+    @PostMapping(value = "/profil")
+    public String ubahPassword(Model model, UbahPasswordDTO ubahPasswordDTO, Principal principal) {
+        AnggotaModel anggota = anggotaService.getAnggotaByUsername(principal.getName());
+
+        if (!anggotaService.cekPassword(ubahPasswordDTO.getId(), ubahPasswordDTO.getOldPassword())) {
+            model.addAttribute("wrong_password", "Salah Kata Sandi");
+        } else {
+            anggotaService.gantiPassword(ubahPasswordDTO.getId(), ubahPasswordDTO.getNewPassword());
+        }
+
+        model.addAttribute("anggota", anggota);
+        model.addAttribute("aset", getAset(anggota.getProfile()));
+        model.addAttribute("divisi", getDivisi(anggota.getProfile().getDivisi()));
+        model.addAttribute("ubahPassword", ubahPasswordDTO);
 
         return "anggota/profile";
     }
