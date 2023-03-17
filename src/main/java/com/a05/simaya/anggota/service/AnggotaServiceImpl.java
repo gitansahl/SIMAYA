@@ -110,7 +110,7 @@ public class AnggotaServiceImpl implements AnggotaService {
 
         String uploadedFileName = username + "." + extension;
 
-        FileUploadUtil.saveFile("src/resources/static/user-photos/", username + "." + extension, image);
+        FileUploadUtil.saveFile("src/main/resources/static/user-photos/", username + "." + extension, image);
         return uploadedFileName;
     }
 
