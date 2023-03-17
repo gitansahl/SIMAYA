@@ -5,7 +5,6 @@ import com.a05.simaya.anggota.payload.AnggotaDTO;
 import com.a05.simaya.anggota.repository.AnggotaDb;
 import com.a05.simaya.anggota.repository.ProfileAnggotaDb;
 import com.a05.simaya.anggota.util.FileUploadUtil;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -14,12 +13,10 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.List;
 
 @Service
 @Transactional
-@Slf4j
 public class AnggotaServiceImpl implements AnggotaService {
 
     @Autowired
@@ -33,8 +30,9 @@ public class AnggotaServiceImpl implements AnggotaService {
     @Override
     public void tambahAnggota(AnggotaDTO anggota) {
         AnggotaModel anggotaModel = setAnggotaModel(anggota, new AnggotaModel());
+        ProfileModel profileModel = new ProfileModel();
         setUsernamePassword(anggota, anggotaModel);
-        ProfileModel profileModel = setProfileAnggota(anggota.getProfile(), anggotaModel.getProfile());
+        anggotaModel.setProfile(profileModel);
         anggotaDb.save(anggotaModel);
         profileAnggotaDb.save(profileModel);
     }
@@ -69,11 +67,14 @@ public class AnggotaServiceImpl implements AnggotaService {
     @Override
     public void updateDataAnggota(AnggotaDTO anggotaDTO) {
         AnggotaModel anggota = anggotaDb.findAnggotaModelById(anggotaDTO.getId());
+        Long id_profile = anggota.getProfile().getIdProfile();
+
         AnggotaModel updatedAnggota = setAnggotaModel(anggotaDTO, anggota);
-        ProfileModel profileModel = profileAnggotaDb.findProfileModelByAnggota_Id(anggotaDTO.getId());
-        ProfileModel updateProfile = setProfileAnggota(anggotaDTO.getProfile(), profileModel);
-        anggotaDb.save(updatedAnggota);
+        ProfileModel updateProfile = setProfileAnggota(anggotaDTO.getProfile(), anggota.getProfile());
+        updateProfile.setIdProfile(id_profile);
+
         profileAnggotaDb.save(updateProfile);
+        anggotaDb.save(updatedAnggota);
     }
 
     @Override

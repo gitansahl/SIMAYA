@@ -180,7 +180,7 @@
               <div class="col-10">
                 <div class="mb-3">
                   <label for="formGroupExampleInput7" class="form-label">Golongan Darah <span style="color: red">*</span></label>
-                  <select id="formGroupExampleInput7" th:value="*{golonganDarah}" class="form-select input-text border-success rounded-3 border border-2" aria-label="Default select example" required
+                  <select id="formGroupExampleInput7" th:field="*{golonganDarah}" class="form-select input-text border-success rounded-3 border border-2" aria-label="Default select example" required
                           disabled>
                     <option value="" selected>Pilih golongan darah...</option>
                     <option value="A">A</option>
@@ -524,7 +524,7 @@
     </div>
   </div>
 </div>
-
+<footer th:replace="fragments/fragment :: footer"></footer>
 <script>
 
   function browserFile() {

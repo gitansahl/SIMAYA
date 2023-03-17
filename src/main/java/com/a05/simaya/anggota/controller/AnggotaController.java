@@ -105,8 +105,11 @@ public class AnggotaController {
     public String ubahPassword(Model model, UbahPasswordDTO ubahPasswordDTO, Principal principal) {
         AnggotaModel anggota = anggotaService.getAnggotaByUsername(principal.getName());
 
-        if (!anggotaService.cekPassword(ubahPasswordDTO.getId(), ubahPasswordDTO.getOldPassword())) {
-            model.addAttribute("wrong_password", "Salah Kata Sandi");
+        if (anggotaService.cekPassword(ubahPasswordDTO.getId(), ubahPasswordDTO.getNewPassword())) {
+            model.addAttribute("wrong_password", "Masukkan kata sandi yang berbeda!");
+        }
+        else if (!anggotaService.cekPassword(ubahPasswordDTO.getId(), ubahPasswordDTO.getOldPassword())) {
+            model.addAttribute("wrong_password", "Kata sandi lama yang dimasukkan salah!");
         } else {
             anggotaService.gantiPassword(ubahPasswordDTO.getId(), ubahPasswordDTO.getNewPassword());
         }
