@@ -7,11 +7,13 @@ import java.util.List;
 
 public interface EventService {
     void tambahEvent(CreateEventDTO eventDTO);
-
+    List<EventModel> getListOngoing();
+    List<EventModel> getListUpcoming();
+    Integer countDone();
+    Integer countNotDone();
 
     List<EventModel> getListEvent();
 
     EventModel getEventById(Long idEvent);
-
     void deleteEvent(Long idEvent);
 }

@@ -67,13 +67,21 @@
             color: #37814F;
         }
 
+        body{
+            background-image: url("https://www.linkpicture.com/q/bg_17.png");
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-size: cover;
+            font-family: "Segoe UI", "Segoe UI Semibold", "Segoe UI Black", sans-serif;
+        }
+
     </style>
 
 </head>
 <body>
 <nav th:replace="fragments/fragment :: navbar('anggota')"></nav>
 <div class="container my-5">
-
     <div th:if="${modal_add}">
         <!-- Modal -->
         <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -118,9 +126,9 @@
                         <td>Data 2</td>
                         <td>Data 3</td>
                         <td>Data 4</td>
+                        <td>Data 5</td>
                         <td>Data 6</td>
                         <td>Data 7</td>
-                        <td>Data 8</td>
                     </tr>
                     </tbody>
                 </table>
@@ -155,11 +163,11 @@
                 {"data": "tanggalLahir"},
                 {"data": null,
                     "render": function (data){
-                        if (data.jenisKelamin == 0){
-                            return "Laki-Laki";
-                        } else {
-                            return "Perempuan";
-                        }
+                    if (data.jenisKelamin == 1){
+                        return "Laki-Laki";
+                    } else {
+                        return "Perempuan";
+                    }
                     }
                 },
                 {"data": null,
