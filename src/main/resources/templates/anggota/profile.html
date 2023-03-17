@@ -1,8 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Profil</title>
+    <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+    <object th:include="fragments/fragment :: js" th:remove="tag"></object>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
     <style>
@@ -176,7 +178,169 @@
                 </div>
             </div>
         </div>
+
+        <div id="wrongPasswordText" th:text="${wrong_password}" hidden></div>
+        <!-- Modal -->
+        <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <form th:action="@{/profil}" th:object="${ubahPassword}" method="POST" class="container needs-validation">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="staticBackdropLabel">Ubah Kata Sandi</h1>
+                            <input type="text" th:field="*{id}" hidden>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" data-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div th:if="${wrong_password}">
+                                <div id="wrongPasswordInfo" class="alert alert-danger alert-dismissible fade show" role="alert">
+                                    <strong>Kata sandi lama yang dimasukkan salah.</strong>
+                                </div>
+                            </div>
+                            <div class="my-3">
+                                <label for="formKataSandiLama" class="form-label">Kata Sandi Lama<span style="color: red">*</span></label>
+                                <div class="input-group">
+                                    <input type="password" th:field="*{oldPassword}" class="form-control input-text border-success rounded-start border border-2" id="formKataSandiLama" placeholder="Masukkan kata sandi lama..." required>
+                                    <span class="input-group-text" id="basic-addon1" onclick="clickBiEye('#togglePassword1', '#formKataSandiLama')"><i class="bi bi-eye-slash mb-2" id="togglePassword1"></i></span>
+                                    <div class="valid-feedback">
+                                        Looks good!
+                                    </div>
+                                    <div class="invalid-feedback">
+                                        Masukkan Kata Sandi Lama.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="my-3">
+                                <label for="formKataSandiBaru" class="form-label">Kata Sandi Baru<span style="color: red">*</span></label>
+                                <input type="password" onchange="cekNewPassword()" th:field="*{newPassword}" class="form-control input-text border-success rounded-start border border-2" id="formKataSandiBaru" placeholder="Masukkan kata sandi baru..." required>
+                                <div class="valid-feedback">
+                                    Looks good!
+                                </div>
+                                <div class="invalid-feedback">
+                                    Masukkan Kata Sandi Baru.
+                                </div>
+                            </div>
+                            <div class="my-3">
+                                <label for="formKonfirmasiKataSandiBaru" class="form-label">Konfirmasi Kata Sandi Baru<span style="color: red">*</span></label>
+                                <input type="password" onchange="cekNewPassword()" class="form-control border-success rounded-start border border-2" id="formKonfirmasiKataSandiBaru" placeholder="Konfirmasi kata sandi baru..." required>
+                                <div class="valid-feedback">
+                                    Kata sandi sesuai.
+                                </div>
+                                <div class="invalid-feedback">
+                                    Kata sandi tidak sesuai.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-success" data-bs-dismiss="modal" data-dismiss="modal">Close</button>
+                            <button type="submit"
+                                    class="btn btn-success"
+                                    data-toggle="modal"
+                                    data-target="#exampleModal"
+                                    id="submit" disabled>
+                                Ubah
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-5 mb-3">
+            <div class="col-4"></div>
+            <div class="col-4 text-center">
+                <button type="button" class="btn btn-success btn-lg" data-toggle="modal" onclick="removeWrongPassword()"
+                        data-target="#staticBackdrop">
+                    Ubah Kata Sandi
+                </button>
+            </div>
+            <div class="col-4"></div>
+        </div>
+
     </div>
 </section>
+
+<script th:inline="javascript">
+
+    $(document).ready(function (){
+        const text_wrong_passwors = document.getElementById("wrongPasswordText").innerText
+        if (text_wrong_passwors === "Salah Kata Sandi") {
+            $('#staticBackdrop').modal('show');
+        }
+    });
+
+    $('.input-text').change((e) => {
+        if (e.target.value === '') {
+            $(e.target).addClass("is-invalid");
+            $(e.target).addClass("border-danger");
+
+            $(e.target).removeClass("border-success");
+            $(e.target).removeClass("is-valid");
+        } else {
+            $(e.target).removeClass("is-invalid");
+            $(e.target).removeClass("border-danger");
+
+            $(e.target).addClass("border-success");
+            $(e.target).addClass("is-valid");
+        }
+
+        cekValid()
+    });
+
+    function cekNewPassword() {
+        const sandiBaru = document.getElementById("formKataSandiBaru")
+        const konfirmasiSandiBaru = document.getElementById("formKonfirmasiKataSandiBaru")
+
+        if (konfirmasiSandiBaru.value.length > 0) {
+            if (sandiBaru.value === konfirmasiSandiBaru.value) {
+                $(konfirmasiSandiBaru).removeClass("is-invalid");
+                $(konfirmasiSandiBaru).removeClass("border-danger");
+
+                $(konfirmasiSandiBaru).addClass("border-success");
+                $(konfirmasiSandiBaru).addClass("is-valid");
+            } else {
+                $(konfirmasiSandiBaru).addClass("is-invalid");
+                $(konfirmasiSandiBaru).addClass("border-danger");
+
+                $(konfirmasiSandiBaru).removeClass("border-success");
+                $(konfirmasiSandiBaru).removeClass("is-valid");
+            }
+        }
+
+        cekValid()
+    }
+
+    function cekValid() {
+        const valid = document.getElementsByClassName("is-valid")
+        if (valid.length === 3) {
+            $("#submit").removeAttr("disabled")
+        } else {
+            $("#submit").attr("disabled", true)
+        }
+    }
+
+    function clickBiEye(idTogglePassword, idInput) {
+
+        const togglePassword = document
+            .querySelector(idTogglePassword);
+
+        const password = document.querySelector(idInput);
+
+        const type = password
+            .getAttribute('type') === 'password' ?
+            'text' : 'password';
+
+        password.setAttribute('type', type);
+
+        // Toggle the eye and bi-eye icon
+        togglePassword.classList.toggle('bi-eye');
+
+    }
+
+    function removeWrongPassword() {
+        document.getElementById("wrongPasswordInfo").style.display = "none"
+    }
+
+</script>
+
 </body>
 </html>
