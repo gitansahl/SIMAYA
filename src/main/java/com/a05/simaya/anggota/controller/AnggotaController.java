@@ -43,9 +43,11 @@ public class AnggotaController {
         return "anggota/daftar-anggota";
     }
 
-    @GetMapping(value = "/ubah-profil/{id}")
-    public String getUbahProfilePage(@PathVariable String id, Model model) {
-        AnggotaDTO updateAnggotaDTO = anggotaService.getInfoAnggota(id);
+    @GetMapping(value = "/ubah-profil")
+    public String getUbahProfilePage(Principal principal,
+                                     Model model) {
+        AnggotaModel anggota = anggotaService.getAnggotaByUsername(principal.getName());
+        AnggotaDTO updateAnggotaDTO = anggotaService.getInfoAnggota(anggota.getId());
 
         model.addAttribute("updateAnggota", updateAnggotaDTO);
         return "anggota/form-ubah-profile";
@@ -54,7 +56,7 @@ public class AnggotaController {
     @PostMapping(value = "/ubah-profil")
     public String ubahProfile(AnggotaDTO updateAnggota) {
         anggotaService.updateDataAnggota(updateAnggota);
-        return "redirect:/home";
+        return "redirect:/profil";
     }
 
     @GetMapping(value = "/ubah-data-anggota/{id}")
@@ -117,15 +119,15 @@ public class AnggotaController {
         }
 
         if (profile.getIsPunyaMotor().equals(Boolean.TRUE)) {
-            res = res.equals("-") ? res + ", Motor" : "Motor";
+            res = res.equals("-") ? "Motor" : res + ", Motor";
         }
 
         if (profile.getIsPunyaRumah().equals(Boolean.TRUE)) {
-            res = res.equals("-") ? res + ", Rumah" : "Rumah";
+            res = res.equals("-") ? "Rumah" : res + ", Rumah";
         }
 
         if (profile.getIsPunyaVila().equals(Boolean.TRUE)) {
-            res = res.equals("-") ? res + ", Vila" : "Vila";
+            res = res.equals("-") ? "Vila" : res + ", Vila";
         }
         return res;
     }
