@@ -17,5 +17,5 @@ public interface AnggotaService {
     boolean cekPassword(String id, String oldPassword);
     void gantiPassword(String id, String newPassword);
 
-    String uploadProfile(MultipartFile image, String username) throws IOException;
+    String uploadProfile(MultipartFile image, String username, String pastUrl) throws IOException;
 }
