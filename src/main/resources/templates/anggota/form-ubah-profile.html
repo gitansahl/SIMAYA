@@ -54,12 +54,12 @@
       <h3 class="my-auto">Mengubah Profil</h3>
     </div>
     <div class="card-body">
-      <form th:action="@{/ubah-profil}" th:object="${updateAnggota}" method="POST" class="needs-validation">
+      <form th:action="@{/ubah-profil}" th:object="${updateAnggota}" method="POST" enctype="multipart/form-data" class="needs-validation">
         <!--Baris Foto-->
         <div class="row my-3">
           <div class="col-1"></div>
           <div class="col-10 text-center">
-            <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" style="width: 150px" class="rounded-circle" alt="...">
+            <img th:src="*{profile.photoUrl == null} ? 'https://cdn-icons-png.flaticon.com/512/3135/3135715.png' : @{*{profile.photosImagePath}}" style="width: 150px" class="rounded-circle" alt="...">
           </div>
           <div class="col-1"></div>
         </div>
@@ -68,7 +68,7 @@
           <div class="col-1"></div>
           <div class="col-10 text-center">
             <button type="button" class="btn btn-sm btn-outline-success" onclick="browserFile()"><i class="bi bi-upload"></i>  Unggah Foto</button>
-            <input type="file" name="upload" id="upload" style="display:none" accept="image/*"/>
+            <input type="file" name="upload" id="upload" style="display:none" accept="image/png, image/jpeg"/>
           </div>
           <div class="col-1"></div>
         </div>

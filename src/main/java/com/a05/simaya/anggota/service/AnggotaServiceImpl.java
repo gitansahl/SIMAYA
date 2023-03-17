@@ -4,15 +4,22 @@ import com.a05.simaya.anggota.model.*;
 import com.a05.simaya.anggota.payload.AnggotaDTO;
 import com.a05.simaya.anggota.repository.AnggotaDb;
 import com.a05.simaya.anggota.repository.ProfileAnggotaDb;
+import com.a05.simaya.anggota.util.FileUploadUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 
 @Service
 @Transactional
+@Slf4j
 public class AnggotaServiceImpl implements AnggotaService {
 
     @Autowired
@@ -91,6 +98,22 @@ public class AnggotaServiceImpl implements AnggotaService {
         anggotaModel.setPassword(encrypt(newPassword));
     }
 
+    @Override
+    public String uploadProfile(MultipartFile image, String username) throws IOException {
+        if (image.isEmpty())
+            return null;
+
+        String fileName = StringUtils.cleanPath(image.getOriginalFilename());
+
+        String[] stringSplitted = fileName.split("\\.");
+        String extension = stringSplitted[stringSplitted.length-1];
+
+        String uploadedFileName = username + "." + extension;
+
+        FileUploadUtil.saveFile("src/main/resources/static/user-photos/", username + "." + extension, image);
+        return uploadedFileName;
+    }
+
     private AnggotaModel setAnggotaModel(AnggotaDTO anggotaDTO, AnggotaModel anggotaModel) {
         anggotaModel.setRole(RoleEnum.valueOf(anggotaDTO.getRole()));
         anggotaModel.setEmail(anggotaDTO.getEmail());
@@ -122,6 +145,7 @@ public class AnggotaServiceImpl implements AnggotaService {
         profileModel.setIsPunyaRumah(profileDTO.getIsPunyaRumah());
         profileModel.setIsPunyaVila(profileDTO.getIsPunyaVila());
         profileModel.setCatatan(profileDTO.getCatatan());
+        profileModel.setPhotoUrl(profileDTO.getPhotoUrl());
 
         return profileModel;
     }

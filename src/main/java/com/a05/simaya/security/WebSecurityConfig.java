@@ -29,7 +29,7 @@ public class WebSecurityConfig {
                 .loginPage("/login").permitAll()
                 .and()
                 .logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-                .logoutSuccessUrl("/login").permitAll();
+                .logoutSuccessUrl("/login?code=logout").permitAll();
         return http.build();
     }
 
