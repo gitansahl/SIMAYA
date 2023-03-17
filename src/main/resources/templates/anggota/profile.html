@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://thymeleaf.org">
+<html lang="id" xmlns:th="http://thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Profil</title>
@@ -126,55 +126,51 @@
             <div class="col-lg-12 mb-4 mb-sm-5">
                 <div class="card card-style1 border-0">
                     <div class="card-body p-1-9 p-sm-2-3 p-md-6 p-lg-7">
-                        <div class="row align-items-center">
+                        <div class="row align-items-center mb-5">
                             <div class="col-lg-4 mb-4 mb-lg-0">
-                                <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="...">
+                                <img src="https://bootdey.com/img/Content/avatar/avatar7.png">
                             </div>
                             <div class="col-lg-6 px-xl-10">
                                 <ul class="list-unstyled mb-1-9">
-                                    <li class="display-28"><span style="font-size: 2.5em" class="display-26 text-secondary me-2 font-weight-600">Gitan Sahl Tazakha Wijaya</span></li>
-                                    <li class="display-28"><span style="font-size: 1.5em" class="display-26 text-secondary me-2">gitansahltw@gmail.com</span></li>
-                                    <li class="display-28"><span style="font-size: 1.5em" class="display-26 text-secondary me-2">081390281317</span></li>
-                                    <li class="display-28"><span style="font-size: 1.5em" class="display-26 text-secondary me-2">Kendal, 15 April 2002</span></li>
+                                    <li class="display-28"><span th:text="${anggota.namaDepan} + ' ' + ${anggota.namaBelakang}"style="font-size: 2.5em" class="display-26 text-secondary me-2 font-weight-600"></span></li>
+                                    <li class="display-28"><span th:text="${anggota.email}" style="font-size: 1.5em" class="display-26 text-secondary me-2"></span></li>
+                                    <li class="display-28"><span th:text="${anggota.nomorHP}" style="font-size: 1.5em" class="display-26 text-secondary me-2"></span></li>
+                                    <li class="display-28"><span th:text="${anggota.tempatLahir} + ', ' + ${#temporals.format(anggota.tanggalLahir,'d MMMM yyyy')}" style="font-size: 1.5em" class="display-26 text-secondary me-2"></span></li>
                                 </ul>
                             </div>
                             <div style="align-self: flex-start; text-align: right" class="col-lg-2 px-xl-10 h-100">
-                                <h3>Aktif</h3>
+                                <h3 th:text="${anggota.statusKeanggotaan} ? 'Aktif' : 'Tidak Aktif'"></h3>
+                            </div>
+                        </div>
+                        <div class="col-lg-12 mb-4 mb-sm-5">
+                            <div class="row">
+                                <div class="col">
+                                    <span class="section-title text-primary">Divisi</span>
+                                    <p th:text="${divisi}"class="mb-5"></p>
+                                    <span class="section-title text-primary">Mengelola Mentoring</span>
+                                    <p th:text="${anggota.profile.isMengelolaMentoring} ? 'Ya' : 'Tidak'"></p>
+                                </div>
+                                <div class="col">
+                                    <span class="section-title text-primary">Golongan Darah</span>
+                                    <p th:text="${anggota.golonganDarah != null} ? ${anggota.golonganDarah} : 'Unknown'" class="mb-5"></p>
+                                    <span class="section-title text-primary">Jenis Kelamin</span>
+                                    <p th:text="${anggota.jenisKelamin} ? 'Laki-laki' : 'Perempuan'"></p>
+                                </div>
+                                <div class="col">
+                                    <span class="section-title text-primary">Pekerjaan</span>
+                                    <p th:text="${anggota.profile.pekerjaan != null} ? ${anggota.profile.pekerjaan} : 'Unknown'" class="mb-5"></p>
+                                    <span class="section-title text-primary">Aset</span>
+                                    <p th:text="${aset}"></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-12 mb-4 mb-sm-5">
+                            <div>
+                                <span class="section-title text-primary mb-3 mb-sm-4">Catatan</span>
+                                <p th:text="${anggota.profile.catatan != null} ? ${anggota.profile.catatan} : '-'"></p>
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
-            <div class="col-lg-12 mb-4 mb-sm-5">
-                <div class="row">
-                    <div class="col">
-                        <span class="section-title text-primary">Divisi</span>
-                        <p class="mb-5">Keuangan</p>
-                        <span class="section-title text-primary">Penugasan</span>
-                        <p>Gaada di Model :((</p>
-                    </div>
-                    <div class="col">
-                        <span class="section-title text-primary">Golongan Darah</span>
-                        <p class="mb-5">O</p>
-                        <span class="section-title text-primary">Jenis Kelamin</span>
-                        <p>Laki-laki</p>
-                    </div>
-                    <div class="col">
-                        <span class="section-title text-primary">Pekerjaan</span>
-                        <p class="mb-5">PNS</p>
-                        <span class="section-title text-primary">Aset</span>
-                        <p>Mobil, Motor, Vila, Rumah</p>
-                    </div>
-                    <div class="col">
-                        <span class="section-title text-primary">Mengelola Mentoring</span>
-                        <p>Ya</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-12 mb-4 mb-sm-5">
-                <div>
-                    <span class="section-title text-primary mb-3 mb-sm-4">About Me</span>
-                    <p>Edith is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
                 </div>
             </div>
         </div>
