@@ -126,8 +126,8 @@
                             <div class="row mb-4">
                                 <div class="col"></div>
                                 <div class="col"></div>
-                                <div style="outline: dashed 1px black" class="col">
-                                    <button class="btn btn-success"><i style="margin-right: 0.5rem" class="fa fa-pencil"></i>Ubah Profil</button>
+                                <div class="col" align="right">
+                                    <a type="button" href="/ubah-profil" class="btn btn-success"><i style="margin-right: 0.5rem" class="fa fa-pencil"></i>Ubah Profil</a>
                                 </div>
                             </div>
                             <div class="row">
@@ -176,7 +176,7 @@
                         <div class="modal-body">
                             <div th:if="${wrong_password}">
                                 <div id="wrongPasswordInfo" class="alert alert-danger alert-dismissible fade show" role="alert">
-                                    <strong>Kata sandi lama yang dimasukkan salah.</strong>
+                                    <strong th:text="${wrong_password}"></strong>
                                 </div>
                             </div>
                             <div class="my-3">
@@ -246,7 +246,7 @@
 
     $(document).ready(function (){
         const text_wrong_passwors = document.getElementById("wrongPasswordText").innerText
-        if (text_wrong_passwors === "Salah Kata Sandi") {
+        if (text_wrong_passwors === "Masukkan kata sandi yang berbeda!" || text_wrong_passwors === "Kata sandi lama yang dimasukkan salah!") {
             $('#staticBackdrop').modal('show');
         }
     });

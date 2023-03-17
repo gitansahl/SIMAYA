@@ -189,7 +189,7 @@
               <div class="col-10">
                 <div class="mb-3">
                   <label for="formGroupExampleInput7" class="form-label">Golongan Darah <span style="color: red">*</span></label>
-                  <select id="formGroupExampleInput7" th:value="*{golonganDarah}" class="form-select input-text border-success rounded-3 border border-2" aria-label="Default select example" required
+                  <select id="formGroupExampleInput7" th:field="*{golonganDarah}" class="form-select input-text border-success rounded-3 border border-2" aria-label="Default select example" required
                           disabled>
                     <option value="" selected>Pilih golongan darah...</option>
                     <option value="A">A</option>
@@ -361,7 +361,7 @@
               <div class="col-10">
                 <div class="mb-3">
                   <label for="formGroupExampleInput15" class="form-label">Status Keanggotaan <span style="color: red">*</span></label>
-                  <select id="formGroupExampleInput15" th:field="*{statusKeanggotaan}" class="form-select input-text border-success rounded-3 border border-2" aria-label="Default select example" required>
+                  <select id="formGroupExampleInput15" th:field="*{statusKeanggotaan}" class="form-select input-text border-success rounded-3 border border-2" aria-label="Default select example" required disabled>
                     <option value="" selected>Pilih status...</option>
                     <option value=1>Aktif</option>
                     <option value=0>Tidak Aktif</option>
@@ -490,6 +490,8 @@
                   <input type="date" th:field="*{tanggalLahir}" hidden>
                   <input type="text" th:field="*{role}" hidden>
                   <input type="text" th:field="*{jenisKelamin}" hidden>
+                  <input type="text" th:field="*{statusKeanggotaan}" hidden>
+                  <input type="text" th:field="*{profile.photoUrl}" hidden>
 
                 </h5>
                 <button type="button"
@@ -531,6 +533,7 @@
     </div>
   </div>
 </div>
+<footer th:replace="fragments/fragment :: footer"></footer>
 
 <script>
 

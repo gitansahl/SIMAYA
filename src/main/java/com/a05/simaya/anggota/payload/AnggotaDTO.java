@@ -24,5 +24,5 @@ public class AnggotaDTO {
     private String namaBelakang;
     private String nomorHP;
     private Boolean statusKeanggotaan = Boolean.TRUE;
-    private ProfileModel profile = new ProfileModel();
+    private ProfileModel profile;
 }

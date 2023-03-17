@@ -33,8 +33,9 @@ public class AnggotaServiceImpl implements AnggotaService {
     @Override
     public void tambahAnggota(AnggotaDTO anggota) {
         AnggotaModel anggotaModel = setAnggotaModel(anggota, new AnggotaModel());
+        ProfileModel profileModel = new ProfileModel();
         setUsernamePassword(anggota, anggotaModel);
-        ProfileModel profileModel = setProfileAnggota(anggota.getProfile(), anggotaModel.getProfile());
+        anggotaModel.setProfile(profileModel);
         anggotaDb.save(anggotaModel);
         profileAnggotaDb.save(profileModel);
     }
@@ -62,6 +63,7 @@ public class AnggotaServiceImpl implements AnggotaService {
         updateAnggotaDTO.setStatusKeanggotaan(anggotaModel.getStatusKeanggotaan());
 
         updateAnggotaDTO.setProfile(anggotaModel.getProfile());
+        log.info("On Get Info Anggota: " + updateAnggotaDTO.getProfile().getPhotoUrl());
 
         return updateAnggotaDTO;
     }
@@ -69,11 +71,14 @@ public class AnggotaServiceImpl implements AnggotaService {
     @Override
     public void updateDataAnggota(AnggotaDTO anggotaDTO) {
         AnggotaModel anggota = anggotaDb.findAnggotaModelById(anggotaDTO.getId());
+        Long id_profile = anggota.getProfile().getIdProfile();
+
         AnggotaModel updatedAnggota = setAnggotaModel(anggotaDTO, anggota);
-        ProfileModel profileModel = profileAnggotaDb.findProfileModelByAnggota_Id(anggotaDTO.getId());
-        ProfileModel updateProfile = setProfileAnggota(anggotaDTO.getProfile(), profileModel);
-        anggotaDb.save(updatedAnggota);
+        ProfileModel updateProfile = setProfileAnggota(anggotaDTO.getProfile(), anggota.getProfile());
+        updateProfile.setIdProfile(id_profile);
+
         profileAnggotaDb.save(updateProfile);
+        anggotaDb.save(updatedAnggota);
     }
 
     @Override
@@ -99,9 +104,10 @@ public class AnggotaServiceImpl implements AnggotaService {
     }
 
     @Override
-    public String uploadProfile(MultipartFile image, String username) throws IOException {
+    public String uploadProfile(MultipartFile image, String username, String pastUrl) throws IOException {
+        log.info(String.valueOf(image.isEmpty()));
         if (image.isEmpty())
-            return null;
+            return pastUrl;
 
         String fileName = StringUtils.cleanPath(image.getOriginalFilename());
 
