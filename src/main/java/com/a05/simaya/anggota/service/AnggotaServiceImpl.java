@@ -5,6 +5,7 @@ import com.a05.simaya.anggota.payload.AnggotaDTO;
 import com.a05.simaya.anggota.repository.AnggotaDb;
 import com.a05.simaya.anggota.repository.ProfileAnggotaDb;
 import com.a05.simaya.anggota.util.FileUploadUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -13,10 +14,12 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 
 @Service
 @Transactional
+@Slf4j
 public class AnggotaServiceImpl implements AnggotaService {
 
     @Autowired
@@ -60,6 +63,7 @@ public class AnggotaServiceImpl implements AnggotaService {
         updateAnggotaDTO.setStatusKeanggotaan(anggotaModel.getStatusKeanggotaan());
 
         updateAnggotaDTO.setProfile(anggotaModel.getProfile());
+        log.info("On Get Info Anggota: " + updateAnggotaDTO.getProfile().getPhotoUrl());
 
         return updateAnggotaDTO;
     }
@@ -100,9 +104,10 @@ public class AnggotaServiceImpl implements AnggotaService {
     }
 
     @Override
-    public String uploadProfile(MultipartFile image, String username) throws IOException {
+    public String uploadProfile(MultipartFile image, String username, String pastUrl) throws IOException {
+        log.info(String.valueOf(image.isEmpty()));
         if (image.isEmpty())
-            return null;
+            return pastUrl;
 
         String fileName = StringUtils.cleanPath(image.getOriginalFilename());
 
