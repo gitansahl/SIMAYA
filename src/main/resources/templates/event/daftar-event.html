@@ -104,6 +104,15 @@
     </div>
 <!--    ALERT MSG-->
 
+<!--    ALERT MSG SUCCESS-->
+    <div class="alert alert-success" role="alert" th:if="${success}">
+        <span th:text="${success}"></span>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+<!--    ALERT MSG-->
+
     <div class="card" style="width: 100%;">
         <div class="card-header text-center" style="background-color: #DBEFE1">
             <h3 class="my-auto">Daftar Event</h3>
