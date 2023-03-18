@@ -16,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -91,6 +92,10 @@ public class AnggotaServiceImpl implements AnggotaService {
         return anggotaDb.findByUsername(username);
     }
 
+    @Override
+    public AnggotaModel getAnggotaById(String id) {
+        return anggotaDb.findAnggotaModelById(id);
+    }
     @Override
     public boolean cekPassword(String id, String oldPassword) {
         AnggotaModel anggotaModel = anggotaDb.findAnggotaModelById(id);

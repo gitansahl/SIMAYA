@@ -17,7 +17,7 @@
     .toppane {
       width: 100%;
       height: auto;
-      padding-bottom: 20px;
+      padding-bottom: 40px;
     }
 
     .leftpane {
@@ -81,7 +81,7 @@
     }
 
     .event-card .date-section {
-      background-color: #28a745;
+      background-color: #37814F;
       color: #fff;
       border-radius: 5px 5px 0 0;
       padding: 10px 20px;
@@ -118,12 +118,18 @@
     .icon {
       vertical-align: text-bottom;
     }
+    a{
+      text-decoration: none;
+    }
+    a:hover{
+      text-decoration: none;
+    }
   </style>
 
 </head>
 <body>
 <nav th:replace="fragments/fragment :: navbar('event')"></nav>
-<div class="container my-5">
+<div class="container-xl my-5">
   <div class="card" style="width: 100%;">
     <div class="card-header text-center" style="background-color: #DBEFE1">
       <h3 class="my-auto">Dashboard Event</h3>
@@ -137,6 +143,7 @@
           <h5 class="section-title">Event Sedang Berlangsung</h5>
           <div th:if="${listOngoing != null}" th:each="event : ${listOngoing}">
             <div class="card event-card shadow">
+              <a th:href="@{/event/}+ ${event.idEvent}">
               <div class="date-section">
                 <div class="row">
                   <div class="col-sm-6 border-right">
@@ -170,6 +177,7 @@
                   <span th:text="${event.penanggungJawab.namaDepan} + ' ' +  ${event.penanggungJawab.namaBelakang}"></span>
                 </p>
               </div>
+              </a>
             </div>
           </div>
 
@@ -187,7 +195,7 @@
           <div id="chart-unavailable" style="display: none; text-align: center">
             <h6>Data belum mencukupi!</h6>
           </div>
-          <div class="card shadow" style="margin: 25px 50px; padding: 20px" id="card-chart">
+          <div class="card shadow" style="margin: 25px 65px; padding: 20px" id="card-chart">
             <canvas id="pie-chart" style="max-height: 300px;"></canvas>
             <p style="padding-top: 15px; text-align: center" id="total-statistik"></p>
           </div>
@@ -197,6 +205,7 @@
           <h5 class="section-title">Event Yang Akan Datang</h5>
           <div th:if="${listUpcoming != null}" th:each="event : ${listUpcoming}">
             <div class="card event-card shadow">
+              <a th:href="@{/event/}+ ${event.idEvent}">
               <div class="date-section">
                 <div class="row">
                   <div class="col-sm-6 border-right">
@@ -208,8 +217,8 @@
                     <span th:text="${#temporals.format(event.waktuAkhir, 'hh:mm a')}"></span>
                   </div>
                 </div>
-
               </div>
+
               <div class="card-body">
                 <h5 class="card-title"><span th:text="${event.namaEvent}"></span></h5>
                 <p class="card-text">
@@ -230,6 +239,7 @@
                   <span th:text="${event.penanggungJawab.namaDepan} + ' ' +  ${event.penanggungJawab.namaBelakang}"></span>
                 </p>
               </div>
+              </a>
             </div>
           </div>
 
@@ -271,7 +281,7 @@
                   label: 'Event Progress',
                   data: [data.done, data.notDone],
                   backgroundColor: [
-                    "#28a745",
+                    "#37814F",
                     "#E0EFEF",
                   ],
                   hoverBackgroundColor: [
@@ -280,7 +290,7 @@
                   ],
                   borderColor: [
                     '#6c757d',
-                    '#28a745'
+                    '#37814F'
                   ],
                   borderWidth: 1
                 }]
