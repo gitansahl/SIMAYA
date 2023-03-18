@@ -13,12 +13,26 @@
     <script type="text/javascript" src="https://cdn.datatables.net/plug-ins/1.10.21/dataRender/datetime.js"></script>
     <link href="https://nightly.datatables.net/css/jquery.dataTables.css" rel="stylesheet" type="text/css" />
     <style>
+        html{
+            margin: 0;
+            padding: 0;
+            height: 100%;
+        }
+
         body{
             background-image: url("https://www.linkpicture.com/q/bg_17.png");
             background-position: center;
             background-repeat: no-repeat;
             background-attachment: fixed;
             background-size: cover;
+            margin: 0;
+            padding: 0;
+            height: 100%;
+        }
+
+        #container{
+            min-height: 70%;
+            position: relative;
         }
 
         .dataTables_wrapper .dataTables_filter input:focus-visible{
@@ -67,21 +81,12 @@
             color: #37814F;
         }
 
-        body{
-            background-image: url("https://www.linkpicture.com/q/bg_17.png");
-            background-position: center;
-            background-repeat: no-repeat;
-            background-attachment: fixed;
-            background-size: cover;
-            font-family: "Segoe UI", "Segoe UI Semibold", "Segoe UI Black", sans-serif;
-        }
-
     </style>
 
 </head>
 <body>
 <nav th:replace="fragments/fragment :: navbar('anggota')"></nav>
-<div class="container my-5">
+<div class="container my-5" id="container">
     <div th:if="${modal_add}">
         <!-- Modal -->
         <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
