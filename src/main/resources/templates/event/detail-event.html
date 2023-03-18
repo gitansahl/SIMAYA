@@ -58,6 +58,16 @@
 <nav th:replace="fragments/fragment :: navbar('event')"></nav>
 
 <div class="container-fluid" th:if="${event.isDeleted.booleanValue() == false}">
+
+<!--    ALERT MSG ERROR-->
+    <div class="alert alert-danger alert-dismissible fade show" style="margin: 20px 50px -30px 50px" role="alert" th:if="${error}">
+        <span th:text="${error}"></span>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+<!--    ALERT MSG-->
+
     <div class="card" style="margin: 50px 50px 0px 50px; padding-bottom:20px;background-color: rgba(255, 255, 255, 0.5)">
         <div class="row">
             <div class="col" style="margin-left: 50px;">
@@ -72,21 +82,18 @@
                         <div class="col">
                             <span class="material-symbols-outlined icon">Today</span>
                             <p class="icon-label"
-                               th:text="${#temporals.format(event.waktuMulai, 'dd MMMM yyyy HH:mm')}"></p>
+                               th:text="${#temporals.format(event.waktuMulai, 'dd MMMM yyyy, HH:mm')} + ' - ' + ${#temporals.format(event.waktuAkhir, 'dd MMMM yyyy, HH:mm')}"></p>
 
                         </div>
+
+                    </div>
+                    <div class="row">
                         <div class="col">
                             <span class="material-symbols-outlined icon">person</span>
                             <p class="icon-label"
                                th:text="${event.penanggungJawab.getNamaDepan()} + ' ' + ${event.penanggungJawab.getNamaBelakang()}"></p>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col">
-                            <span class="material-symbols-outlined icon">event_available</span>
-                            <p class="icon-label"
-                               th:text="${#temporals.format(event.waktuAkhir, 'dd MMMM yyyy HH:mm')}"></p>
-                        </div>
+
                         <div class="col">
                             <span class="material-symbols-outlined icon">task</span>
                             <p class="icon-label" th:text="${event.programKerja}"></p>
@@ -107,7 +114,7 @@
                                 Usaha</p>
                         </div>
                     </div>
-                    <div class="row" style="margin-top: 70px">
+                    <div class="row" style="margin-top: 20px">
                         <div class="col">
                             <h4>Deskripsi</h4>
                         </div>
@@ -131,6 +138,7 @@
                             <tr>
                                 <th>Deskripsi Progres</th>
                                 <th>Status</th>
+                                <th>Id Progres</th>
                                 <th>Action</th>
                             </tr>
 
@@ -140,6 +148,7 @@
                                 <td>Data 1</td>
                                 <td>Data 2</td>
                                 <td>Data 3</td>
+                                <td>Data 4</td>
                             </tr>
                             </tbody>
                         </table>
@@ -241,6 +250,10 @@
 </div>
 <!--MODAL-->
 
+<!--FOOTER-->
+<footer th:replace="fragments/fragment :: footer"></footer>
+<!--FOOTER-->
+
 <!--SCRIPT-->
 <script th:inline="javascript">
 
@@ -256,6 +269,7 @@
             data: JSON.stringify(data),
             success: function (data) {
                 window.location.reload();
+                $("#table_progres").DataTable().page('last')
             }
         })
     }
@@ -283,8 +297,16 @@
                 "url": '/api/progres/view/' + id,
                 "dataSrc": ''
             },
+            "order": [ [2,'desc'] ],
+            // "ordering": false,
             "searching": true,
-            "ordering": false,
+            columnDefs: [
+                {
+                    target: 2,
+                    visible: false,
+                    searchable: false,
+                },
+            ],
             "columns": [
                 {
                     "data": null,
@@ -301,6 +323,9 @@
                             return "Selesai"
                         }
                     }
+                },
+                {
+                    "data": "idProgres"
                 },
                 {
                     "data": null,

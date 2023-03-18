@@ -6,6 +6,13 @@
   <object th:include="fragments/fragment :: css" th:remove="tag"></object>
   <object th:include="fragments/fragment :: js" th:remove="tag"></object>
   <style>
+    body {
+      background-image: url("https://www.linkpicture.com/q/bg_17.png");
+      background-position: center;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      background-size: cover;
+    }
     .form-control:focus {
       border-color: #28a745;
       box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.25);
@@ -31,6 +38,11 @@
   </style>
 </head>
 <body>
+
+<!--NAVVBAR-->
+<nav th:replace="fragments/fragment :: navbar('event')"></nav>
+<!--NAVBAR-->
+
 <div class="container my-5">
   <div class="card" style="width: 100%;">
     <div class="card-header text-center" style="background-color: #DBEFE1">
@@ -47,7 +59,13 @@
               <div class="col-10">
                 <div class="mb-3">
                   <label for="formGroupExampleInput8" class="form-label">Nama Event <span style="color: red">*</span></label>
-                  <input type="text" th:field="*{namaEvent}" class="form-control border-success rounded-3 border border-2" id="formGroupExampleInput8" placeholder="Masukkan nama Event..." required>
+                  <input type="text" th:field="*{namaEvent}" class="form-control border-success rounded-3 border border-2 input-text" id="formGroupExampleInput8" placeholder="Masukkan nama Event..." required>
+                  <div class="valid-feedback">
+                    Looks good!
+                  </div>
+                  <div class="invalid-feedback">
+                    Masukkan Nama Event.
+                  </div>
                 </div>
               </div>
               <div class="col-1"></div>
@@ -60,7 +78,13 @@
               <div class="col-10">
                 <label for="formGroupExampleInput9" class="form-label">Nama Program Kerja <span style="color: red">*</span></label>
                 <div class="input-group mb-3">
-                  <input type="text" th:field="*{programKerja}" class="form-control border-success rounded-start border border-2" id="formGroupExampleInput9" placeholder="Masukkan program kerja..." required>
+                  <input type="text" th:field="*{programKerja}" class="form-control border-success rounded-start border border-2 input-text" id="formGroupExampleInput9" placeholder="Masukkan program kerja..." required>
+                  <div class="valid-feedback">
+                    Looks good!
+                  </div>
+                  <div class="invalid-feedback">
+                    Masukkan Nama Program Kerja
+                  </div>
                 </div>
               </div>
               <div class="col-1"></div>
@@ -76,7 +100,13 @@
               <div class="col-10">
                 <div class="mb-3">
                   <label for="formGroupExampleInput1" class="form-label">Waktu Mulai<span style="color: red">*</span></label>
-                  <input type="datetime-local" th:field="*{waktuMulai}" class="form-control border-success rounded-3 border border-2" id="formGroupExampleInput1" placeholder="Masukkan nama belakang..." required>
+                  <input type="datetime-local" th:field="*{waktuMulai}" class="form-control border-success rounded-3 border border-2 input-text" id="formGroupExampleInput1" placeholder="Masukkan nama belakang..." required>
+                  <div class="valid-feedback">
+                    Looks good!
+                  </div>
+                  <div class="invalid-feedback">
+                    Masukkan Waktu Mulai.
+                  </div>
                 </div>
               </div>
               <div class="col-1"></div>
@@ -89,7 +119,13 @@
               <div class="col-10">
                 <div class="mb-3">
                   <label for="formGroupExampleInput12" class="form-label">Waktu Berakhir<span style="color: red">*</span></label>
-                  <input type="datetime-local" th:field="*{waktuAkhir}" class="form-control border-success rounded-3 border border-2" id="formGroupExampleInput12" placeholder="Masukkan nama belakang..." required>
+                  <input type="datetime-local" th:field="*{waktuAkhir}" class="form-control border-success rounded-3 border border-2 input-text" id="formGroupExampleInput12" placeholder="Masukkan nama belakang..." required>
+                  <div class="valid-feedback">
+                    Looks good!
+                  </div>
+                  <div class="invalid-feedback">
+                    Masukkan Waktu Berakhir.
+                  </div>
                 </div>
               </div>
               <div class="col-1"></div>
@@ -105,7 +141,13 @@
               <div class="col-10">
                 <div class="mb-3">
                   <label for="formGroupExampleInput2" class="form-label">Tempat Pelaksanaan <span style="color: red">*</span></label>
-                  <input type="text" th:field="*{tempatPelaksanaan}" class="form-control border-success rounded-3 border border-2" id="formGroupExampleInput2" placeholder="Masukkan tempat pelaksanaan..." required>
+                  <input type="text" th:field="*{tempatPelaksanaan}" class="form-control border-success rounded-3 border border-2 input-text" id="formGroupExampleInput2" placeholder="Masukkan tempat pelaksanaan..." required>
+                  <div class="valid-feedback">
+                    Looks good!
+                  </div>
+                  <div class="invalid-feedback">
+                    Masukkan Tempat Pelaksanaan.
+                  </div>
                 </div>
               </div>
               <div class="col-1"></div>
@@ -117,12 +159,18 @@
               <div class="col-10">
                 <div class="mb-3">
                   <label for="formGroupExampleInput3" class="form-label">Departemen <span style="color: red">*</span></label>
-                  <select id="formGroupExampleInput3" th:field="*{direktorat}" class="form-select border-success rounded-3 border border-2" aria-label="Default select example" required>
+                  <select id="formGroupExampleInput3" th:field="*{direktorat}" class="form-select border-success input-text rounded-3 border border-2" aria-label="Default select example" required>
                     <option value="" selected>Pilih departemen..</option>
                     <option value="SDM_OPERASIONAL">SDM & Operasional</option>
                     <option value="PENGEMBANGAN_USAHA">Pengembangan Usaha</option>
                     <option value="KEUANGAN_PROGRAM">Keuangan & Program</option>
                   </select>
+                  <div class="valid-feedback">
+                    Looks good!
+                  </div>
+                  <div class="invalid-feedback">
+                    Pilih Departemen.
+                  </div>
                 </div>
               </div>
               <div class="col-1"></div>
@@ -138,7 +186,13 @@
               <div class="col-10">
                 <div class="mb-3">
                   <label for="formGroupExampleInput4" class="form-label">Deskripsi <span style="color: red">*</span></label>
-                  <textarea th:field="*{deskripsi}" class="form-control border-success rounded-3 border border-2" id="formGroupExampleInput4" placeholder="Deskripsi event..." required></textarea>
+                  <textarea th:field="*{deskripsi}" class="form-control border-success input-text rounded-3 border border-2" id="formGroupExampleInput4" placeholder="Deskripsi event..." required></textarea>
+                  <div class="valid-feedback">
+                    Looks good!
+                  </div>
+                  <div class="invalid-feedback">
+                    Masukkan Deskripsi.
+                  </div>
                 </div>
               </div>
               <div class="col-1"></div>
@@ -150,9 +204,15 @@
               <div class="col-10">
                 <div class="mb-3">
                   <label for="formGroupExampleInput6" class="form-label">Penanggung Jawab <span style="color: red">*</span></label>
-                  <select name="idEvent" id="formGroupExampleInput6" class="form-select border-success rounded-3 border border-2" aria-label="Default select example" th:field="*{penanggungJawab.id}" required>
+                  <select name="idEvent" id="formGroupExampleInput6" class="form-select border-success input-text rounded-3 border border-2" aria-label="Default select example" th:field="*{penanggungJawab.id}" required>
                     <option th:each="anggota : ${listAnggota}" th:value="${anggota.id}" th:text="${anggota.namaDepan} + ' ' + ${anggota.namaBelakang}"></option>
                   </select>
+                  <div class="valid-feedback">
+                    Looks good!
+                  </div>
+                  <div class="invalid-feedback">
+                    Pilih Anggota.
+                  </div>
                 </div>
               </div>
               <div class="col-1"></div>
@@ -173,5 +233,28 @@
   </div>
 </div>
 
+<!--FOOTER-->
+<footer th:replace="fragments/fragment :: footer"></footer>
+<!--FOOTER-->
+
+<script>
+
+  $('.input-text').change((e) => {
+    console.log(e.target.value)
+    if (e.target.value === '') {
+      $(e.target).addClass("is-invalid");
+      $(e.target).addClass("border-danger");
+
+      $(e.target).removeClass("border-success");
+      $(e.target).removeClass("is-valid");
+    } else {
+      $(e.target).removeClass("is-invalid");
+      $(e.target).removeClass("border-danger");
+
+      $(e.target).addClass("border-success");
+      $(e.target).addClass("is-valid");
+    }
+  });
+</script>
 </body>
 </html>

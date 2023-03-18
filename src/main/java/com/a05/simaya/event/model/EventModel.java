@@ -2,6 +2,7 @@ package com.a05.simaya.event.model;
 
 import com.a05.simaya.anggota.model.AnggotaModel;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;

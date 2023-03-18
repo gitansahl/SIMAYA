@@ -2,6 +2,7 @@ package com.a05.simaya.event.controller;
 
 
 import com.a05.simaya.anggota.model.AnggotaModel;
+import com.a05.simaya.anggota.model.RoleEnum;
 import com.a05.simaya.anggota.service.AnggotaService;
 import com.a05.simaya.event.model.EventModel;
 import com.a05.simaya.event.model.ProgresModel;
@@ -10,9 +11,12 @@ import com.a05.simaya.event.service.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
@@ -29,16 +33,19 @@ public class EventController {
     public String getPage(Model model) {
         CreateEventDTO event = new CreateEventDTO();
 
-        List<AnggotaModel> listAnggota = anggotaService.getListAnggota();
+        // Hanya menampilkan anggota dengan role SDM
+        List<AnggotaModel> listAnggotaSDM = anggotaService.getListAnggotaBasedonRole(RoleEnum.SDM_OPERASIONAL);
 
-        model.addAttribute("listAnggota", listAnggota);
+        model.addAttribute("listAnggota", listAnggotaSDM);
         model.addAttribute("event", event);
         return "event/form-tambah-event";
     }
 
     @PostMapping(value = "/tambah-event")
-    public String postForm(CreateEventDTO event) {
+    public String postForm(CreateEventDTO event, RedirectAttributes redirectAttributes) {
         eventService.tambahEvent(event);
+
+        redirectAttributes.addFlashAttribute("success", String.format("Event bernama %s berhasil ditambahkan!", event.getNamaEvent()));
         return "redirect:/event/viewall";
     }
 
@@ -56,6 +63,23 @@ public class EventController {
         return "event/dashboard-event";
     }
 
+    @GetMapping(value = "/event/hapus/{id}")
+    public String deleteEvent(
+            @PathVariable(value = "id") Long idEvent,
+            RedirectAttributes redirectAttributes
+    ){
+        Boolean result = eventService.deleteEvent(idEvent);
+        EventModel event = eventService.getEventById(idEvent);
+
+        if (result){
+            redirectAttributes.addFlashAttribute("success", String.format("Event bernama %s berhasil dihapus!", event.getNamaEvent()));
+            return "redirect:/event/viewall";
+        } else {
+            redirectAttributes.addFlashAttribute("error", "Event ini gagal dihapus! karena progres TIDAK BOLEH KOSONG");
+            return "redirect:/event/{id}";
+        }
+    }
+
     @GetMapping(value="/event/{id}")
     public String viewDetailEvent(
             @PathVariable(value = "id") Long idEvent,
@@ -68,11 +92,4 @@ public class EventController {
         return "event/detail-event";
     }
 
-    @GetMapping(value = "/event/hapus/{id}")
-    public String deleteEvent(
-            @PathVariable(value = "id") Long idEvent
-    ){
-        eventService.deleteEvent(idEvent);
-        return "redirect:/event/viewall";
-    }
 }

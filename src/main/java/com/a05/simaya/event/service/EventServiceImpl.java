@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
@@ -95,18 +96,23 @@ public class EventServiceImpl implements EventService{
     }
 
     @Override
+
     public EventModel getEventById(Long idEvent) {
         Optional<EventModel> eventModel = eventDb.findById(idEvent);
         return eventModel.orElse(null);
     }
 
     @Override
-    public void deleteEvent(Long idEvent) {
+    public Boolean deleteEvent(Long idEvent) {
         Optional<EventModel> eventModel = eventDb.findById(idEvent);
         EventModel event = eventModel.orElse(null);
         if (event != null){
-            event.setIsDeleted(Boolean.TRUE);
-            eventDb.save(event);
+            if (event.getListProgres().size() != 0){
+                event.setIsDeleted(Boolean.TRUE);
+                eventDb.save(event);
+                return true;
+            }
         }
+        return false;
     }
 }
