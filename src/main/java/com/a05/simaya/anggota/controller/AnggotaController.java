@@ -9,6 +9,8 @@ import com.a05.simaya.anggota.service.AnggotaService;
 import com.a05.simaya.event.model.DirektoratEnum;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -123,6 +125,24 @@ public class AnggotaController {
         model.addAttribute("ubahPassword", ubahPasswordDTO);
 
         return "anggota/profile";
+    }
+
+    @GetMapping(value = "/profil/{id}")
+    public String profilAnggotaPage(@PathVariable(value = "id") String id,
+                                    Model model, Authentication authentication) {
+        AnggotaModel anggota = anggotaService.getAnggotaById(id);
+        String role = "";
+        if( authentication.getAuthorities().contains(new SimpleGrantedAuthority("ADMIN")) ){
+            role = "Admin";
+        }else{
+            role = "Anggota";
+        }
+        model.addAttribute("role",role);
+        model.addAttribute("anggota", anggota);
+        model.addAttribute("aset", getAset(anggota.getProfile()));
+        model.addAttribute("divisi", getDivisi(anggota.getProfile().getDivisi()));
+
+        return "anggota/detail-anggota";
     }
 
     public String getAset(ProfileModel profile) {

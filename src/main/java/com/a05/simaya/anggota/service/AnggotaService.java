@@ -14,6 +14,7 @@ public interface AnggotaService {
     void updateDataAnggota(AnggotaDTO updateAnggota);
     String encrypt(String password);
     AnggotaModel getAnggotaByUsername(String username);
+    AnggotaModel getAnggotaById(String id);
     boolean cekPassword(String id, String oldPassword);
     void gantiPassword(String id, String newPassword);
 
