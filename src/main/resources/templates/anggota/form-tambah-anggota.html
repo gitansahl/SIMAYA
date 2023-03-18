@@ -28,6 +28,12 @@
             border-color: #28a745;
         }
 
+        html{
+            margin: 0;
+            padding: 0;
+            height: 100%;
+        }
+
         body{
             background-image: url("https://www.linkpicture.com/q/bg_17.png");
             background-position: center;
@@ -35,13 +41,22 @@
             background-attachment: fixed;
             background-size: cover;
             font-family: "Segoe UI", "Segoe UI Semibold", "Segoe UI Black", sans-serif;
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            position: relative;
+        }
+
+        #container {
+            min-height: 82.7%;
+            position: relative;
         }
 
     </style>
 </head>
 <body>
 <nav th:replace="fragments/fragment :: navbar('anggota')"></nav>
-<div class="container my-5">
+<div class="container my-5" id="container">
     <div class="card" style="width: 100%;">
         <div class="card-header text-center" style="background-color: #DBEFE1">
             <h3 class="my-auto">Menambahkan Anggota Baru</h3>
@@ -303,7 +318,9 @@
         </div>
     </div>
 </div>
+
 <footer th:replace="fragments/fragment :: footer"></footer>
+
 <script>
 
     $('.input-text').change((e) => {

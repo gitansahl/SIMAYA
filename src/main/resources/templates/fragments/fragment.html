@@ -44,7 +44,7 @@
                 </a>
             </li>
             <li class="nav-item" th:classappend="${onevar == 'event'} ? active">
-                <a class="nav-link" th:href="@{/}"
+                <a class="nav-link" th:href="@{/event}"
                    style="font-family: 'Segoe UI Semibold'; font-size: 15px">Event</a>
             </li>
             <li class="nav-item" th:classappend="${onevar == 'usaha'} ? active">
@@ -53,7 +53,7 @@
             </li>
             <li class="nav-item" th:classappend="${onevar == 'ziswaf'} ? active">
                 <a class="nav-link" th:href="@{/}"
-                   style="font-family: 'Segoe UI Semibold'; font-size: 15px">ZISWAF</a>
+                   style="font-family: 'Segoe UI Semibold'; font-size: 15px">Ziswaf</a>
             </li>
             <li class="nav-item" th:classappend="${onevar == 'keuangan'} ? active">
                 <a class="nav-link" th:href="@{/}"
@@ -73,7 +73,8 @@
         </div>
     </div>
 </nav>
-<footer class="text-center text-lg-start bg-white" style="position: fixed; bottom: 0; width: 100%">
+<footer class="justify-content-center text-center text-lg-start position-absolute bg-white"
+        style="clear: both; left: 0; width: 100%">
     <!-- Copyright -->
     <div class="text-center p-4 fw-bold" style="color: #37814F">
         © 2023 Rosan Solutions - Sistem Informasi Manajemen Yayasan
