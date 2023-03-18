@@ -93,7 +93,7 @@
 </head>
 <body>
 <nav th:replace="fragments/fragment :: navbar('event')"></nav>
-<div class="container my-5" id="container">
+<div class="container-xl my-5" id="container">
 
 <!--    ALERT MSG SUCCESS-->
     <div class="alert alert-success" role="alert" th:if="${success}">
@@ -119,25 +119,32 @@
         </div>
         <div class="card-body">
             <div class="justify-content-center">
+                <div class="row" style="margin-top: 10px">
+                    <div class="col">
+                        <table>
+                            <thead>
+                            <tr>
+                                <h6>Periode Event</h6>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>Tanggal Awal: </td>
+                                <td><input class="form-control" type="datetime-local" id="min" name="min"></td>
+                            </tr>
+                            <tr>
+                                <td>Tanggal Akhir: </td>
+                                <td><input class="form-control" type="datetime-local" id="max" name="max"></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="col" style="text-align: right">
+                        <a  class="btn btn-success" th:href="@{/tambah-event}">Tambah Event</a>
+                    </div>
+                </div>
                 <br>
-                <table>
-                    <thead>
-                    <tr>
-                        <h6>Periode Event</h6>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <td>Tanggal Awal: </td>
-                        <td><input class="form-control" type="datetime-local" id="min" name="min"></td>
-                    </tr>
-                    <tr>
-                        <td>Tanggal Akhir: </td>
-                        <td><input class="form-control" type="datetime-local" id="max" name="max"></td>
-                    </tr>
-                    </tbody>
-                </table>
-                <br><br>
                 <table id="table_event" class="hover row-border stripe" style="width:100%">
                     <thead>
                     <tr>
@@ -237,7 +244,7 @@
                 {
                     "data": null,
                     "render": function (data, type) {
-                        return '<a class="btn btn-success" href="/event/'+ data.idEvent +'">' + 'Detail' + '</a>';
+                        return '<a class="btn btn-outline-success" href="/event/'+ data.idEvent +'">' + 'Detail' + '</a>';
                     }
                 }
             ],

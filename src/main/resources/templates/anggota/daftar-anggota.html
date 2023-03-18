@@ -86,7 +86,7 @@
 </head>
 <body>
 <nav th:replace="fragments/fragment :: navbar('anggota')"></nav>
-<div class="container my-5" id="container">
+<div class="container-xl my-5" id="container">
     <div th:if="${modal_add}">
         <!-- Modal -->
         <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -111,6 +111,9 @@
         </div>
         <div class="card-body">
             <div class="justify-content-center">
+
+                <a  class="btn btn-success float-right" style="margin:10px 0px 40px 0px" th:href="@{/tambah-anggota}">Tambah Anggota</a>
+
                 <br>
                 <table id="table_anggota" class="hover row-border stripe">
                     <thead>
@@ -187,7 +190,7 @@
                 {"data": "nomorHP"},
                 {"data": null,
                     "render": function (data,type) {
-                        return '<a class="btn btn-success" href="/profil/'+ data.id +'">' + 'Detail' + '</a>';
+                        return '<a class="btn btn-outline-success" href="/profil/'+ data.id +'">' + 'Detail' + '</a>';
                     }
                 }
 
