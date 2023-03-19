@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://thymeleaf.org">
+<html lang="en" xmlns:th="http://thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>Daftar Anggota</title>
@@ -87,6 +87,16 @@
 <body>
 <nav th:replace="fragments/fragment :: navbar('anggota')"></nav>
 <div class="container-xl my-5" id="container">
+
+    <!--    ALERT MSG SUCCESS-->
+    <div class="alert" style="background-color: #37814F; color: white" role="alert" th:if="${success}">
+        <span th:text="${success}"></span>
+        <button type="button" class="close" style="color:white;" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <!--    ALERT MSG-->
+
     <div th:if="${modal_add}">
         <!-- Modal -->
         <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -111,8 +121,9 @@
         </div>
         <div class="card-body">
             <div class="justify-content-center">
-
-                <a  class="btn btn-success float-right" style="margin:10px 0px 40px 0px" th:href="@{/tambah-anggota}">Tambah Anggota</a>
+                <div sec:authorize="hasAuthority('ADMIN')">
+                    <a  class="btn btn-success float-right" style="margin:10px 0px 40px 0px" th:href="@{/tambah-anggota}">Tambah Anggota</a>
+                </div>
 
                 <br>
                 <table id="table_anggota" class="hover row-border stripe">

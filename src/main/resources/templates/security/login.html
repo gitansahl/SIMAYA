@@ -37,8 +37,15 @@
                 <div class="col-md-4 col-sm-4 col-xs-12"></div>
                 <div class="col-md-4 col-sm-4 col-xs-12">
                     <div class="form-container">
-                        <div class="alert alert-primary" role="alert" th:if="${code} != null">Log out berhasil!</div>
+                        <!--    ALERT MSG SUCCESS-->
+                        <div class="alert" style="background-color: #37814F; color: white" role="alert" th:if="${code} != null">
+                            <span>Log out berhasil!</span>
+                            <button type="button" class="close" style="color:white;" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
                         <div class="alert alert-danger" role="alert" th:if="${param.error}">Username atau Kata sandi salah!</div>
+                        <!--    ALERT MSG-->
                         <h1 class="mb-4">Login</h1>
                         <div class="form-group mb-4">
                             <label class="mb-2" for="UsernameForm">Username</label>

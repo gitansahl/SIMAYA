@@ -75,7 +75,7 @@ public class EventController {
             redirectAttributes.addFlashAttribute("success", String.format("Event bernama %s berhasil dihapus!", event.getNamaEvent()));
             return "redirect:/event/viewall";
         } else {
-            redirectAttributes.addFlashAttribute("error", "Event ini gagal dihapus! karena progres TIDAK BOLEH KOSONG");
+            redirectAttributes.addFlashAttribute("error", "Event ini gagal dihapus! karena event ini memiliki progres");
             return "redirect:/event/{id}";
         }
     }
