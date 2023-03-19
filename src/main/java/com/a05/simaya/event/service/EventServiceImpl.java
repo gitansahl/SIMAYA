@@ -35,7 +35,7 @@ public class EventServiceImpl implements EventService{
             LocalDateTime now = LocalDateTime.now();
             List<EventModel> listOngoing = new ArrayList<>();
             for (EventModel event: listEvent){
-                if (event.getWaktuMulai().isBefore(now) && event.getWaktuAkhir().isAfter(now)){
+                if (event.getWaktuMulai().isBefore(now) && event.getWaktuAkhir().isAfter(now) && !event.getIsDeleted()){
                     listOngoing.add(event);
                 }
             }
@@ -55,7 +55,7 @@ public class EventServiceImpl implements EventService{
             LocalDateTime now = LocalDateTime.now();
             List<EventModel> listUpcoming = new ArrayList<>();
             for (EventModel event: listEvent){
-                if (event.getWaktuMulai().isBefore(now.plusWeeks(1)) && event.getWaktuMulai().isAfter(now)){
+                if (event.getWaktuMulai().isBefore(now.plusWeeks(1)) && event.getWaktuMulai().isAfter(now) && !event.getIsDeleted()){
                     listUpcoming.add(event);
                 }
             }
@@ -107,7 +107,7 @@ public class EventServiceImpl implements EventService{
         Optional<EventModel> eventModel = eventDb.findById(idEvent);
         EventModel event = eventModel.orElse(null);
         if (event != null){
-            if (event.getListProgres().size() != 0){
+            if (event.getListProgres().size() == 0){
                 event.setIsDeleted(Boolean.TRUE);
                 eventDb.save(event);
                 return true;

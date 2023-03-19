@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.IOException;
 import java.security.Principal;
@@ -39,15 +40,13 @@ public class AnggotaController {
         return "anggota/form-tambah-anggota";
     }
 
-    @PostMapping(value = "/anggota/viewall")
-    public String postForm(AnggotaDTO anggota, ModelMap model) {
+    @PostMapping(value = "/tambah-anggota")
+    public String postForm(AnggotaDTO anggota, RedirectAttributes redirectAttributes) {
         anggotaService.tambahAnggota(anggota);
 
-        String info = "Data anggota dengan nama " + anggota.getNamaDepan() + " " +
-                anggota.getNamaBelakang() + " telah berhasil ditambahkan";
-        model.addAttribute("modal_add", info);
+        redirectAttributes.addFlashAttribute("success", String.format("Anggota bernama %s berhasil ditambahkan!", anggota.getNamaDepan()));
 
-        return "anggota/daftar-anggota";
+        return "redirect:/anggota/viewall";
     }
 
     @GetMapping(value = "/ubah-profil")

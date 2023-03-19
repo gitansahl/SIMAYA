@@ -157,6 +157,13 @@
                                 <p th:text="${anggota.profile.catatan != null} ? ${anggota.profile.catatan} : '-'"></p>
                             </div>
                         </div>
+                            <div class="col-4 text-center mx-auto">
+                                <button type="button" class="btn btn-success btn-lg" data-toggle="modal" onclick="removeWrongPassword()"
+                                        data-target="#staticBackdrop">
+                                    Ubah Kata Sandi
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -228,16 +235,7 @@
             </div>
         </div>
 
-        <div class="row mt-5 mb-3">
-            <div class="col-4"></div>
-            <div class="col-4 text-center">
-                <button type="button" class="btn btn-success btn-lg" data-toggle="modal" onclick="removeWrongPassword()"
-                        data-target="#staticBackdrop">
-                    Ubah Kata Sandi
-                </button>
-            </div>
-            <div class="col-4"></div>
-        </div>
+
 
     </div>
 </section>
