@@ -10,45 +10,46 @@
             border-color: #28a745;
             box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.25);
         }
+
         .form-select:focus {
             border-color: #28a745;
             box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.25);
         }
+
         option:checked {
             background-color: #28a745;
             color: white;
             box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.25);
         }
+
         option:hover {
             background-color: #28a745;
             box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.25);
         }
+
         .form-check-input:checked {
             background-color: #28a745;
             border-color: #28a745;
         }
 
-        html{
+        html {
             margin: 0;
             padding: 0;
             height: 100%;
         }
 
-        body{
+        body {
             background-image: url("https://www.linkpicture.com/q/bg_17.png");
             background-position: center;
             background-repeat: no-repeat;
             background-attachment: fixed;
             background-size: cover;
             font-family: "Segoe UI", "Segoe UI Semibold", "Segoe UI Black", sans-serif;
-            margin: 0;
-            padding: 0;
-            height: 100%;
             position: relative;
         }
 
         #container {
-            min-height: 82.7%;
+            min-height: 100%;
             position: relative;
         }
 
@@ -71,8 +72,11 @@
                             <div class="col-1"></div>
                             <div class="col-10">
                                 <div class="mb-3">
-                                    <label for="formGroupExampleInput8" class="form-label">Username <span style="color: red">*</span></label>
-                                    <input type="text" th:field="*{username}" class="form-control input-text border-success rounded-start border border-2" id="formGroupExampleInput8" placeholder="Masukkan username..." required>
+                                    <label for="formGroupExampleInput8" class="form-label">Username <span
+                                            style="color: red">*</span></label>
+                                    <input type="text" th:field="*{username}"
+                                           class="form-control input-text border-success rounded-start border border-2"
+                                           id="formGroupExampleInput8" placeholder="Masukkan username..." required>
                                     <div class="valid-feedback">
                                         Looks good!
                                     </div>
@@ -89,10 +93,14 @@
                         <div class="row">
                             <div class="col-1"></div>
                             <div class="col-10">
-                                <label for="formGroupExampleInput9" class="form-label">Kata Sandi <span style="color: red">*</span></label>
+                                <label for="formGroupExampleInput9" class="form-label">Kata Sandi <span
+                                        style="color: red">*</span></label>
                                 <div class="input-group mb-3">
-                                    <input type="password" th:field="*{password}" class="form-control input-text border-success rounded-start border border-2" id="formGroupExampleInput9" placeholder="Masukkan password..." required>
-                                    <span class="input-group-text" id="basic-addon2"><i class="bi bi-eye-slash mb-2" id="togglePassword"></i></span>
+                                    <input type="password" th:field="*{password}"
+                                           class="form-control input-text border-success rounded-start border border-2"
+                                           id="formGroupExampleInput9" placeholder="Masukkan password..." required>
+                                    <span class="input-group-text" id="basic-addon2"><i class="bi bi-eye-slash mb-2"
+                                                                                        id="togglePassword"></i></span>
                                     <div class="valid-feedback">
                                         Looks good!
                                     </div>
@@ -113,8 +121,11 @@
                             <div class="col-1"></div>
                             <div class="col-10">
                                 <div class="mb-3">
-                                    <label for="formGroupExampleInput1" class="form-label">Nama Depan <span style="color: red">*</span></label>
-                                    <input type="text" th:field="*{namaDepan}" class="form-control input-text border-success rounded-3 border border-2" id="formGroupExampleInput1" placeholder="Masukkan nama depan..." required>
+                                    <label for="formGroupExampleInput1" class="form-label">Nama Depan <span
+                                            style="color: red">*</span></label>
+                                    <input type="text" th:field="*{namaDepan}"
+                                           class="form-control input-text border-success rounded-3 border border-2"
+                                           id="formGroupExampleInput1" placeholder="Masukkan nama depan..." required>
                                     <div class="valid-feedback">
                                         Looks good!
                                     </div>
@@ -132,8 +143,12 @@
                             <div class="col-1"></div>
                             <div class="col-10">
                                 <div class="mb-3">
-                                    <label for="formGroupExampleInput12" class="form-label">Nama Belakang <span style="color: red">*</span></label>
-                                    <input type="text" th:field="*{namaBelakang}" class="form-control input-text border-success rounded-3 border border-2" id="formGroupExampleInput12" placeholder="Masukkan nama belakang..." required>
+                                    <label for="formGroupExampleInput12" class="form-label">Nama Belakang <span
+                                            style="color: red">*</span></label>
+                                    <input type="text" th:field="*{namaBelakang}"
+                                           class="form-control input-text border-success rounded-3 border border-2"
+                                           id="formGroupExampleInput12" placeholder="Masukkan nama belakang..."
+                                           required>
                                     <div class="valid-feedback">
                                         Looks good!
                                     </div>
@@ -154,8 +169,11 @@
                             <div class="col-1"></div>
                             <div class="col-10">
                                 <div class="mb-3">
-                                    <label for="formGroupExampleInput2" class="form-label">Email <span style="color: red">*</span></label>
-                                    <input type="email" th:field="*{email}" class="form-control input-text border-success rounded-3 border border-2" id="formGroupExampleInput2" placeholder="Masukkan email..." required>
+                                    <label for="formGroupExampleInput2" class="form-label">Email <span
+                                            style="color: red">*</span></label>
+                                    <input type="email" th:field="*{email}"
+                                           class="form-control input-text border-success rounded-3 border border-2"
+                                           id="formGroupExampleInput2" placeholder="Masukkan email..." required>
                                     <div class="valid-feedback">
                                         Looks good!
                                     </div>
@@ -172,8 +190,11 @@
                             <div class="col-1"></div>
                             <div class="col-10">
                                 <div class="mb-3">
-                                    <label for="formGroupExampleInput3" class="form-label">Nomor HP <span style="color: red">*</span></label>
-                                    <input type="number" th:field="*{nomorHP}" class="form-control input-text border-success rounded-3 border border-2" id="formGroupExampleInput3" placeholder="Masukkan nomor HP..." required>
+                                    <label for="formGroupExampleInput3" class="form-label">Nomor HP <span
+                                            style="color: red">*</span></label>
+                                    <input type="number" th:field="*{nomorHP}"
+                                           class="form-control input-text border-success rounded-3 border border-2"
+                                           id="formGroupExampleInput3" placeholder="Masukkan nomor HP..." required>
                                     <div class="valid-feedback">
                                         Looks good!
                                     </div>
@@ -194,8 +215,11 @@
                             <div class="col-1"></div>
                             <div class="col-10">
                                 <div class="mb-3">
-                                    <label for="formGroupExampleInput4" class="form-label">Role <span style="color: red">*</span></label>
-                                    <select id="formGroupExampleInput4" th:field="*{role}" class="form-select input-text border-success rounded-3 border border-2" aria-label="Default select example" required>
+                                    <label for="formGroupExampleInput4" class="form-label">Role <span
+                                            style="color: red">*</span></label>
+                                    <select id="formGroupExampleInput4" th:field="*{role}"
+                                            class="form-select input-text border-success rounded-3 border border-2"
+                                            aria-label="Default select example" required>
                                         <option value="" selected>Pilih role...</option>
                                         <option value="ADMIN">Admin</option>
                                         <option value="ANGGOTA">Anggota</option>
@@ -219,8 +243,11 @@
                             <div class="col-1"></div>
                             <div class="col-10">
                                 <div class="mb-3">
-                                    <label for="formGroupExampleInput7" class="form-label">Golongan Darah <span style="color: red">*</span></label>
-                                    <select id="formGroupExampleInput7" th:field="*{golonganDarah}" class="form-select input-text border-success rounded-3 border border-2" aria-label="Default select example" required>
+                                    <label for="formGroupExampleInput7" class="form-label">Golongan Darah <span
+                                            style="color: red">*</span></label>
+                                    <select id="formGroupExampleInput7" th:field="*{golonganDarah}"
+                                            class="form-select input-text border-success rounded-3 border border-2"
+                                            aria-label="Default select example" required>
                                         <option value="" selected>Pilih golongan darah...</option>
                                         <option value="A">A</option>
                                         <option value="B">B</option>
@@ -246,8 +273,11 @@
                             <div class="col-1"></div>
                             <div class="col-10">
                                 <div class="mb-3">
-                                    <label for="formGroupExampleInput5" class="form-label">Tempat Lahir <span style="color: red">*</span></label>
-                                    <input type="text" th:field="*{tempatLahir}" class="form-control input-text border-success rounded-3 border border-2" id="formGroupExampleInput5" placeholder="Masukkan tempat lahir..." required>
+                                    <label for="formGroupExampleInput5" class="form-label">Tempat Lahir <span
+                                            style="color: red">*</span></label>
+                                    <input type="text" th:field="*{tempatLahir}"
+                                           class="form-control input-text border-success rounded-3 border border-2"
+                                           id="formGroupExampleInput5" placeholder="Masukkan tempat lahir..." required>
                                     <div class="valid-feedback">
                                         Looks good!
                                     </div>
@@ -264,8 +294,11 @@
                             <div class="col-1"></div>
                             <div class="col-10">
                                 <div class="mb-3">
-                                    <label for="formGroupExampleInput6" class="form-label">Tanggal Lahir <span style="color: red">*</span></label>
-                                    <input type="date" th:field="*{tanggalLahir}" class="form-control input-text border-success rounded-3 border border-2" id="formGroupExampleInput6" placeholder="Masukkan tanggal lahir..." required>
+                                    <label for="formGroupExampleInput6" class="form-label">Tanggal Lahir <span
+                                            style="color: red">*</span></label>
+                                    <input type="date" th:field="*{tanggalLahir}"
+                                           class="form-control input-text border-success rounded-3 border border-2"
+                                           id="formGroupExampleInput6" placeholder="Masukkan tanggal lahir..." required>
                                     <div class="valid-feedback">
                                         Looks good!
                                     </div>
@@ -281,12 +314,14 @@
                         <div class="row">
                             <div class="col-1"></div>
                             <div class="col-10">
-                                <label for="formGroupExampleInput11" class="form-label">Jenis Kelamin <span style="color: red">*</span></label>
+                                <label for="formGroupExampleInput11" class="form-label">Jenis Kelamin <span
+                                        style="color: red">*</span></label>
 
                                 <div class="row mt-2">
                                     <div class="col-6">
                                         <div id="formGroupExampleInput11" class="form-check">
-                                            <input class="form-check-input" th:field="*{jenisKelamin}" value=1 type="radio" name="flexRadioDefault1" id="flexRadioDefault1">
+                                            <input class="form-check-input" th:field="*{jenisKelamin}" value=1
+                                                   type="radio" name="flexRadioDefault1" id="flexRadioDefault1">
                                             <label class="form-check-label" for="flexRadioDefault1">
                                                 Laki-laki
                                             </label>
@@ -294,7 +329,8 @@
                                     </div>
                                     <div class="col-6">
                                         <div class="form-check">
-                                            <input class="form-check-input" th:field="*{jenisKelamin}" value=0 type="radio" name="flexRadioDefault2" id="flexRadioDefault2">
+                                            <input class="form-check-input" th:field="*{jenisKelamin}" value=0
+                                                   type="radio" name="flexRadioDefault2" id="flexRadioDefault2">
                                             <label class="form-check-label" for="flexRadioDefault2">
                                                 Perempuan
                                             </label>

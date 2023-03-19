@@ -1,307 +1,328 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://thymeleaf.org">
 <head>
-  <meta charset="UTF-8">
-  <title>Dashboard Event</title>
-  <object th:include="fragments/fragment :: css" th:remove="tag"></object>
-  <object th:include="fragments/fragment :: js" th:remove="tag"></object>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-LZxD+OiwwIoHjRuDXsMg7f8y9+dCjTzMJv1dbmQz8gKYSFA+1BLPUwvweKI01Pn8J+YIyTtuTxl1+wTYYJ2zDg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-shadow"></script>
+    <meta charset="UTF-8">
+    <title>Dashboard Event</title>
+    <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+    <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+          integrity="sha512-LZxD+OiwwIoHjRuDXsMg7f8y9+dCjTzMJv1dbmQz8gKYSFA+1BLPUwvweKI01Pn8J+YIyTtuTxl1+wTYYJ2zDg=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-shadow"></script>
 
-  <style>
-    .container {
-      width: 100%;
-    }
+    <style>
+        .container {
+            width: 100%;
+        }
 
-    .toppane {
-      width: 100%;
-      height: auto;
-      padding-bottom: 40px;
-    }
+        .toppane {
+            width: 100%;
+            height: auto;
+            padding-bottom: 40px;
+        }
 
-    .leftpane {
-      width: 25%;
-    }
+        .leftpane {
+            width: 25%;
+        }
 
-    .middlepane {
-      width: 50%;
-    }
-    .rightpane {
-      width: 25%;
-    }
+        .middlepane {
+            width: 50%;
+        }
 
-    body {
-      margin: 0!important;
-    }
+        .rightpane {
+            width: 25%;
+        }
 
-    .d-flex {
-      display: flex;
-    }
-    .section-title{
-      text-align: center;
-      margin-bottom: 20px;
-      text-decoration: underline;
-    }
-    p{
-      margin-bottom: 5px;
-    }
+        .d-flex {
+            display: flex;
+        }
 
-    .event-card {
-      border: 1px solid #DBEFE1;
-      border-radius: 5px;
-      box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-      transition: all 0.3s ease;
-      height: 100%;
-      margin-bottom: 20px;
-    }
+        .section-title {
+            text-align: center;
+            margin-bottom: 20px;
+            text-decoration: underline;
+        }
 
-    .event-card:hover {
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-      transform: translateY(-5px);
-    }
+        p {
+            margin-bottom: 5px;
+        }
 
-    .event-card h5 {
-      margin-top: 5px;
-      margin-bottom: 10px;
-      font-weight: bold;
-      font-size: 20px;
-      color: #28a745;
-    }
+        .event-card {
+            border: 1px solid #DBEFE1;
+            border-radius: 5px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            height: 100%;
+            margin-bottom: 20px;
+        }
 
-    .event-card p {
-      margin-bottom: 5px;
-      color: #333;
-    }
+        .event-card:hover {
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            transform: translateY(-5px);
+        }
 
-    .event-card .card-body {
-      padding: 20px;
-      padding-top: 10px;
-      background-color: #DBEFE1;
-    }
+        .event-card h5 {
+            margin-top: 5px;
+            margin-bottom: 10px;
+            font-weight: bold;
+            font-size: 20px;
+            color: #28a745;
+        }
 
-    .event-card .date-section {
-      background-color: #37814F;
-      color: #fff;
-      border-radius: 5px 5px 0 0;
-      padding: 10px 20px;
-    }
+        .event-card p {
+            margin-bottom: 5px;
+            color: #333;
+        }
 
-    .event-card .date-section p {
-      margin-bottom: 0;
-      font-size: 16px;
-      font-weight: bold;
-      color: #FFFFFF;
-    }
+        .event-card .card-body {
+            padding: 20px;
+            padding-top: 10px;
+            background-color: #DBEFE1;
+        }
 
-    .event-card .date-section span {
-      font-size: 14px;
-      font-weight: normal;
-    }
+        .event-card .date-section {
+            background-color: #37814F;
+            color: #fff;
+            border-radius: 5px 5px 0 0;
+            padding: 10px 20px;
+        }
 
-    .no-event{
-      text-align: center;
-      color: #373435;
-    }
+        .event-card .date-section p {
+            margin-bottom: 0;
+            font-size: 16px;
+            font-weight: bold;
+            color: #FFFFFF;
+        }
 
-    button{
-      margin-top: 10px;
-    }
-    body{
-      background-image: url("https://www.linkpicture.com/q/bg_17.png");
-      background-position: center;
-      background-repeat: no-repeat;
-      background-attachment: fixed;
-      background-size: cover;
-      font-family: "Segoe UI", "Segoe UI Semibold", "Segoe UI Black", sans-serif;
-    }
-    .icon {
-      vertical-align: text-bottom;
-    }
-    a{
-      text-decoration: none;
-    }
-    a:hover{
-      text-decoration: none;
-    }
-  </style>
+        .event-card .date-section span {
+            font-size: 14px;
+            font-weight: normal;
+        }
+
+        .no-event {
+            text-align: center;
+            color: #373435;
+        }
+
+        button {
+            margin-top: 10px;
+        }
+
+        html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+        }
+
+        body {
+            margin: 0 !important;
+            background-image: url("https://www.linkpicture.com/q/bg_17.png");
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-size: cover;
+            font-family: "Segoe UI", "Segoe UI Semibold", "Segoe UI Black", sans-serif;
+            position: relative;
+        }
+
+        #container {
+            min-height: 100%;
+            position: relative;
+        }
+
+        .icon {
+            vertical-align: text-bottom;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: none;
+        }
+    </style>
 
 </head>
 <body>
 <nav th:replace="fragments/fragment :: navbar('event')"></nav>
-<div class="container-xl my-5">
-  <div class="card" style="width: 100%;">
-    <div class="card-header text-center" style="background-color: #DBEFE1">
-      <h3 class="my-auto">Dashboard Event</h3>
-    </div>
-    <div class="card-body" style="padding: 20px 50px">
-      <div class="toppane">
-        <a class="btn btn-success btn-sm" href="/event/viewall">Lihat Semua Event</a>
-      </div>
-      <div class="d-flex">
-        <div class="leftpane">
-          <h5 class="section-title">Event Sedang Berlangsung</h5>
-          <div th:if="${listOngoing != null}" th:each="event : ${listOngoing}">
-            <div class="card event-card shadow">
-              <a th:href="@{/event/}+ ${event.idEvent}">
-              <div class="date-section">
-                <div class="row">
-                  <div class="col-sm-6 border-right">
-                    <p th:text="${#temporals.format(event.waktuMulai, 'dd MMMM yyyy')}"></p>
-                    <span th:text="${#temporals.format(event.waktuMulai, 'hh:mm a')}"></span>
-                  </div>
-                  <div class="col-sm-6">
-                    <p th:text="${#temporals.format(event.waktuAkhir, 'dd MMMM yyyy')}"></p>
-                    <span th:text="${#temporals.format(event.waktuAkhir, 'hh:mm a')}"></span>
-                  </div>
-                </div>
-              </div>
+<div class="container-xl my-5" id="container">
+    <div class="card" style="width: 100%;">
+        <div class="card-header text-center" style="background-color: #DBEFE1">
+            <h3 class="my-auto">Dashboard Event</h3>
+        </div>
+        <div class="card-body" style="padding: 20px 50px">
+            <div class="toppane">
+                <a class="btn btn-success btn-sm" href="/event/viewall">Lihat Semua Event</a>
+            </div>
+            <div class="d-flex">
+                <div class="leftpane">
+                    <h5 class="section-title">Event Sedang Berlangsung</h5>
+                    <div th:if="${listOngoing != null}" th:each="event : ${listOngoing}">
+                        <div class="card event-card shadow">
+                            <a th:href="@{/event/}+ ${event.idEvent}">
+                                <div class="date-section">
+                                    <div class="row">
+                                        <div class="col-sm-6 border-right">
+                                            <p th:text="${#temporals.format(event.waktuMulai, 'dd MMMM yyyy')}"></p>
+                                            <span th:text="${#temporals.format(event.waktuMulai, 'hh:mm a')}"></span>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <p th:text="${#temporals.format(event.waktuAkhir, 'dd MMMM yyyy')}"></p>
+                                            <span th:text="${#temporals.format(event.waktuAkhir, 'hh:mm a')}"></span>
+                                        </div>
+                                    </div>
+                                </div>
 
-              <div class="card-body">
-                <h5 class="card-title"><span th:text="${event.namaEvent}"></span></h5>
-                <p class="card-text">
-                  <span class="material-symbols-outlined icon">location_on</span>
-                  <span th:text="${event.tempatPelaksanaan}"></span>
-                </p>
-                <p class="card-text">
-                  <span class="material-symbols-outlined icon">location_city</span>
-                  <span class="icon-label" th:if="${event.direktorat.name()} == SDM_OPERASIONAL">SDM &
+                                <div class="card-body">
+                                    <h5 class="card-title"><span th:text="${event.namaEvent}"></span></h5>
+                                    <p class="card-text">
+                                        <span class="material-symbols-outlined icon">location_on</span>
+                                        <span th:text="${event.tempatPelaksanaan}"></span>
+                                    </p>
+                                    <p class="card-text">
+                                        <span class="material-symbols-outlined icon">location_city</span>
+                                        <span class="icon-label" th:if="${event.direktorat.name()} == SDM_OPERASIONAL">SDM &
                     Operasional</span>
-                  <span class="icon-label" th:if="${event.direktorat.name()} == KEUANGAN_PROGRAM">Keuangan &
+                                        <span class="icon-label" th:if="${event.direktorat.name()} == KEUANGAN_PROGRAM">Keuangan &
                     Program</span>
-                  <span class="icon-label" th:if="${event.direktorat.name()} == PENGEMBANGAN_USAHA">Pengembangan
+                                        <span class="icon-label"
+                                              th:if="${event.direktorat.name()} == PENGEMBANGAN_USAHA">Pengembangan
                     Usaha</span>
-                </p>
-                <p class="card-text">
-                  <span class="material-symbols-outlined icon">person</span>
-                  <span th:text="${event.penanggungJawab.namaDepan} + ' ' +  ${event.penanggungJawab.namaBelakang}"></span>
-                </p>
-              </div>
-              </a>
-            </div>
-          </div>
+                                    </p>
+                                    <p class="card-text">
+                                        <span class="material-symbols-outlined icon">person</span>
+                                        <span th:text="${event.penanggungJawab.namaDepan} + ' ' +  ${event.penanggungJawab.namaBelakang}"></span>
+                                    </p>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
 
-          <div th:unless="${listOngoing != null}">
-            <div class="row">
-              <div class="col-sm-12">
-                <h6 class="no-event">Tidak ada event yang sedang berlangsung!</h6>
-              </div>
-            </div>
-          </div>
+                    <div th:unless="${listOngoing != null}">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <h6 class="no-event">Tidak ada event yang sedang berlangsung!</h6>
+                            </div>
+                        </div>
+                    </div>
 
-        </div>
-        <div class="middlepane">
-          <h5 class="section-title">Statistik Event Terlaksana</h5>
-          <div id="chart-unavailable" style="display: none; text-align: center">
-            <h6>Data belum mencukupi!</h6>
-          </div>
-          <div class="card shadow" style="margin: 25px 65px; padding: 20px" id="card-chart">
-            <canvas id="pie-chart" style="max-height: 300px;"></canvas>
-            <p style="padding-top: 15px; text-align: center" id="total-statistik"></p>
-          </div>
-        </div>
-
-        <div class="rightpane">
-          <h5 class="section-title">Event Yang Akan Datang</h5>
-          <div th:if="${listUpcoming != null}" th:each="event : ${listUpcoming}">
-            <div class="card event-card shadow">
-              <a th:href="@{/event/}+ ${event.idEvent}">
-              <div class="date-section">
-                <div class="row">
-                  <div class="col-sm-6 border-right">
-                    <p th:text="${#temporals.format(event.waktuMulai, 'dd MMMM yyyy')}"></p>
-                    <span th:text="${#temporals.format(event.waktuMulai, 'hh:mm a')}"></span>
-                  </div>
-                  <div class="col-sm-6">
-                    <p th:text="${#temporals.format(event.waktuAkhir, 'dd MMMM yyyy')}"></p>
-                    <span th:text="${#temporals.format(event.waktuAkhir, 'hh:mm a')}"></span>
-                  </div>
                 </div>
-              </div>
+                <div class="middlepane">
+                    <h5 class="section-title">Statistik Event Terlaksana</h5>
+                    <div id="chart-unavailable" style="display: none; text-align: center">
+                        <h6>Data belum mencukupi!</h6>
+                    </div>
+                    <div class="card shadow" style="margin: 25px 65px; padding: 20px" id="card-chart">
+                        <canvas id="pie-chart" style="max-height: 300px;"></canvas>
+                        <p style="padding-top: 15px; text-align: center" id="total-statistik"></p>
+                    </div>
+                </div>
 
-              <div class="card-body">
-                <h5 class="card-title"><span th:text="${event.namaEvent}"></span></h5>
-                <p class="card-text">
-                  <span class="material-symbols-outlined icon">location_on</span>
-                  <span th:text="${event.tempatPelaksanaan}"></span>
-                </p>
-                <p class="card-text">
-                  <span class="material-symbols-outlined icon">location_city</span>
-                  <span class="icon-label" th:if="${event.direktorat.name()} == SDM_OPERASIONAL">SDM &
+                <div class="rightpane">
+                    <h5 class="section-title">Event Yang Akan Datang</h5>
+                    <div th:if="${listUpcoming != null}" th:each="event : ${listUpcoming}">
+                        <div class="card event-card shadow">
+                            <a th:href="@{/event/}+ ${event.idEvent}">
+                                <div class="date-section">
+                                    <div class="row">
+                                        <div class="col-sm-6 border-right">
+                                            <p th:text="${#temporals.format(event.waktuMulai, 'dd MMMM yyyy')}"></p>
+                                            <span th:text="${#temporals.format(event.waktuMulai, 'hh:mm a')}"></span>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <p th:text="${#temporals.format(event.waktuAkhir, 'dd MMMM yyyy')}"></p>
+                                            <span th:text="${#temporals.format(event.waktuAkhir, 'hh:mm a')}"></span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="card-body">
+                                    <h5 class="card-title"><span th:text="${event.namaEvent}"></span></h5>
+                                    <p class="card-text">
+                                        <span class="material-symbols-outlined icon">location_on</span>
+                                        <span th:text="${event.tempatPelaksanaan}"></span>
+                                    </p>
+                                    <p class="card-text">
+                                        <span class="material-symbols-outlined icon">location_city</span>
+                                        <span class="icon-label" th:if="${event.direktorat.name()} == SDM_OPERASIONAL">SDM &
                     Operasional</span>
-                  <span class="icon-label" th:if="${event.direktorat.name()} == KEUANGAN_PROGRAM">Keuangan &
+                                        <span class="icon-label" th:if="${event.direktorat.name()} == KEUANGAN_PROGRAM">Keuangan &
                     Program</span>
-                  <span class="icon-label" th:if="${event.direktorat.name()} == PENGEMBANGAN_USAHA">Pengembangan
+                                        <span class="icon-label"
+                                              th:if="${event.direktorat.name()} == PENGEMBANGAN_USAHA">Pengembangan
                     Usaha</span>
-                </p>
-                <p class="card-text">
-                  <span class="material-symbols-outlined icon">person</span>
-                  <span th:text="${event.penanggungJawab.namaDepan} + ' ' +  ${event.penanggungJawab.namaBelakang}"></span>
-                </p>
-              </div>
-              </a>
-            </div>
-          </div>
+                                    </p>
+                                    <p class="card-text">
+                                        <span class="material-symbols-outlined icon">person</span>
+                                        <span th:text="${event.penanggungJawab.namaDepan} + ' ' +  ${event.penanggungJawab.namaBelakang}"></span>
+                                    </p>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
 
-          <div th:unless="${listUpcoming != null}">
-            <div class="row">
-              <div class="col-sm-12">
-                <h6 class="no-event">Tidak ada event dalam waktu dekat!</h6>
-              </div>
+                    <div th:unless="${listUpcoming != null}">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <h6 class="no-event">Tidak ada event dalam waktu dekat!</h6>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
         </div>
-      </div>
     </div>
-  </div>
 </div>
 <footer th:replace="fragments/fragment :: footer"></footer>
 <script>
-  fetch('/api/chart-data')
-          .then(response => response.json())
-          .then(data => {
-            var done = data.done;
-            var notDone = data.notDone;
+    fetch('/api/chart-data')
+        .then(response => response.json())
+        .then(data => {
+                var done = data.done;
+                var notDone = data.notDone;
 
-            if (done == 0 && notDone == 0) {
-              document.getElementById('pie-chart').style.display = 'none';
-              document.getElementById('card-chart').style.display = 'none';
-              document.getElementById('chart-unavailable').style.display = 'block';
-            } else {
-              const total = data.done + data.notDone;
-              const percentage = total > 0 ? (data.done / total * 100).toFixed(2) : 0;
-              document.getElementById("total-statistik").textContent = "Persentase Event Terlaksana:   " + percentage + "%";
+                if (done == 0 && notDone == 0) {
+                    document.getElementById('pie-chart').style.display = 'none';
+                    document.getElementById('card-chart').style.display = 'none';
+                    document.getElementById('chart-unavailable').style.display = 'block';
+                } else {
+                    const total = data.done + data.notDone;
+                    const percentage = total > 0 ? (data.done / total * 100).toFixed(2) : 0;
+                    document.getElementById("total-statistik").textContent = "Persentase Event Terlaksana:   " + percentage + "%";
 
-              var ctx = document.getElementById('pie-chart').getContext('2d');
-            var chart = new Chart(ctx, {
-              type: 'pie',
-              data: {
-                labels: ['Terlaksana', 'Gagal Terlaksana'],
-                datasets: [{
-                  label: 'Event Progress',
-                  data: [data.done, data.notDone],
-                  backgroundColor: [
-                    "#37814F",
-                    "#E0EFEF",
-                  ],
-                  hoverBackgroundColor: [
-                    '#1e7e34',
-                    '#c8e7de'
-                  ],
-                  borderColor: [
-                    '#6c757d',
-                    '#37814F'
-                  ],
-                  borderWidth: 1
-                }]
-              },
-              options: {
-                responsive: true,
-                maintainAspectRatio: false,
-              }
-            });
-          }}
-          );
+                    var ctx = document.getElementById('pie-chart').getContext('2d');
+                    var chart = new Chart(ctx, {
+                        type: 'pie',
+                        data: {
+                            labels: ['Terlaksana', 'Gagal Terlaksana'],
+                            datasets: [{
+                                label: 'Event Progress',
+                                data: [data.done, data.notDone],
+                                backgroundColor: [
+                                    "#37814F",
+                                    "#E0EFEF",
+                                ],
+                                hoverBackgroundColor: [
+                                    '#1e7e34',
+                                    '#c8e7de'
+                                ],
+                                borderColor: [
+                                    '#6c757d',
+                                    '#37814F'
+                                ],
+                                borderWidth: 1
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                        }
+                    });
+                }
+            }
+        );
 
 </script>
 </body>

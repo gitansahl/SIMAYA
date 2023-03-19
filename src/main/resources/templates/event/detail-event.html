@@ -17,6 +17,12 @@
 
 
     <style>
+        html{
+            margin: 0;
+            padding: 0;
+            height: 100%;
+        }
+
         body {
             background-image: url("https://www.linkpicture.com/q/bg_17.png");
             background-position: center;
@@ -24,6 +30,12 @@
             background-attachment: fixed;
             background-size: cover;
             font-family: "Segoe UI", "Segoe UI Semibold", "Segoe UI Black", sans-serif;
+            position: relative;
+        }
+
+        #container{
+            min-height: 100%;
+            position: relative;
         }
 
         .icon ~ .icon-label {
@@ -57,16 +69,16 @@
 
 <nav th:replace="fragments/fragment :: navbar('event')"></nav>
 
-<div class="container-fluid" th:if="${event.isDeleted.booleanValue() == false}">
+<div class="container-fluid" th:if="${event.isDeleted.booleanValue() == false}" id="container">
 
-<!--    ALERT MSG ERROR-->
+    <!--    ALERT MSG ERROR-->
     <div class="alert alert-danger alert-dismissible fade show" style="margin: 20px 50px -30px 50px" role="alert" th:if="${error}">
         <span th:text="${error}"></span>
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
             <span aria-hidden="true">&times;</span>
         </button>
     </div>
-<!--    ALERT MSG-->
+    <!--    ALERT MSG-->
 
     <div class="card" style="margin: 50px 50px 0px 50px; padding-bottom:20px;background-color: rgba(255, 255, 255, 0.5)">
         <div class="row">
@@ -190,7 +202,7 @@
             <img src="https://drive.google.com/uc?id=1OhUIp1PgpWz026RWWxX5fAMFqh2Xt6c-" alt="gif-deleted" style="width: 200px;" class="rounded mx-auto d-block">
             <br>
             <p>Sayang sekali kamu sudah <b>tidak dapat mengakses</b> informasi mengenai event ini. Hal ini karena event telah dihapus oleh <b>SDM & Operasional</b>. Nantikan
-            Event-event kami selanjutnya ya!!</p>
+                Event-event kami selanjutnya ya!!</p>
         </div>
     </div>
 </div>
