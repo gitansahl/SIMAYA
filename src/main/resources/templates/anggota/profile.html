@@ -5,15 +5,19 @@
     <title>Profil</title>
     <object th:include="fragments/fragment :: css" th:remove="tag"></object>
     <object th:include="fragments/fragment :: js" th:remove="tag"></object>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+            crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <style>
         .card-style1 {
             box-shadow: 0px 0px 10px 0px rgb(89 75 128 / 9%);
         }
+
         .border-0 {
-            border: 0!important;
+            border: 0 !important;
         }
 
         .card {
@@ -24,8 +28,14 @@
             word-wrap: break-word;
             background-color: #fff;
             background-clip: border-box;
-            border: 1px solid rgba(0,0,0,.125);
+            border: 1px solid rgba(0, 0, 0, .125);
             border-radius: 0.25rem;
+        }
+
+        html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
         }
 
         section {
@@ -37,6 +47,8 @@
             background-attachment: fixed;
             background-size: cover;
             font-family: "Segoe UI", "Segoe UI Semibold", "Segoe UI Black", sans-serif;
+            min-height: 100%;
+            position: relative;
         }
 
         .section-title {
@@ -47,44 +59,52 @@
             position: relative;
             display: inline-block;
         }
+
         .text-primary {
             color: rgba(0, 0, 0, 1) !important;
         }
+
         .text-secondary {
             color: #15395A !important;
         }
+
         .font-weight-600 {
             font-weight: 600;
         }
+
         .display-26 {
             font-size: 1.3rem;
         }
 
-        @media screen and (min-width: 992px){
+        @media screen and (min-width: 992px) {
             .p-lg-7 {
                 padding: 4rem;
             }
         }
-        @media screen and (min-width: 768px){
+
+        @media screen and (min-width: 768px) {
             .p-md-6 {
                 padding: 3.5rem;
             }
         }
-        @media screen and (min-width: 576px){
+
+        @media screen and (min-width: 576px) {
             .p-sm-2-3 {
                 padding: 2.3rem;
             }
         }
+
         .p-1-9 {
             padding: 1.9rem;
         }
 
-        @media screen and (min-width: 576px){
+        @media screen and (min-width: 576px) {
             .pe-sm-6, .px-sm-6 {
                 padding-right: 3.5rem;
             }
         }
-        @media screen and (min-width: 576px){
+
+        @media screen and (min-width: 576px) {
             .ps-sm-6, .px-sm-6 {
                 padding-left: 3.5rem;
             }
@@ -93,13 +113,14 @@
         .mb-1-9 {
             margin-bottom: 1.9rem;
         }
-        @media (min-width: 992px){
+
+        @media (min-width: 992px) {
 
         }
     </style>
 </head>
 <body>
-<nav th:replace="fragments/fragment :: navbar('abc')"></nav>
+<nav th:replace="fragments/fragment :: navbar('profil')"></nav>
 <section class="bg-light">
     <div class="container">
         <div class="row">
@@ -108,14 +129,22 @@
                     <div class="card-body p-1-9 p-sm-2-3 p-md-6 p-lg-7">
                         <div class="row align-items-center mb-5">
                             <div class="col-lg-4 mb-4 mb-lg-0">
-                                <img style="width: 15rem" th:src="${anggota.profile.photoUrl == null} ? 'https://bootdey.com/img/Content/avatar/avatar7.png' : @{${anggota.profile.photosImagePath}}">
+                                <img style="width: 15rem"
+                                     th:src="${anggota.profile.photoUrl == null} ? 'https://bootdey.com/img/Content/avatar/avatar7.png' : @{${anggota.profile.photosImagePath}}">
                             </div>
                             <div class="col-lg-6 px-xl-10">
                                 <ul class="list-unstyled mb-1-9">
-                                    <li class="display-28"><span th:text="${anggota.namaDepan} + ' ' + ${anggota.namaBelakang}"style="font-size: 2.5em" class="display-26 text-secondary me-2 font-weight-600"></span></li>
-                                    <li class="display-28"><span th:text="${anggota.email}" style="font-size: 1.5em" class="display-26 text-secondary me-2"></span></li>
-                                    <li class="display-28"><span th:text="${anggota.nomorHP}" style="font-size: 1.5em" class="display-26 text-secondary me-2"></span></li>
-                                    <li class="display-28"><span th:text="${anggota.tempatLahir} + ', ' + ${#temporals.format(anggota.tanggalLahir,'d MMMM yyyy')}" style="font-size: 1.5em" class="display-26 text-secondary me-2"></span></li>
+                                    <li class="display-28"><span
+                                            th:text="${anggota.namaDepan} + ' ' + ${anggota.namaBelakang}"
+                                            style="font-size: 2.5em"
+                                            class="display-26 text-secondary me-2 font-weight-600"></span></li>
+                                    <li class="display-28"><span th:text="${anggota.email}" style="font-size: 1.5em"
+                                                                 class="display-26 text-secondary me-2"></span></li>
+                                    <li class="display-28"><span th:text="${anggota.nomorHP}" style="font-size: 1.5em"
+                                                                 class="display-26 text-secondary me-2"></span></li>
+                                    <li class="display-28"><span
+                                            th:text="${anggota.tempatLahir} + ', ' + ${#temporals.format(anggota.tanggalLahir,'d MMMM yyyy')}"
+                                            style="font-size: 1.5em" class="display-26 text-secondary me-2"></span></li>
                                 </ul>
                             </div>
                             <div style="align-self: flex-start; text-align: right" class="col-lg-2 px-xl-10 h-100">
@@ -127,25 +156,28 @@
                                 <div class="col"></div>
                                 <div class="col"></div>
                                 <div class="col" align="right">
-                                    <a type="button" href="/ubah-profil" class="btn btn-success"><i style="margin-right: 0.5rem" class="fa fa-pencil"></i>Ubah Profil</a>
+                                    <a type="button" href="/ubah-profil" class="btn btn-success"><i
+                                            style="margin-right: 0.5rem" class="fa fa-pencil"></i>Ubah Profil</a>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col">
                                     <span class="section-title text-primary">Divisi</span>
-                                    <p th:text="${divisi}"class="mb-5"></p>
+                                    <p th:text="${divisi}" class="mb-5"></p>
                                     <span class="section-title text-primary">Mengelola Mentoring</span>
                                     <p th:text="${anggota.profile.isMengelolaMentoring} ? 'Ya' : 'Tidak'"></p>
                                 </div>
                                 <div class="col">
                                     <span class="section-title text-primary">Golongan Darah</span>
-                                    <p th:text="${anggota.golonganDarah != null} ? ${anggota.golonganDarah} : 'Unknown'" class="mb-5"></p>
+                                    <p th:text="${anggota.golonganDarah != null} ? ${anggota.golonganDarah} : 'Unknown'"
+                                       class="mb-5"></p>
                                     <span class="section-title text-primary">Jenis Kelamin</span>
                                     <p th:text="${anggota.jenisKelamin} ? 'Laki-laki' : 'Perempuan'"></p>
                                 </div>
                                 <div class="col">
                                     <span class="section-title text-primary">Pekerjaan</span>
-                                    <p th:text="${anggota.profile.pekerjaan != null} ? ${anggota.profile.pekerjaan} : 'Unknown'" class="mb-5"></p>
+                                    <p th:text="${anggota.profile.pekerjaan != null} ? ${anggota.profile.pekerjaan} : 'Unknown'"
+                                       class="mb-5"></p>
                                     <span class="section-title text-primary">Aset</span>
                                     <p th:text="${aset}"></p>
                                 </div>
@@ -171,26 +203,35 @@
 
         <div id="wrongPasswordText" th:text="${wrong_password}" hidden></div>
         <!-- Modal -->
-        <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+             aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
-                    <form th:action="@{/profil}" th:object="${ubahPassword}" method="POST" class="container needs-validation">
+                    <form th:action="@{/profil}" th:object="${ubahPassword}" method="POST"
+                          class="container needs-validation">
                         <div class="modal-header">
                             <h1 class="modal-title fs-5" id="staticBackdropLabel">Ubah Kata Sandi</h1>
                             <input type="text" th:field="*{id}" hidden>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" data-dismiss="modal" aria-label="Close"></button>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" data-dismiss="modal"
+                                    aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
                             <div th:if="${wrong_password}">
-                                <div id="wrongPasswordInfo" class="alert alert-danger alert-dismissible fade show" role="alert">
+                                <div id="wrongPasswordInfo" class="alert alert-danger alert-dismissible fade show"
+                                     role="alert">
                                     <strong th:text="${wrong_password}"></strong>
                                 </div>
                             </div>
                             <div class="my-3">
-                                <label for="formKataSandiLama" class="form-label">Kata Sandi Lama<span style="color: red">*</span></label>
+                                <label for="formKataSandiLama" class="form-label">Kata Sandi Lama<span
+                                        style="color: red">*</span></label>
                                 <div class="input-group">
-                                    <input type="password" th:field="*{oldPassword}" class="form-control input-text border-success rounded-start border border-2" id="formKataSandiLama" placeholder="Masukkan kata sandi lama..." required>
-                                    <span class="input-group-text" id="basic-addon1" onclick="clickBiEye('#togglePassword1', '#formKataSandiLama')"><i class="bi bi-eye-slash mb-2" id="togglePassword1"></i></span>
+                                    <input type="password" th:field="*{oldPassword}"
+                                           class="form-control input-text border-success rounded-start border border-2"
+                                           id="formKataSandiLama" placeholder="Masukkan kata sandi lama..." required>
+                                    <span class="input-group-text" id="basic-addon1"
+                                          onclick="clickBiEye('#togglePassword1', '#formKataSandiLama')"><i
+                                            class="bi bi-eye-slash mb-2" id="togglePassword1"></i></span>
                                     <div class="valid-feedback">
                                         Looks good!
                                     </div>
@@ -200,8 +241,11 @@
                                 </div>
                             </div>
                             <div class="my-3">
-                                <label for="formKataSandiBaru" class="form-label">Kata Sandi Baru<span style="color: red">*</span></label>
-                                <input type="password" onchange="cekNewPassword()" th:field="*{newPassword}" class="form-control input-text border-success rounded-start border border-2" id="formKataSandiBaru" placeholder="Masukkan kata sandi baru..." required>
+                                <label for="formKataSandiBaru" class="form-label">Kata Sandi Baru<span
+                                        style="color: red">*</span></label>
+                                <input type="password" onchange="cekNewPassword()" th:field="*{newPassword}"
+                                       class="form-control input-text border-success rounded-start border border-2"
+                                       id="formKataSandiBaru" placeholder="Masukkan kata sandi baru..." required>
                                 <div class="valid-feedback">
                                     Looks good!
                                 </div>
@@ -210,8 +254,12 @@
                                 </div>
                             </div>
                             <div class="my-3">
-                                <label for="formKonfirmasiKataSandiBaru" class="form-label">Konfirmasi Kata Sandi Baru<span style="color: red">*</span></label>
-                                <input type="password" onchange="cekNewPassword()" class="form-control border-success rounded-start border border-2" id="formKonfirmasiKataSandiBaru" placeholder="Konfirmasi kata sandi baru..." required>
+                                <label for="formKonfirmasiKataSandiBaru" class="form-label">Konfirmasi Kata Sandi
+                                    Baru<span style="color: red">*</span></label>
+                                <input type="password" onchange="cekNewPassword()"
+                                       class="form-control border-success rounded-start border border-2"
+                                       id="formKonfirmasiKataSandiBaru" placeholder="Konfirmasi kata sandi baru..."
+                                       required>
                                 <div class="valid-feedback">
                                     Kata sandi sesuai.
                                 </div>
@@ -221,7 +269,9 @@
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-success" data-bs-dismiss="modal" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-success" data-bs-dismiss="modal" data-dismiss="modal">
+                                Close
+                            </button>
                             <button type="submit"
                                     class="btn btn-success"
                                     data-toggle="modal"
@@ -240,9 +290,11 @@
     </div>
 </section>
 
+<footer th:replace="fragments/fragment :: footer"></footer>
+
 <script th:inline="javascript">
 
-    $(document).ready(function (){
+    $(document).ready(function () {
         const text_wrong_passwors = document.getElementById("wrongPasswordText").innerText
         if (text_wrong_passwors === "Masukkan kata sandi yang berbeda!" || text_wrong_passwors === "Kata sandi lama yang dimasukkan salah!") {
             $('#staticBackdrop').modal('show');

@@ -1,474 +1,543 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://thymeleaf.org">
 <head>
-  <meta charset="UTF-8">
-  <title>Ubah Profil</title>
-  <object th:include="fragments/fragment :: css" th:remove="tag"></object>
-  <object th:include="fragments/fragment :: js" th:remove="tag"></object>
-  <style>
-    .additional {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-    }
-    .form-control:focus {
-      border-color: #28a745;
-      box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.25);
-    }
-    .form-select:focus {
-      border-color: #28a745;
-      box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.25);
-    }
-    option:checked {
-      background-color: #28a745;
-      color: white;
-      box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.25);
-    }
-    option:hover {
-      background-color: #28a745;
-      box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.25);
-    }
-    .form-check-input:checked {
-      background-color: #28a745;
-      border-color: #28a745;
-    }
+    <meta charset="UTF-8">
+    <title>Ubah Profil</title>
+    <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+    <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+    <style>
+        .additional {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
 
-    body{
-      background-image: url("https://www.linkpicture.com/q/bg_17.png");
-      background-position: center;
-      background-repeat: no-repeat;
-      background-attachment: fixed;
-      background-size: cover;
-      font-family: "Segoe UI", "Segoe UI Semibold", "Segoe UI Black", sans-serif;
-    }
+        .form-control:focus {
+            border-color: #28a745;
+            box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.25);
+        }
 
-  </style>
+        .form-select:focus {
+            border-color: #28a745;
+            box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.25);
+        }
+
+        option:checked {
+            background-color: #28a745;
+            color: white;
+            box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.25);
+        }
+
+        option:hover {
+            background-color: #28a745;
+            box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.25);
+        }
+
+        .form-check-input:checked {
+            background-color: #28a745;
+            border-color: #28a745;
+        }
+
+        html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+        }
+
+        body {
+            background-image: url("https://www.linkpicture.com/q/bg_17.png");
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-size: cover;
+            font-family: "Segoe UI", "Segoe UI Semibold", "Segoe UI Black", sans-serif;
+            position: relative;
+        }
+
+        #container {
+            min-height: 100%;
+            position: relative;
+        }
+
+    </style>
 </head>
 <body>
 <nav th:replace="fragments/fragment :: navbar('anggota')"></nav>
-<div class="container my-5">
-  <div class="card" style="width: 100%;">
-    <div class="card-header text-center" style="background-color: #DBEFE1">
-      <h3 class="my-auto">Mengubah Profil</h3>
-    </div>
-    <div class="card-body">
-      <form th:action="@{/ubah-profil}" th:object="${updateAnggota}" method="POST" enctype="multipart/form-data" class="needs-validation">
-        <!--Baris Foto-->
-        <div class="row my-3">
-          <div class="col-1"></div>
-          <div class="col-10 text-center">
-            <img th:src="*{profile.photoUrl == null} ? 'https://cdn-icons-png.flaticon.com/512/3135/3135715.png' : @{*{profile.photosImagePath}}" style="width: 150px" class="rounded-circle" alt="...">
-          </div>
-          <div class="col-1"></div>
+<div class="container my-5" id="container">
+    <div class="card" style="width: 100%;">
+        <div class="card-header text-center" style="background-color: #DBEFE1">
+            <h3 class="my-auto">Mengubah Profil</h3>
         </div>
-        <!--Baris Button-->
-        <div class="row my-3">
-          <div class="col-1"></div>
-          <div class="col-10 text-center">
-            <button type="button" class="btn btn-sm btn-outline-success" onclick="browserFile()"><i class="bi bi-upload"></i>  Unggah Foto</button>
-            <input type="file" name="upload" id="upload" style="display:none" accept="image/png, image/jpeg"/>
-          </div>
-          <div class="col-1"></div>
-        </div>
-
-        <!--Baris 1-->
-        <div class="row my-3">
-          <div class="col-6">
-            <div class="row">
-              <div class="col-1"></div>
-              <div class="col-10">
-                <div class="mb-3">
-                  <label for="formGroupExampleInput1" class="form-label">Nama Depan <span style="color: red">*</span></label>
-                  <input type="text" th:value="*{namaDepan}" class="form-control input-text border-success rounded-3 border border-2" id="formGroupExampleInput1" placeholder="Masukkan nama depan..." required
-                         disabled>
-                  <div class="valid-feedback">
-                    Looks good!
-                  </div>
-                  <div class="invalid-feedback">
-                    Masukkan Nama Depan.
-                  </div>
-                </div>
-              </div>
-              <div class="col-1"></div>
-            </div>
-          </div>
-
-          <div class="col-6">
-            <div class="row">
-              <div class="col-1"></div>
-              <div class="col-10">
-                <div class="mb-3">
-                  <label for="formGroupExampleInput12" class="form-label">Nama Belakang <span style="color: red">*</span></label>
-                  <input type="text" th:value="*{namaBelakang}" class="form-control input-text border-success rounded-3 border border-2" id="formGroupExampleInput12" placeholder="Masukkan nama belakang..." required
-                         disabled>
-                  <div class="valid-feedback">
-                    Looks good!
-                  </div>
-                  <div class="invalid-feedback">
-                    Masukkan Nama Belakang.
-                  </div>
-                </div>
-              </div>
-              <div class="col-1"></div>
-            </div>
-          </div>
-        </div>
-
-        <!--Baris 2-->
-        <div class="row my-3">
-          <div class="col-6">
-            <div class="row">
-              <div class="col-1"></div>
-              <div class="col-10">
-                <div class="mb-3">
-                  <label for="formGroupExampleInput2" class="form-label">Email <span style="color: red">*</span></label>
-                  <input type="email" th:field="*{email}" class="form-control input-text border-success rounded-3 border border-2" id="formGroupExampleInput2" placeholder="Masukkan email..." required>
-                  <div class="valid-feedback">
-                    Looks good!
-                  </div>
-                  <div class="invalid-feedback">
-                    Masukkan Email.
-                  </div>
-                </div>
-              </div>
-              <div class="col-1"></div>
-            </div>
-          </div>
-          <div class="col-6">
-            <div class="row">
-              <div class="col-1"></div>
-              <div class="col-10">
-                <div class="mb-3">
-                  <label for="formGroupExampleInput3" class="form-label">Nomor HP <span style="color: red">*</span></label>
-                  <input type="number" th:field="*{nomorHP}" class="form-control input-text border-success rounded-3 border border-2" id="formGroupExampleInput3" placeholder="Masukkan nomor HP..." required>
-                  <div class="valid-feedback">
-                    Looks good!
-                  </div>
-                  <div class="invalid-feedback">
-                    Masukkan No HP.
-                  </div>
-                </div>
-              </div>
-              <div class="col-1"></div>
-            </div>
-          </div>
-        </div>
-
-        <!--Baris 3-->
-        <div class="row my-3">
-          <div class="col-6">
-            <div class="row">
-              <div class="col-1"></div>
-              <div class="col-10">
-                <div class="mb-3">
-                  <label for="formGroupExampleInput4" class="form-label">Role <span style="color: red">*</span></label>
-                  <select id="formGroupExampleInput4" th:field="*{role}" class="form-select input-text border-success rounded-3 border border-2" aria-label="Default select example" required disabled>
-                    <option value="" selected>Pilih role...</option>
-                    <option value="ADMIN">Admin</option>
-                    <option value="ANGGOTA">Anggota</option>
-                    <option value="SDM_OPERASIONAL">SDM & Operasional</option>
-                    <option value="PENGEMBANGAN_USAHA">Pengembangan Usaha</option>
-                    <option value="KEUANGAN_PROGRAM">Keuangan & Program</option>
-                  </select>
-                  <div class="valid-feedback">
-                    Looks good!
-                  </div>
-                  <div class="invalid-feedback">
-                    Pilih Role.
-                  </div>
-                </div>
-              </div>
-              <div class="col-1"></div>
-            </div>
-          </div>
-          <div class="col-6">
-            <div class="row">
-              <div class="col-1"></div>
-              <div class="col-10">
-                <div class="mb-3">
-                  <label for="formGroupExampleInput7" class="form-label">Golongan Darah <span style="color: red">*</span></label>
-                  <select id="formGroupExampleInput7" th:field="*{golonganDarah}" class="form-select input-text border-success rounded-3 border border-2" aria-label="Default select example" required
-                          disabled>
-                    <option value="" selected>Pilih golongan darah...</option>
-                    <option value="A">A</option>
-                    <option value="B">B</option>
-                    <option value="AB">AB</option>
-                    <option value="O">O</option>
-                  </select>
-                  <div class="valid-feedback">
-                    Looks good!
-                  </div>
-                  <div class="invalid-feedback">
-                    Pilih Golongan Darah.
-                  </div>
-                </div>
-              </div>
-              <div class="col-1"></div>
-            </div>
-          </div>
-        </div>
-
-        <!--Baris 4-->
-        <div class="row my-3">
-          <div class="col-6">
-            <div class="row">
-              <div class="col-1"></div>
-              <div class="col-10">
-                <div class="mb-3">
-                  <label for="formGroupExampleInput5" class="form-label">Tempat Lahir <span style="color: red">*</span></label>
-                  <input type="text" th:value="*{tempatLahir}" class="form-control input-text border-success rounded-3 border border-2" id="formGroupExampleInput5" placeholder="Masukkan tempat lahir..." required
-                         disabled>
-                  <div class="valid-feedback">
-                    Looks good!
-                  </div>
-                  <div class="invalid-feedback">
-                    Masukkan Tempat Lahir.
-                  </div>
-                </div>
-              </div>
-              <div class="col-1"></div>
-            </div>
-          </div>
-          <div class="col-6">
-            <div class="row">
-              <div class="col-1"></div>
-              <div class="col-10">
-                <div class="mb-3">
-                  <label for="formGroupExampleInput6" class="form-label">Tanggal Lahir <span style="color: red">*</span></label>
-                  <input type="date" th:value="*{tanggalLahir}" class="form-control input-text border-success rounded-3 border border-2" id="formGroupExampleInput6" placeholder="Masukkan tanggal lahir..." required
-                         disabled>
-                  <div class="valid-feedback">
-                    Looks good!
-                  </div>
-                </div>
-              </div>
-              <div class="col-1"></div>
-            </div>
-          </div>
-        </div>
-
-        <!--Baris 5-->
-        <div class="row my-3">
-          <div class="col-6">
-            <div class="row">
-              <div class="col-1"></div>
-              <div class="col-10">
-                <label for="formGroupExampleInput11" class="form-label">Jenis Kelamin <span style="color: red">*</span></label>
-
-                <div class="row mt-2">
-                  <div class="col-6">
-                    <div id="formGroupExampleInput11" class="form-check">
-                      <input class="form-check-input" th:field="*{jenisKelamin}" value=1 type="radio" name="flexRadioDefault1" id="flexRadioDefault1" disabled>
-                      <label class="form-check-label" for="flexRadioDefault1">
-                        Laki-laki
-                      </label>
+        <div class="card-body">
+            <form th:action="@{/ubah-profil}" th:object="${updateAnggota}" method="POST" enctype="multipart/form-data"
+                  class="needs-validation">
+                <!--Baris Foto-->
+                <div class="row my-3">
+                    <div class="col-1"></div>
+                    <div class="col-10 text-center">
+                        <img th:src="*{profile.photoUrl == null} ? 'https://cdn-icons-png.flaticon.com/512/3135/3135715.png' : @{*{profile.photosImagePath}}"
+                             style="width: 150px" class="rounded-circle" alt="...">
                     </div>
-                  </div>
-                  <div class="col-6">
-                    <div class="form-check">
-                      <input class="form-check-input" th:field="*{jenisKelamin}" value=0 type="radio" name="flexRadioDefault2" id="flexRadioDefault2" disabled>
-                      <label class="form-check-label" for="flexRadioDefault2">
-                        Perempuan
-                      </label>
-                    </div>
-                  </div>
+                    <div class="col-1"></div>
                 </div>
-              </div>
-              <div class="col-1"></div>
-            </div>
-          </div>
-        </div>
+                <!--Baris Button-->
+                <div class="row my-3">
+                    <div class="col-1"></div>
+                    <div class="col-10 text-center">
+                        <button type="button" class="btn btn-sm btn-outline-success" onclick="browserFile()"><i
+                                class="bi bi-upload"></i> Unggah Foto
+                        </button>
+                        <input type="file" name="upload" id="upload" style="display:none"
+                               accept="image/png, image/jpeg"/>
+                    </div>
+                    <div class="col-1"></div>
+                </div>
 
-        <br>
+                <!--Baris 1-->
+                <div class="row my-3">
+                    <div class="col-6">
+                        <div class="row">
+                            <div class="col-1"></div>
+                            <div class="col-10">
+                                <div class="mb-3">
+                                    <label for="formGroupExampleInput1" class="form-label">Nama Depan <span
+                                            style="color: red">*</span></label>
+                                    <input type="text" th:value="*{namaDepan}"
+                                           class="form-control input-text border-success rounded-3 border border-2"
+                                           id="formGroupExampleInput1" placeholder="Masukkan nama depan..." required
+                                           disabled>
+                                    <div class="valid-feedback">
+                                        Looks good!
+                                    </div>
+                                    <div class="invalid-feedback">
+                                        Masukkan Nama Depan.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-1"></div>
+                        </div>
+                    </div>
 
-        <div class="row my-3">
-          <div class="col-6">
-            <div class="row">
-              <div class="col-1"></div>
-              <div class="col-5">
-                <h3 style="color: #37814F">Additional Info</h3>
-              </div>
-              <div class="col-6 pe-0">
-                <hr class="border-bottom" style="border: 2px solid #37814F!important;"/>
-              </div>
-            </div>
-          </div>
-          <div class="col-6">
-            <div class="row">
-              <div class="col-11 ps-0">
-                <hr class="border-bottom" style="border: 2px solid #37814F!important;"/>
-              </div>
-            </div>
-          </div>
-        </div>
+                    <div class="col-6">
+                        <div class="row">
+                            <div class="col-1"></div>
+                            <div class="col-10">
+                                <div class="mb-3">
+                                    <label for="formGroupExampleInput12" class="form-label">Nama Belakang <span
+                                            style="color: red">*</span></label>
+                                    <input type="text" th:value="*{namaBelakang}"
+                                           class="form-control input-text border-success rounded-3 border border-2"
+                                           id="formGroupExampleInput12" placeholder="Masukkan nama belakang..." required
+                                           disabled>
+                                    <div class="valid-feedback">
+                                        Looks good!
+                                    </div>
+                                    <div class="invalid-feedback">
+                                        Masukkan Nama Belakang.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-1"></div>
+                        </div>
+                    </div>
+                </div>
 
-        <!--Baris 6-->
-        <div class="row my-3">
-          <div class="col-6">
-            <div class="row">
-              <div class="col-1"></div>
-              <div class="col-10">
-                <div class="mb-3">
-                  <label for="formGroupExampleInput16" class="form-label">Divisi</label>
-                  <select id="formGroupExampleInput16" th:field="*{profile.divisi}" class="form-select input-text border-success rounded-3 border border-2" aria-label="Default select example">
-                    <option value="" selected>Pilih divisi...</option>
-                    <option value="KEUANGAN_PROGRAM">Keuangan & Program</option>
-                    <option value="PENGEMBANGAN_USAHA">Pengembangan Usaha</option>
-                    <option value="SDM_OPERASIONAL">SDM & Operasional</option>
-                  </select>
-                  <div class="valid-feedback">
-                    Looks good!
-                  </div>
+                <!--Baris 2-->
+                <div class="row my-3">
+                    <div class="col-6">
+                        <div class="row">
+                            <div class="col-1"></div>
+                            <div class="col-10">
+                                <div class="mb-3">
+                                    <label for="formGroupExampleInput2" class="form-label">Email <span
+                                            style="color: red">*</span></label>
+                                    <input type="email" th:field="*{email}"
+                                           class="form-control input-text border-success rounded-3 border border-2"
+                                           id="formGroupExampleInput2" placeholder="Masukkan email..." required>
+                                    <div class="valid-feedback">
+                                        Looks good!
+                                    </div>
+                                    <div class="invalid-feedback">
+                                        Masukkan Email.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-1"></div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="row">
+                            <div class="col-1"></div>
+                            <div class="col-10">
+                                <div class="mb-3">
+                                    <label for="formGroupExampleInput3" class="form-label">Nomor HP <span
+                                            style="color: red">*</span></label>
+                                    <input type="number" th:field="*{nomorHP}"
+                                           class="form-control input-text border-success rounded-3 border border-2"
+                                           id="formGroupExampleInput3" placeholder="Masukkan nomor HP..." required>
+                                    <div class="valid-feedback">
+                                        Looks good!
+                                    </div>
+                                    <div class="invalid-feedback">
+                                        Masukkan No HP.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-1"></div>
+                        </div>
+                    </div>
                 </div>
-              </div>
-              <div class="col-1"></div>
-            </div>
-          </div>
-          <div class="col-6">
-            <div class="row">
-              <div class="col-1"></div>
-              <div class="col-10">
-                <div class="mb-3">
-                  <label for="formGroupExampleInput13" class="form-label">Pekerjaan <span style="color: red">*</span></label>
-                  <select id="formGroupExampleInput13" th:field="*{profile.pekerjaan}" class="form-select input-text border-success rounded-3 border border-2" aria-label="Default select example" required>
-                    <option value="" selected>Pilih pekerjaan...</option>
-                    <option value="ASN">ASN</option>
-                    <option value="SWASTA">Swasta</option>
-                    <option value="WIRAUSAHA">Wirausaha</option>
-                    <option value="IRT">Rumah Tangga</option>
-                    <option value="LAINNYA">Lainnya</option>
-                  </select>
-                  <div class="valid-feedback">
-                    Looks good!
-                  </div>
-                  <div class="invalid-feedback">
-                    Masukkan Pekerjaan.
-                  </div>
-                </div>
-              </div>
-              <div class="col-1"></div>
-            </div>
-          </div>
-        </div>
 
-        <!--Baris 7-->
-        <div class="row my-3">
-          <div class="col-6">
-            <div class="row">
-              <div class="col-1"></div>
-              <div class="col-10">
-                <div class="mb-3">
-                  <label for="formGroupExampleInput15" class="form-label">Status Keanggotaan <span style="color: red">*</span></label>
-                  <select id="formGroupExampleInput15" th:field="*{statusKeanggotaan}" class="form-select input-text border-success rounded-3 border border-2" aria-label="Default select example" required disabled>
-                    <option value="" selected>Pilih status...</option>
-                    <option value=1>Aktif</option>
-                    <option value=0>Tidak Aktif</option>
-                  </select>
-                  <div class="valid-feedback">
-                    Looks good!
-                  </div>
-                  <div class="invalid-feedback">
-                    Pilih Status Keanggotaan.
-                  </div>
-                </div>
-              </div>
-              <div class="col-1"></div>
-            </div>
-          </div>
-          <div class="col-6">
-            <div class="row">
-              <div class="col-1"></div>
-              <div class="col-10">
-                <label for="formGroupExampleInput14" class="form-label">Mengelola Mentoring <span style="color: red">*</span></label>
-                <div class="row mt-2">
-                  <div class="col-6">
-                    <div id="formGroupExampleInput14" class="form-check">
-                      <input class="form-check-input" th:field="*{profile.isMengelolaMentoring}" value=1 type="radio" name="flexRadioDefault3" id="flexRadioDefault3">
-                      <label class="form-check-label" for="flexRadioDefault3">
-                        Ya
-                      </label>
+                <!--Baris 3-->
+                <div class="row my-3">
+                    <div class="col-6">
+                        <div class="row">
+                            <div class="col-1"></div>
+                            <div class="col-10">
+                                <div class="mb-3">
+                                    <label for="formGroupExampleInput4" class="form-label">Role <span
+                                            style="color: red">*</span></label>
+                                    <select id="formGroupExampleInput4" th:field="*{role}"
+                                            class="form-select input-text border-success rounded-3 border border-2"
+                                            aria-label="Default select example" required disabled>
+                                        <option value="" selected>Pilih role...</option>
+                                        <option value="ADMIN">Admin</option>
+                                        <option value="ANGGOTA">Anggota</option>
+                                        <option value="SDM_OPERASIONAL">SDM & Operasional</option>
+                                        <option value="PENGEMBANGAN_USAHA">Pengembangan Usaha</option>
+                                        <option value="KEUANGAN_PROGRAM">Keuangan & Program</option>
+                                    </select>
+                                    <div class="valid-feedback">
+                                        Looks good!
+                                    </div>
+                                    <div class="invalid-feedback">
+                                        Pilih Role.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-1"></div>
+                        </div>
                     </div>
-                  </div>
-                  <div class="col-6">
-                    <div class="form-check">
-                      <input class="form-check-input" th:field="*{profile.isMengelolaMentoring}" value=0 type="radio" name="flexRadioDefault4" id="flexRadioDefault4">
-                      <label class="form-check-label" for="flexRadioDefault4">
-                        Tidak
-                      </label>
+                    <div class="col-6">
+                        <div class="row">
+                            <div class="col-1"></div>
+                            <div class="col-10">
+                                <div class="mb-3">
+                                    <label for="formGroupExampleInput7" class="form-label">Golongan Darah <span
+                                            style="color: red">*</span></label>
+                                    <select id="formGroupExampleInput7" th:field="*{golonganDarah}"
+                                            class="form-select input-text border-success rounded-3 border border-2"
+                                            aria-label="Default select example" required
+                                            disabled>
+                                        <option value="" selected>Pilih golongan darah...</option>
+                                        <option value="A">A</option>
+                                        <option value="B">B</option>
+                                        <option value="AB">AB</option>
+                                        <option value="O">O</option>
+                                    </select>
+                                    <div class="valid-feedback">
+                                        Looks good!
+                                    </div>
+                                    <div class="invalid-feedback">
+                                        Pilih Golongan Darah.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-1"></div>
+                        </div>
                     </div>
-                  </div>
                 </div>
-              </div>
-              <div class="col-1"></div>
-            </div>
-          </div>
-        </div>
 
-        <!--Baris 8-->
-        <div class="row my-3">
-          <div class="col-6 mb-3">
-            <div class="row">
-              <div class="col-1"></div>
-              <div class="col-11">
-                <label class="form-label">Asset</label>
-                <div class="row">
-                  <div class="col-6">
-                    <div class="form-check">
-                      <input th:field="*{profile.isPunyaMobil}" class="form-check-input" type="checkbox" id="flexCheckMobil">
-                      <label class="form-check-label" for="flexCheckMobil">
-                        Mobil
-                      </label>
+                <!--Baris 4-->
+                <div class="row my-3">
+                    <div class="col-6">
+                        <div class="row">
+                            <div class="col-1"></div>
+                            <div class="col-10">
+                                <div class="mb-3">
+                                    <label for="formGroupExampleInput5" class="form-label">Tempat Lahir <span
+                                            style="color: red">*</span></label>
+                                    <input type="text" th:value="*{tempatLahir}"
+                                           class="form-control input-text border-success rounded-3 border border-2"
+                                           id="formGroupExampleInput5" placeholder="Masukkan tempat lahir..." required
+                                           disabled>
+                                    <div class="valid-feedback">
+                                        Looks good!
+                                    </div>
+                                    <div class="invalid-feedback">
+                                        Masukkan Tempat Lahir.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-1"></div>
+                        </div>
                     </div>
-                  </div>
-                  <div class="col-6">
-                    <div class="form-check">
-                      <input th:field="*{profile.isPunyaMotor}" class="form-check-input" type="checkbox" id="flexCheckMotor">
-                      <label class="form-check-label" for="flexCheckMotor">
-                        Motor
-                      </label>
+                    <div class="col-6">
+                        <div class="row">
+                            <div class="col-1"></div>
+                            <div class="col-10">
+                                <div class="mb-3">
+                                    <label for="formGroupExampleInput6" class="form-label">Tanggal Lahir <span
+                                            style="color: red">*</span></label>
+                                    <input type="date" th:value="*{tanggalLahir}"
+                                           class="form-control input-text border-success rounded-3 border border-2"
+                                           id="formGroupExampleInput6" placeholder="Masukkan tanggal lahir..." required
+                                           disabled>
+                                    <div class="valid-feedback">
+                                        Looks good!
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-1"></div>
+                        </div>
                     </div>
-                  </div>
                 </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-6 mb-3">
-            <div class="row">
-              <div class="col-1"></div>
-              <div class="col-11">
-                <label class="form-label" style="color: white"> <span style="color: white">*</span></label>
-                <div class="row">
-                  <div class="col-6">
-                    <div class="form-check">
-                      <input th:field="*{profile.isPunyaVila}" class="form-check-input" type="checkbox" id="flexCheckVila">
-                      <label class="form-check-label" for="flexCheckVila">
-                        Vila
-                      </label>
-                    </div>
-                  </div>
-                  <div class="col-6">
-                    <div class="form-check">
-                      <input th:field="*{profile.isPunyaRumah}" class="form-check-input" type="checkbox" id="flexCheckRumah">
-                      <label class="form-check-label" for="flexCheckRumah">
-                        Rumah
-                      </label>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
 
-        <!--Baris 9-->
-        <div class="container-fluid my-3">
-          <div class="mb-3 mx-3">
-            <label for="formGroupExampleInput" class="form-label">Catatan </label>
-            <textarea type="text" th:field="*{profile.catatan}" class="form-control input-text border-success rounded-3 border border-2" id="formGroupExampleInput" ></textarea>
-          </div>
-        </div>
+                <!--Baris 5-->
+                <div class="row my-3">
+                    <div class="col-6">
+                        <div class="row">
+                            <div class="col-1"></div>
+                            <div class="col-10">
+                                <label for="formGroupExampleInput11" class="form-label">Jenis Kelamin <span
+                                        style="color: red">*</span></label>
+
+                                <div class="row mt-2">
+                                    <div class="col-6">
+                                        <div id="formGroupExampleInput11" class="form-check">
+                                            <input class="form-check-input" th:field="*{jenisKelamin}" value=1
+                                                   type="radio" name="flexRadioDefault1" id="flexRadioDefault1"
+                                                   disabled>
+                                            <label class="form-check-label" for="flexRadioDefault1">
+                                                Laki-laki
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="form-check">
+                                            <input class="form-check-input" th:field="*{jenisKelamin}" value=0
+                                                   type="radio" name="flexRadioDefault2" id="flexRadioDefault2"
+                                                   disabled>
+                                            <label class="form-check-label" for="flexRadioDefault2">
+                                                Perempuan
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-1"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <br>
+
+                <div class="row my-3">
+                    <div class="col-6">
+                        <div class="row">
+                            <div class="col-1"></div>
+                            <div class="col-5">
+                                <h3 style="color: #37814F">Additional Info</h3>
+                            </div>
+                            <div class="col-6 pe-0">
+                                <hr class="border-bottom" style="border: 2px solid #37814F!important;"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="row">
+                            <div class="col-11 ps-0">
+                                <hr class="border-bottom" style="border: 2px solid #37814F!important;"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!--Baris 6-->
+                <div class="row my-3">
+                    <div class="col-6">
+                        <div class="row">
+                            <div class="col-1"></div>
+                            <div class="col-10">
+                                <div class="mb-3">
+                                    <label for="formGroupExampleInput16" class="form-label">Divisi</label>
+                                    <select id="formGroupExampleInput16" th:field="*{profile.divisi}"
+                                            class="form-select input-text border-success rounded-3 border border-2"
+                                            aria-label="Default select example">
+                                        <option value="" selected>Pilih divisi...</option>
+                                        <option value="KEUANGAN_PROGRAM">Keuangan & Program</option>
+                                        <option value="PENGEMBANGAN_USAHA">Pengembangan Usaha</option>
+                                        <option value="SDM_OPERASIONAL">SDM & Operasional</option>
+                                    </select>
+                                    <div class="valid-feedback">
+                                        Looks good!
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-1"></div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="row">
+                            <div class="col-1"></div>
+                            <div class="col-10">
+                                <div class="mb-3">
+                                    <label for="formGroupExampleInput13" class="form-label">Pekerjaan <span
+                                            style="color: red">*</span></label>
+                                    <select id="formGroupExampleInput13" th:field="*{profile.pekerjaan}"
+                                            class="form-select input-text border-success rounded-3 border border-2"
+                                            aria-label="Default select example" required>
+                                        <option value="" selected>Pilih pekerjaan...</option>
+                                        <option value="ASN">ASN</option>
+                                        <option value="SWASTA">Swasta</option>
+                                        <option value="WIRAUSAHA">Wirausaha</option>
+                                        <option value="IRT">Rumah Tangga</option>
+                                        <option value="LAINNYA">Lainnya</option>
+                                    </select>
+                                    <div class="valid-feedback">
+                                        Looks good!
+                                    </div>
+                                    <div class="invalid-feedback">
+                                        Masukkan Pekerjaan.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-1"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!--Baris 7-->
+                <div class="row my-3">
+                    <div class="col-6">
+                        <div class="row">
+                            <div class="col-1"></div>
+                            <div class="col-10">
+                                <div class="mb-3">
+                                    <label for="formGroupExampleInput15" class="form-label">Status Keanggotaan <span
+                                            style="color: red">*</span></label>
+                                    <select id="formGroupExampleInput15" th:field="*{statusKeanggotaan}"
+                                            class="form-select input-text border-success rounded-3 border border-2"
+                                            aria-label="Default select example" required disabled>
+                                        <option value="" selected>Pilih status...</option>
+                                        <option value=1>Aktif</option>
+                                        <option value=0>Tidak Aktif</option>
+                                    </select>
+                                    <div class="valid-feedback">
+                                        Looks good!
+                                    </div>
+                                    <div class="invalid-feedback">
+                                        Pilih Status Keanggotaan.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-1"></div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="row">
+                            <div class="col-1"></div>
+                            <div class="col-10">
+                                <label for="formGroupExampleInput14" class="form-label">Mengelola Mentoring <span
+                                        style="color: red">*</span></label>
+                                <div class="row mt-2">
+                                    <div class="col-6">
+                                        <div id="formGroupExampleInput14" class="form-check">
+                                            <input class="form-check-input" th:field="*{profile.isMengelolaMentoring}"
+                                                   value=1 type="radio" name="flexRadioDefault3" id="flexRadioDefault3">
+                                            <label class="form-check-label" for="flexRadioDefault3">
+                                                Ya
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="form-check">
+                                            <input class="form-check-input" th:field="*{profile.isMengelolaMentoring}"
+                                                   value=0 type="radio" name="flexRadioDefault4" id="flexRadioDefault4">
+                                            <label class="form-check-label" for="flexRadioDefault4">
+                                                Tidak
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-1"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!--Baris 8-->
+                <div class="row my-3">
+                    <div class="col-6 mb-3">
+                        <div class="row">
+                            <div class="col-1"></div>
+                            <div class="col-11">
+                                <label class="form-label">Asset</label>
+                                <div class="row">
+                                    <div class="col-6">
+                                        <div class="form-check">
+                                            <input th:field="*{profile.isPunyaMobil}" class="form-check-input"
+                                                   type="checkbox" id="flexCheckMobil">
+                                            <label class="form-check-label" for="flexCheckMobil">
+                                                Mobil
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="form-check">
+                                            <input th:field="*{profile.isPunyaMotor}" class="form-check-input"
+                                                   type="checkbox" id="flexCheckMotor">
+                                            <label class="form-check-label" for="flexCheckMotor">
+                                                Motor
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6 mb-3">
+                        <div class="row">
+                            <div class="col-1"></div>
+                            <div class="col-11">
+                                <label class="form-label" style="color: white"> <span
+                                        style="color: white">*</span></label>
+                                <div class="row">
+                                    <div class="col-6">
+                                        <div class="form-check">
+                                            <input th:field="*{profile.isPunyaVila}" class="form-check-input"
+                                                   type="checkbox" id="flexCheckVila">
+                                            <label class="form-check-label" for="flexCheckVila">
+                                                Vila
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="form-check">
+                                            <input th:field="*{profile.isPunyaRumah}" class="form-check-input"
+                                                   type="checkbox" id="flexCheckRumah">
+                                            <label class="form-check-label" for="flexCheckRumah">
+                                                Rumah
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!--Baris 9-->
+                <div class="container-fluid my-3">
+                    <div class="mb-3 mx-3">
+                        <label for="formGroupExampleInput" class="form-label">Catatan </label>
+                        <textarea type="text" th:field="*{profile.catatan}"
+                                  class="form-control input-text border-success rounded-3 border border-2"
+                                  id="formGroupExampleInput"></textarea>
+                    </div>
+                </div>
 
         <!--Modal-->
         <div class="modal fade" id="exampleModal"
@@ -501,84 +570,85 @@
                             <span aria-hidden="true">
                                 ×
                             </span>
-                </button>
-              </div>
-              <div class="modal-body"><p th:text="'Apakah Anda yakin untuk menyimpan perubahan data?'"></p></div>
-              <div class="modal-footer">
-                <button type="submit"
-                        class="btn btn-success btn-sm"
-                        data-toggle="modal"
-                        data-target="#exampleModal"
-                        id="submit">
-                  Ubah
-                </button>
-              </div>
+                                </button>
+                            </div>
+                            <div class="modal-body"><p
+                                    th:text="'Apakah Anda yakin untuk menyimpan perubahan data?'"></p></div>
+                            <div class="modal-footer">
+                                <button type="submit"
+                                        class="btn btn-success btn-sm"
+                                        data-toggle="modal"
+                                        data-target="#exampleModal"
+                                        id="submit">
+                                    Ubah
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <div class="row mt-5 mb-3">
+                <div class="col-5"></div>
+                <div class="col-2">
+                    <button type="submit" class="btn btn-success btn-lg" data-toggle="modal"
+                            data-target="#exampleModal"
+                            id="submit1">
+                        Ubah
+                    </button>
+                </div>
+                <div class="col-5"></div>
             </div>
-          </div>
-        </div>
-      </form>
-      <div class="row mt-5 mb-3">
-        <div class="col-5"></div>
-        <div class="col-2">
-          <button type="submit" class="btn btn-success btn-lg" data-toggle="modal"
-                  data-target="#exampleModal"
-                  id="submit1">
-            Ubah
-          </button>
-        </div>
-        <div class="col-5"></div>
-      </div>
 
 
+        </div>
     </div>
-  </div>
 </div>
 <footer th:replace="fragments/fragment :: footer"></footer>
 
 <script>
 
-  function browserFile() {
-    $("#upload").click()
-  }
-
-  $('.input-text').change((e) => {
-    console.log(e.target.value)
-    if (e.target.value === '') {
-      $(e.target).addClass("is-invalid");
-      $(e.target).addClass("border-danger");
-
-      $(e.target).removeClass("border-success");
-      $(e.target).removeClass("is-valid");
-    } else {
-      $(e.target).removeClass("is-invalid");
-      $(e.target).removeClass("border-danger");
-
-      $(e.target).addClass("border-success");
-      $(e.target).addClass("is-valid");
+    function browserFile() {
+        $("#upload").click()
     }
-  });
 
-  const spanPassword = document
-          .querySelector('#basic-addon2');
+    $('.input-text').change((e) => {
+        console.log(e.target.value)
+        if (e.target.value === '') {
+            $(e.target).addClass("is-invalid");
+            $(e.target).addClass("border-danger");
 
-  const togglePassword = document
-          .querySelector('#togglePassword');
+            $(e.target).removeClass("border-success");
+            $(e.target).removeClass("is-valid");
+        } else {
+            $(e.target).removeClass("is-invalid");
+            $(e.target).removeClass("border-danger");
 
-  const password = document.querySelector('#formGroupExampleInput9');
+            $(e.target).addClass("border-success");
+            $(e.target).addClass("is-valid");
+        }
+    });
 
-  spanPassword.addEventListener('click', () => {
+    const spanPassword = document
+        .querySelector('#basic-addon2');
 
-    // Toggle the type attribute using
-    // getAttribure() method
-    const type = password
+    const togglePassword = document
+        .querySelector('#togglePassword');
+
+    const password = document.querySelector('#formGroupExampleInput9');
+
+    spanPassword.addEventListener('click', () => {
+
+        // Toggle the type attribute using
+        // getAttribure() method
+        const type = password
             .getAttribute('type') === 'password' ?
             'text' : 'password';
 
-    password.setAttribute('type', type);
+        password.setAttribute('type', type);
 
-    // Toggle the eye and bi-eye icon
-    togglePassword.classList.toggle('bi-eye');
-  });
+        // Toggle the eye and bi-eye icon
+        togglePassword.classList.toggle('bi-eye');
+    });
 </script>
 </body>
 </html>
