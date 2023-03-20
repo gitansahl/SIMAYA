@@ -166,6 +166,10 @@
                             </tbody>
                         </table>
 
+
+                        <input id="isRole" sec:authorize="hasAuthority('SDM_OPERASIONAL')" type="hidden" value="true"/>
+                        <input id="isRole" sec:authorize="!hasAuthority('SDM_OPERASIONAL')" type="hidden" value="false"/>
+
                         <div>
                             <input id="idEvent" type="hidden" th:value="${event.idEvent}">
                         </div>
@@ -270,6 +274,8 @@
 <!--SCRIPT-->
 <script th:inline="javascript">
 
+    var isRole = $('#isRole').val();
+
     function addProgres() {
         var data = {}
         data["nama"] = $("#nama").val()
@@ -319,6 +325,10 @@
                     visible: false,
                     searchable: false,
                 },
+                {
+                    target: 3,
+                    visible: isRole === "true"
+                }
             ],
             "columns": [
                 {
