@@ -22,8 +22,12 @@ public class EventServiceImpl implements EventService{
     EventDb eventDb;
 
     @Override
-    public void tambahEvent(CreateEventDTO eventDTO) {
+    public Boolean tambahEvent(CreateEventDTO eventDTO) {
+        if (eventDb.getEventModelByNamaEvent(eventDTO.getNamaEvent()) != null){
+            return  false;
+        }
         eventDb.save(makeEventModel(eventDTO));
+        return true;
     }
 
     @Override
