@@ -43,9 +43,11 @@ public class EventController {
 
     @PostMapping(value = "/tambah-event")
     public String postForm(CreateEventDTO event, RedirectAttributes redirectAttributes) {
-        eventService.tambahEvent(event);
-
-        redirectAttributes.addFlashAttribute("success", String.format("Event bernama %s berhasil ditambahkan!", event.getNamaEvent()));
+        if (eventService.tambahEvent(event)){
+            redirectAttributes.addFlashAttribute("success", String.format("Event bernama %s berhasil ditambahkan!", event.getNamaEvent()));
+        } else {
+            redirectAttributes.addFlashAttribute("error", String.format("Event bernama %s sudah pernah ditambahkan!", event.getNamaEvent()));
+        }
         return "redirect:/event/viewall";
     }
 

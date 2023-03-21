@@ -122,16 +122,16 @@
                             <div class="col-1"></div>
                             <div class="col-10">
                                 <div class="mb-3">
-                                    <label for="formGroupExampleInput1" class="form-label">Waktu Mulai<span
+                                    <label for="StartDate" class="form-label">Waktu Mulai<span
                                             style="color: red">*</span></label>
                                     <input type="datetime-local" th:field="*{waktuMulai}"
                                            class="form-control border-success rounded-3 border border-2 input-text"
-                                           id="formGroupExampleInput1" placeholder="Masukkan nama belakang..." required>
+                                           id="StartDate" placeholder="Masukkan nama belakang..." required>
                                     <div class="valid-feedback">
                                         Looks good!
                                     </div>
                                     <div class="invalid-feedback">
-                                        Masukkan Waktu Mulai.
+                                        <p id="startdate-text">Waktu mulai tidak boleh lebih dari waktu berakhir!</p>
                                     </div>
                                 </div>
                             </div>
@@ -144,17 +144,17 @@
                             <div class="col-1"></div>
                             <div class="col-10">
                                 <div class="mb-3">
-                                    <label for="formGroupExampleInput12" class="form-label">Waktu Berakhir<span
+                                    <label for="EndDate" class="form-label">Waktu Berakhir<span
                                             style="color: red">*</span></label>
                                     <input type="datetime-local" th:field="*{waktuAkhir}"
                                            class="form-control border-success rounded-3 border border-2 input-text"
-                                           id="formGroupExampleInput12" placeholder="Masukkan nama belakang..."
+                                           id="EndDate" placeholder="Masukkan nama belakang..."
                                            required>
                                     <div class="valid-feedback">
                                         Looks good!
                                     </div>
                                     <div class="invalid-feedback">
-                                        Masukkan Waktu Berakhir.
+                                        <p id="enddate-text"></p>
                                     </div>
                                 </div>
                             </div>
@@ -299,6 +299,46 @@
 
             $(e.target).addClass("border-success");
             $(e.target).addClass("is-valid");
+        }
+    });
+
+    $("#EndDate").change((e) => {
+        var startDate = document.getElementById("StartDate").value;
+        var endDate = document.getElementById("EndDate").value;
+
+        if (endDate === ''){
+            document.getElementById("enddate-text").innerHTML = "Masukkan waktu berakhir!"
+            $(e.target).addClass("is-invalid");
+            $(e.target).addClass("border-danger");
+            $(e.target).removeClass("is-valid");
+        }
+
+        if ((Date.parse(endDate) <= Date.parse(startDate))) {
+            document.getElementById("enddate-text").innerHTML = "Waktu berakhir tidak boleh kurang dari waktu mulai!"
+            $(e.target).addClass("is-invalid");
+            $(e.target).addClass("border-danger");
+            $(e.target).removeClass("is-valid");
+            document.getElementById("EndDate").value = '';
+        }
+    });
+
+    $("#StartDate").change((e) => {
+        var startDate = document.getElementById("StartDate").value;
+        var endDate = document.getElementById("EndDate").value;
+
+        if (startDate === ''){
+            document.getElementById("startdate-text").innerHTML = "Masukkan waktu mulai!"
+            $(e.target).addClass("is-invalid");
+            $(e.target).addClass("border-danger");
+            $(e.target).removeClass("is-valid");
+        }
+
+        if ((Date.parse(startDate) >= Date.parse(endDate))) {
+            document.getElementById("startdate-text").innerHTML = "Waktu mulai tidak boleh lebih dari waktu berakhir!"
+            $(e.target).addClass("is-invalid");
+            $(e.target).addClass("border-danger");
+            $(e.target).removeClass("is-valid");
+            document.getElementById("StartDate").value = '';
         }
     });
 </script>

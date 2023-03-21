@@ -25,7 +25,7 @@ public class ProgresServiceImpl implements ProgresService{
 
     @Override
     public void updateStatusProgress(ProgresModel progres) {
-        progres.setStatus(Boolean.TRUE);
+        progres.setStatus(!progres.getStatus());
         progresDb.save(progres);
     }
 

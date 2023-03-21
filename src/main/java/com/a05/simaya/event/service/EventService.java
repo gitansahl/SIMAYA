@@ -6,7 +6,7 @@ import com.a05.simaya.event.payload.CreateEventDTO;
 import java.util.List;
 
 public interface EventService {
-    void tambahEvent(CreateEventDTO eventDTO);
+    Boolean tambahEvent(CreateEventDTO eventDTO);
 
     EventModel getEventById(Long idEvent);
 

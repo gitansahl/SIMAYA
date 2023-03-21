@@ -36,6 +36,15 @@
             position: relative;
         }
 
+        hr {
+            margin-top: 0px;
+            border: none;
+            height: 1px;
+            /* Set the hr color */
+            color: #333;  /* old IE */
+            background-color: #333;  /* Modern Browsers */
+        }
+
         #container{
             min-height: 100%;
             position: relative;
@@ -145,14 +154,32 @@
             <div class="col">
                 <div class="card" style="margin:40px">
                     <div class="card-header text-center" style="background-color: #DBEFE1">
-                        <h5>Progres Event</h5>
+                        <h5>Daftar Progres Event</h5>
                     </div>
                     <div class="card-body">
+
+                        <div class="row">
+                            <div class="col">
+                                <h6>Keterangan:</h6>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-auto">
+                                <span class="material-symbols-outlined icon" style="color: green">check_circle</span>
+                                <p class="icon-label" style="font-size: 16px">Progres telah selesai</p>
+                            </div>
+                            <div class="col-sm-auto">
+                                <span class="material-symbols-outlined icon" style="color: #FECB00">clock_loader_60</span>
+                                <p class="icon-label" style="font-size: 16px">Progres belum selesai</p>
+                            </div>
+                        </div>
+
+                        <hr>
 
                         <table id="table_progres" class="hover row-border stripe">
                             <thead>
                             <tr>
-                                <th>Deskripsi Progres</th>
+                                <th>Progres</th>
                                 <th>Status</th>
                                 <th>Id Progres</th>
                                 <th>Action</th>
@@ -187,8 +214,14 @@
         </div>
     </div>
 
+    <!--    ALERT MSG INFO-->
+    <div class="alert alert-primary" style="margin: 20px 50px -30px 50px" role="alert" sec:authorize="hasAuthority('SDM_OPERASIONAL')" th:if="${event.getListProgres().size() != 0}">
+        <span> <b>[INFO]</b> Event hanya bisa dihapus ketika tidak memiliki progres!</span>
+    </div>
+    <!--    ALERT MSG-->
+
     <div class="d-flex justify-content-center">
-        <button type="button" class="btn btn-danger btn-lg" data-toggle="modal" data-target="#deleteConfirmationModal" style="margin: 20px" sec:authorize="hasAuthority('SDM_OPERASIONAL')">Hapus
+        <button th:if="${event.getListProgres().size() == 0}" type="button" class="btn btn-danger btn-lg" data-toggle="modal" data-target="#deleteConfirmationModal" style="margin: 20px" sec:authorize="hasAuthority('SDM_OPERASIONAL')">Hapus
             Event
         </button>
     </div>
@@ -247,7 +280,7 @@
             <div class="modal-body">
                 <form id="form-progress">
                     <div class="form-group">
-                        <label for="nama" class="col-form-label">Deskripsi:</label>
+                        <label for="nama" class="col-form-label">Progres:</label>
                         <input name="nama" type="text" class="form-control" id="nama" placeholder="Masukkan deskripsi progres...">
 
                         <input name="event" type="hidden" th:value="${event.idEvent}" id="event">
@@ -338,9 +371,9 @@
                     "data": null,
                     "render": function (data) {
                         if (data.status == false) {
-                            return "Belum Selesai"
+                            return '<span class="material-symbols-outlined icon" style="color: #FECB00;">\n' + 'clock_loader_60\n' + '</span>';
                         } else {
-                            return "Selesai"
+                            return '<span class="material-symbols-outlined icon" style="color: green;">\n' + 'check_circle\n' + '</span>';
                         }
                     }
                 },
@@ -351,7 +384,7 @@
                     "data": null,
                     "render": function (data, type) {
                         if (data.status) {
-                            return '<span class="material-symbols-outlined" style="color: green;">\n' + 'check_circle\n' + '</span>';
+                            return '<button id="' + data.idProgres + '" class="btn btn-outline-danger updateButton" onclick="updateClick(this)">' + 'Batalkan' + '</button>';
                         }
 
                         return '<button id="' + data.idProgres + '" class="btn btn-outline-success updateButton" onclick="updateClick(this)">' + 'Selesaikan' + '</button>';
