@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Tambah Usaha</title>
+  <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+  <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+  <script src="https://code.jquery.com/jquery-3.6.1.min.js"
+          integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+  <script type="text/javascript" charset="utf8"
+          src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.8.4/moment.min.js"></script>
+  <script type="text/javascript"
+          src="https://cdn.datatables.net/plug-ins/1.10.16/sorting/datetime-moment.js"></script>
+  <script type="text/javascript" src="https://cdn.datatables.net/plug-ins/1.10.21/dataRender/datetime.js"></script>
+  <link href="https://nightly.datatables.net/css/jquery.dataTables.css" rel="stylesheet" type="text/css"/>
+
+  <style>
+    .form-control:focus {
+      border-color: #28a745;
+      box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.25);
+    }
+
+    .form-select:focus {
+      border-color: #28a745;
+      box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.25);
+    }
+
+    option:checked {
+      background-color: #28a745;
+      color: white;
+      box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.25);
+    }
+
+    option:hover {
+      background-color: #28a745;
+      box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.25);
+    }
+
+    .form-check-input:checked {
+      background-color: #28a745;
+      border-color: #28a745;
+    }
+
+    html {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+    }
+
+    body {
+      background-image: url("https://www.linkpicture.com/q/bg_17.png");
+      background-position: center;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      background-size: cover;
+      font-family: "Segoe UI", "Segoe UI Semibold", "Segoe UI Black", sans-serif;
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      position: relative;
+    }
+
+    #container {
+      min-height: 100%;
+      position: relative;
+    }
+
+  </style>
+
+</head>
+<body>
+
+  <div class="container">
+    <span th:if="${anggota.role.name() == 'PENGEMBANGAN_USAHA'}">
+      <input style="display: none" th:field="${usaha.idUsaha}" id="idUsaha">
+      <span th:switch="${usaha.statusUsaha.name()}">
+        <!--Belum terverifikasi-->
+        <span th:case="BELUM_TERVERIFIKASI">
+
+          <!--Label-->
+          <div class="row">
+            <div class="col-2"></div>
+            <div class="col-8">
+              <h3>Verifikasi</h3>
+            </div>
+            <div class="col-2"></div>
+          </div>
+
+          <!--Button-->
+          <div class="row">
+          <div class="col-2"></div>
+          <div class="col-8">
+            <div class="row">
+
+              <!--Terima-->
+              <div class="col-6">
+                <button data-bs-toggle="modal" data-bs-target="#verifikasiModal" type="button" class="btn btn-success btn-sm" style="width: 100%;">Terima</button>
+
+                <!-- Modal -->
+                <div class="modal fade" id="verifikasiModal" tabindex="-1" aria-labelledby="verifikasiModalLabel" aria-hidden="true">
+                  <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="verifikasiModalLabel">Verifikasi Usaha?</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body"><p
+                              th:text="'Apakah Anda yakin untuk memverifikasi usaha?'"></p></div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-success" onclick="verifikasiUsaha()">Verifikasi</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-6">
+                <button type="button" class="btn btn-success btn-sm" style="width: 100%;">Tolak</button>
+              </div>
+
+            </div>
+          </div>
+          <div class="col-2"></div>
+        </div>
+
+        </span>
+
+        <!--Sudah/tidak terverifikasi-->
+        <span th:case="*">
+
+          <!--Label-->
+          <div class="row">
+            <div class="col-2"></div>
+            <div class="col-8">
+              <h3>Tindakan</h3>
+            </div>
+            <div class="col-2"></div>
+          </div>
+
+          <!--Button-->
+          <div class="row">
+            <div class="col-2"></div>
+            <div class="col-8">
+              <div class="row">
+
+                <!--Hapus-->
+                <div class="col-6">
+                  <button data-bs-toggle="modal" data-bs-target="#hapusModal" type="button" class="btn btn-success btn-sm" style="width: 100%;">Hapus</button>
+
+                  <!-- Modal -->
+                  <div class="modal fade" id="hapusModal" tabindex="-1" aria-labelledby="hapusModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title" id="hapusModalLabel">Hapus Usaha?</h5>
+                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body"><p
+                                        th:text="'Apakah Anda yakin untuk menghapus usaha?'"></p></div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                          <a type="button" class="btn btn-success" th:href="@{/hapus-usaha/} + ${usaha.idUsaha}">Hapus</a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!--Ubah-->
+                <div class="col-6">
+                  <a th:href="@{/ubah-usaha/} + ${usaha.idUsaha}" type="button" class="btn btn-success btn-sm" style="width: 100%;">Ubah</a>
+                </div>
+
+              </div>
+            </div>
+            <div class="col-2"></div>
+          </div>
+
+        </span>
+      </span>
+    </span>
+  </div>
+
+  <script th:inline="javascript">
+
+    function verifikasiUsaha() {
+      const id = document.getElementById("idUsaha").value;
+
+      $.ajax({
+        url: '/api/usaha/verifikasi',
+        data: JSON.stringify({ "id": id }),
+        contentType: "application/json",
+        type: 'PUT',
+        success: function () {
+          window.location.reload();
+        }
+      })
+    }
+
+  </script>
+</body>
+</html>
