@@ -36,7 +36,6 @@ public class AnggotaModel {
     private String username;
 
     @NotNull
-    @Lob
     @Column(name = "password")
     private String password;
 

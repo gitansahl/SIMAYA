@@ -100,7 +100,7 @@
                                         style="color: red">*</span></label>
                                 <div class="input-group mb-3">
                                     <input type="password" th:field="*{password}"
-                                           class="form-control input-text border-success rounded-start border border-2"
+                                           class="form-control input-password border-success rounded-start border border-2"
                                            id="formGroupExampleInput9" placeholder="Masukkan password..." required>
                                     <span class="input-group-text" id="basic-addon2"><i class="bi bi-eye-slash mb-2"
                                                                                         id="togglePassword"></i></span>
@@ -108,7 +108,7 @@
                                         Looks good!
                                     </div>
                                     <div class="invalid-feedback">
-                                        Masukkan Kata Sandi.
+                                        Kata Sandi minimal terdiri dari 8 karakter.
                                     </div>
                                 </div>
                             </div>
@@ -362,8 +362,23 @@
 
 <script>
 
+    $('.input-password').change((e) => {
+        if (e.target.value.length < 8) {
+            $(e.target).addClass("is-invalid");
+            $(e.target).addClass("border-danger");
+
+            $(e.target).removeClass("border-success");
+            $(e.target).removeClass("is-valid");
+        } else {
+            $(e.target).removeClass("is-invalid");
+            $(e.target).removeClass("border-danger");
+
+            $(e.target).addClass("border-success");
+            $(e.target).addClass("is-valid");
+        }
+    });
+
     $('.input-text').change((e) => {
-        console.log(e.target.value)
         if (e.target.value === '') {
             $(e.target).addClass("is-invalid");
             $(e.target).addClass("border-danger");
