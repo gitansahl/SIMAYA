@@ -20,5 +20,4 @@ public interface AnggotaService {
     void gantiPassword(String id, String newPassword);
     List<AnggotaModel> getListAnggotaBasedonRole(RoleEnum ROLE);
     String uploadProfile(MultipartFile image, String username, String pastUrl) throws IOException;
-
 }
