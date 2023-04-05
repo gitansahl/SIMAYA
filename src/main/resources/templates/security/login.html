@@ -19,7 +19,7 @@
         .form-container {
             background: #FFFFFF;
             border-radius: 0.25rem;
-            padding: 5rem 6rem;
+            padding: 2rem 4rem;
             margin-top: auto;
             margin-bottom: auto;
         }
@@ -36,17 +36,20 @@
             <div class="row">
                 <div class="col-md-4 col-sm-4 col-xs-12"></div>
                 <div class="col-md-4 col-sm-4 col-xs-12">
+                    <!--    ALERT MSG SUCCESS-->
+                    <div class="alert" style="background-color: #37814F; color: white" role="alert" th:if="${code} != null">
+                        <span>Log out berhasil!</span>
+                        <button type="button" class="close" style="color:white;" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <!--    ALERT MSG-->
+                    <div class="alert alert-danger" role="alert" th:if="${param.error}">Username atau Kata sandi salah!</div>
                     <div class="form-container">
-                        <!--    ALERT MSG SUCCESS-->
-                        <div class="alert" style="background-color: #37814F; color: white" role="alert" th:if="${code} != null">
-                            <span>Log out berhasil!</span>
-                            <button type="button" class="close" style="color:white;" data-dismiss="alert" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
+                        <div style="display: flex; justify-content: center">
+                            <img style="align-self: center" src="https://drive.google.com/uc?id=1nzs-oK0IV1wIoxteticf1nMvbyvhuaOP"
+                                 width="300px" alt="Logo">
                         </div>
-                        <div class="alert alert-danger" role="alert" th:if="${param.error}">Username atau Kata sandi salah!</div>
-                        <!--    ALERT MSG-->
-                        <h1 class="mb-4">Login</h1>
                         <div class="form-group mb-4">
                             <label class="mb-2" for="UsernameForm">Username</label>
                             <input type="text" name="username" class="form-control input-text" id="UsernameForm" placeholder="Masukkan username...">
