@@ -67,6 +67,24 @@
             <h3 class="my-auto">Menambahkan Katalog Usaha</h3>
         </div>
         <div class="card-body">
+
+            <div class="row mb-3">
+                <div class="col-12">
+                    <div class="container-fluid mx-1" style="font-size:13px; color:#ED3237;">
+                        <div class="mb-3 mx-3 px-2">
+                            <span>Berikut beberapa ketentuan yang harus diperhatikan agar usaha Anda berpeluang besar diverifikasi:</span>
+                            <ul>
+                                <li>Pastikan data usaha yang mencakup nama produk, harga produk, gambar produk, dan deskripsi produk saling relevan. </li>
+                                <li>Pastikan angka 0 pada harga produk sesuai dan tidak berlebih untuk mencegah kesalahan harga.</li>
+                                <li>Pastikan kontak penjual aktif dan dapat dihubungi oleh calon pembeli.</li>
+                                <li>Pastikan nama produk dan deskripsi produk tidak mengandung SARA atau menyinggung pihak tertentu.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
             <form th:action="@{/tambah-usaha}" th:object="${usaha}" method="POST" class="needs-validation" enctype="multipart/form-data">
                 <!--Baris 1-->
                 <div class="row my-3">

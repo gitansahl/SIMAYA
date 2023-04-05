@@ -56,6 +56,10 @@
             position: relative;
         }
 
+        .button-input {
+            cursor: pointer;
+        }
+
     </style>
 
 </head>
@@ -67,6 +71,23 @@
             <h3 class="my-auto">Mengubah Katalog Usaha</h3>
         </div>
         <div class="card-body">
+
+            <div class="row mb-3">
+                <div class="col-12">
+                    <div class="container-fluid mx-1" style="font-size:13px; color:#ED3237;">
+                        <div class="mb-3 mx-3 px-2">
+                            <span>Berikut beberapa ketentuan yang harus diperhatikan agar usaha Anda berpeluang besar diverifikasi:</span>
+                            <ul>
+                                <li>Pastikan data usaha yang mencakup nama produk, harga produk, gambar produk, dan deskripsi produk saling relevan. </li>
+                                <li>Pastikan angka 0 pada harga produk sesuai dan tidak berlebih untuk mencegah kesalahan harga.</li>
+                                <li>Pastikan kontak penjual aktif dan dapat dihubungi oleh calon pembeli.</li>
+                                <li>Pastikan nama produk dan deskripsi produk tidak mengandung SARA atau menyinggung pihak tertentu.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <form th:action="@{/ubah-usaha}" th:object="${usaha}" method="POST" class="needs-validation" enctype="multipart/form-data">
                 <!--Baris 1-->
                 <div class="row my-3">
@@ -100,7 +121,7 @@
                                     <label for="formGroupExampleInput2" class="form-label">Harga Produk <span
                                             style="color: red">*</span></label>
                                     <div class="input-group mb-3">
-                                        <span class="input-group-text" id="basic-addon1">Rp.</span>
+                                        <span class="input-group-text border-success rounded-start border border-2" id="basic-addon1">Rp.</span>
                                         <input type="number" th:field="*{hargaProduk}" min="0"
                                                class="form-control input-text border-success rounded-end border border-2"
                                                id="formGroupExampleInput2" placeholder="Masukkan harga produk..." required>
@@ -172,10 +193,16 @@
                             <div class="mb-3 mx-3 px-2">
                                 <label for="upload" class="form-label">Gambar Produk <span
                                         style="color: red">*</span></label>
+                                <div class="input-group button-input" onclick="uploadFile()">
+                                    <button type="button" class="input-group-text border-success rounded-start border border-2" id="button-upload">Choose Files</button>
+                                    <input id="upload-label" type="text" class="button-input form-control border-success rounded-end border border-2"
+                                           th:value="${#lists.size(usaha.gambarUsaha)} + ' ' + files" aria-label="Username" aria-describedby="basic-addon1" disabled
+                                           style="background-color: white">
+                                </div>
                                 <input type="file" name="upload" id="upload" multiple
                                        class="form-control input-photo border-success rounded-start border border-2"
-                                       placeholder="Masukkan gambar produk..." required
-                                       accept="image/png, image/jpeg"/>
+                                       placeholder="Masukkan gambar produk..."
+                                       accept="image/png, image/jpeg" style="display: none"/>
                                 <div class="valid-feedback">
                                     Looks good!
                                 </div>
@@ -266,6 +293,10 @@
 
 <script>
 
+    function uploadFile() {
+        $("#upload").click()
+    }
+
     $('.input-text').change((e) => {
         if (e.target.value === '') {
             $(e.target).addClass("is-invalid");
@@ -283,18 +314,29 @@
     });
 
     $('.input-photo').change((e) => {
+        $(e.target).removeClass("is-invalid");
+        $(e.target).removeClass("border-danger");
+
+        $(e.target).addClass("border-success");
+        $(e.target).addClass("is-valid");
+    });
+
+    $('.input-photo').change((e) => {
         if (e.target.files.length === 0) {
             $(e.target).addClass("is-invalid");
             $(e.target).addClass("border-danger");
 
             $(e.target).removeClass("border-success");
             $(e.target).removeClass("is-valid");
+            document.getElementById("upload-label").value = "No file chosen"
+
         } else {
             $(e.target).removeClass("is-invalid");
             $(e.target).removeClass("border-danger");
 
             $(e.target).addClass("border-success");
             $(e.target).addClass("is-valid");
+            document.getElementById("upload-label").value = document.getElementById("upload").files.length + " files"
         }
     });
 
