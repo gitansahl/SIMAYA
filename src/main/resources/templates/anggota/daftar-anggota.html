@@ -1,79 +1,88 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://thymeleaf.org">
+<html lang="en" xmlns:th="http://thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>Daftar Anggota</title>
     <object th:include="fragments/fragment :: css" th:remove="tag"></object>
     <object th:include="fragments/fragment :: js" th:remove="tag"></object>
     <!--    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.css">-->
-    <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
-    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js"
+            integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+    <script type="text/javascript" charset="utf8"
+            src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.8.4/moment.min.js"></script>
-    <script type="text/javascript" src="https://cdn.datatables.net/plug-ins/1.10.16/sorting/datetime-moment.js"></script>
+    <script type="text/javascript"
+            src="https://cdn.datatables.net/plug-ins/1.10.16/sorting/datetime-moment.js"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/plug-ins/1.10.21/dataRender/datetime.js"></script>
-    <link href="https://nightly.datatables.net/css/jquery.dataTables.css" rel="stylesheet" type="text/css" />
+    <link href="https://nightly.datatables.net/css/jquery.dataTables.css" rel="stylesheet" type="text/css"/>
     <style>
-        body{
+        html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+        }
+
+        body {
             background-image: url("https://www.linkpicture.com/q/bg_17.png");
             background-position: center;
             background-repeat: no-repeat;
             background-attachment: fixed;
             background-size: cover;
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            position: relative;
         }
 
-        .dataTables_wrapper .dataTables_filter input:focus-visible{
+        #container {
+            min-height: 100%;
+            position: relative;
+        }
+
+        .dataTables_wrapper .dataTables_filter input:focus-visible {
             box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.25);
             border-color: #28a745;
         }
 
-        .dataTables_wrapper .dataTables_filter input{
+        .dataTables_wrapper .dataTables_filter input {
             border-color: #28a745;
             margin-left: 10px;
         }
 
-        table.dataTable.hover tbody tr:hover{
+        table.dataTable.hover tbody tr:hover {
             background-color: #DBEFE1;
         }
 
-        .dataTables_wrapper .dataTables_paginate .paginate_button.current{
+        .dataTables_wrapper .dataTables_paginate .paginate_button.current {
             background-color: #E0EFEF !important;
         }
 
-        .dataTables_wrapper .dataTables_paginate .paginate_button:hover{
+        .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
             background-color: #E0EFEF !important;
             background: -webkit-gradient(linear, left top, left bottom, color-stop(30%, #FFF), color-stop(100%, #E0EFEF));
             color: black !important;
             border-color: #28a745;
         }
 
-        .dataTables_wrapper .dataTables_paginate .paginate_button.disabled:hover{
+        .dataTables_wrapper .dataTables_paginate .paginate_button.disabled:hover {
             background-color: transparent !important;
         }
 
-        tbody, td, tfoot, th, thead, tr{
+        tbody, td, tfoot, th, thead, tr {
             border-color: #28a745 !important;
         }
 
-        .dataTables_wrapper .dataTables_length select{
+        .dataTables_wrapper .dataTables_length select {
             border-color: #28a745;
         }
 
-        .dataTables_wrapper .dataTables_length select:focus-visible{
+        .dataTables_wrapper .dataTables_length select:focus-visible {
             border-color: #28a745;
             box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.25);
         }
 
-        th.sorting.sorting_desc, th.sorting.sorting_asc{
+        th.sorting.sorting_desc, th.sorting.sorting_asc {
             color: #37814F;
-        }
-
-        body{
-            background-image: url("https://www.linkpicture.com/q/bg_17.png");
-            background-position: center;
-            background-repeat: no-repeat;
-            background-attachment: fixed;
-            background-size: cover;
-            font-family: "Segoe UI", "Segoe UI Semibold", "Segoe UI Black", sans-serif;
         }
 
     </style>
@@ -81,10 +90,21 @@
 </head>
 <body>
 <nav th:replace="fragments/fragment :: navbar('anggota')"></nav>
-<div class="container my-5">
+<div class="container-xl my-5" id="container">
+
+    <!--    ALERT MSG SUCCESS-->
+    <div class="alert" style="background-color: #37814F; color: white" role="alert" th:if="${success}">
+        <span th:text="${success}"></span>
+        <button type="button" class="close" style="color:white;" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <!--    ALERT MSG-->
+
     <div th:if="${modal_add}">
         <!-- Modal -->
-        <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+             aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -106,6 +126,10 @@
         </div>
         <div class="card-body">
             <div class="justify-content-center">
+                <div sec:authorize="hasAuthority('ADMIN')">
+                    <a  class="btn btn-success float-right" style="margin:10px 0px 40px 0px" th:href="@{/tambah-anggota}">Tambah Anggota</a>
+                </div>
+
                 <br>
                 <table id="table_anggota" class="hover row-border stripe">
                     <thead>
@@ -139,7 +163,7 @@
 </div>
 <footer th:replace="fragments/fragment :: footer"></footer>
 <script th:inline="javascript">
-    $(document).ready(function (){
+    $(document).ready(function () {
         $('#staticBackdrop').modal('show');
 
         $('#table_anggota').DataTable({
@@ -149,30 +173,33 @@
             },
             "searching": true,
             "ordering": true,
-            columnDefs: [ {
+            columnDefs: [{
                 targets: 2,
-                render: $.fn.dataTable.render.moment('DD MMMM YYYY' )
-            } ],
+                render: $.fn.dataTable.render.moment('DD MMMM YYYY')
+            }],
             "columns": [
-                {"data": null,
-                    "render": function(data){
+                {
+                    "data": null,
+                    "render": function (data) {
                         return data.namaDepan + " " + data.namaBelakang;
                     }
                 },
                 {"data": "tempatLahir"},
                 {"data": "tanggalLahir"},
-                {"data": null,
-                    "render": function (data){
-                    if (data.jenisKelamin == 1){
-                        return "Laki-Laki";
-                    } else {
-                        return "Perempuan";
-                    }
+                {
+                    "data": null,
+                    "render": function (data) {
+                        if (data.jenisKelamin == 1) {
+                            return "Laki-Laki";
+                        } else {
+                            return "Perempuan";
+                        }
                     }
                 },
-                {"data": null,
-                    "render": function (data){
-                        if (data.statusKeanggotaan == 0){
+                {
+                    "data": null,
+                    "render": function (data) {
+                        if (data.statusKeanggotaan == 0) {
                             return "Tidak Aktif";
                         } else {
                             return "Aktif";
@@ -180,9 +207,10 @@
                     }
                 },
                 {"data": "nomorHP"},
-                {"data": null,
-                    "render": function (data,type) {
-                        return '<button class="btn btn-success" href="#">' + 'Detail' + '</button>';
+                {
+                    "data": null,
+                    "render": function (data, type) {
+                        return '<a class="btn btn-outline-success" href="/profil/' + data.id + '">' + 'Detail' + '</a>';
                     }
                 }
 

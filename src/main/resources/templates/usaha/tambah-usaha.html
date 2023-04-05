@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Tambah Usaha</title>
+    <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+    <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+    <style>
+        .form-control:focus {
+            border-color: #28a745;
+            box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.25);
+        }
+
+        .form-select:focus {
+            border-color: #28a745;
+            box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.25);
+        }
+
+        option:checked {
+            background-color: #28a745;
+            color: white;
+            box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.25);
+        }
+
+        option:hover {
+            background-color: #28a745;
+            box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.25);
+        }
+
+        .form-check-input:checked {
+            background-color: #28a745;
+            border-color: #28a745;
+        }
+
+        html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+        }
+
+        body {
+            background-image: url("https://www.linkpicture.com/q/bg_17.png");
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-size: cover;
+            font-family: "Segoe UI", "Segoe UI Semibold", "Segoe UI Black", sans-serif;
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            position: relative;
+        }
+
+        #container {
+            min-height: 100%;
+            position: relative;
+        }
+
+    </style>
+
+</head>
+<body>
+<nav th:replace="fragments/fragment :: navbar('usaha')"></nav>
+<div class="container my-5" id="container">
+    <div class="card" style="width: 100%;">
+        <div class="card-header text-center" style="background-color: #DBEFE1">
+            <h3 class="my-auto">Menambahkan Katalog Usaha</h3>
+        </div>
+        <div class="card-body">
+
+            <div class="row mb-3">
+                <div class="col-12">
+                    <div class="container-fluid mx-1" style="font-size:13px; color:#ED3237;">
+                        <div class="mb-3 mx-3 px-2">
+                            <span>Berikut beberapa ketentuan yang harus diperhatikan agar usaha Anda berpeluang besar diverifikasi:</span>
+                            <ul>
+                                <li>Pastikan data usaha yang mencakup nama produk, harga produk, gambar produk, dan deskripsi produk saling relevan. </li>
+                                <li>Pastikan angka 0 pada harga produk sesuai dan tidak berlebih untuk mencegah kesalahan harga.</li>
+                                <li>Pastikan kontak penjual aktif dan dapat dihubungi oleh calon pembeli.</li>
+                                <li>Pastikan nama produk dan deskripsi produk tidak mengandung SARA atau menyinggung pihak tertentu.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <form th:action="@{/tambah-usaha}" th:object="${usaha}" method="POST" class="needs-validation" enctype="multipart/form-data">
+                <!--Baris 1-->
+                <div class="row my-3">
+                    <div class="col-6">
+                        <div class="row">
+                            <div class="col-1"></div>
+                            <div class="col-10">
+                                <div class="mb-3">
+                                    <label for="formGroupExampleInput1" class="form-label">Nama Produk <span
+                                            style="color: red">*</span></label>
+                                    <input type="text" th:field="*{namaProduk}"
+                                           class="form-control input-text border-success rounded-start border border-2"
+                                           id="formGroupExampleInput1" placeholder="Masukkan nama produk..." required>
+                                    <div class="valid-feedback">
+                                        Looks good!
+                                    </div>
+                                    <div class="invalid-feedback">
+                                        Masukkan Nama Produk.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-1"></div>
+                        </div>
+                    </div>
+
+                    <div class="col-6">
+                        <div class="row">
+                            <div class="col-1"></div>
+                            <div class="col-10">
+                                <div class="mb-3">
+                                    <label for="formGroupExampleInput2" class="form-label">Harga Produk <span
+                                            style="color: red">*</span></label>
+                                    <div class="input-group mb-3">
+                                        <span class="input-group-text" id="basic-addon1">Rp.</span>
+                                        <input type="number" th:field="*{hargaProduk}" min="0"
+                                               class="form-control input-text border-success rounded-end border border-2"
+                                               id="formGroupExampleInput2" placeholder="Masukkan harga produk..." required>
+                                    </div>
+                                    <div class="valid-feedback">
+                                        Looks good!
+                                    </div>
+                                    <div class="invalid-feedback">
+                                        Masukkan Harga Produk.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-1"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!--Baris 2-->
+                <div class="row my-3">
+                    <div class="col-6">
+                        <div class="row">
+                            <div class="col-1"></div>
+                            <div class="col-10">
+                                <div class="mb-3">
+                                    <label for="formGroupExampleInput3" class="form-label">Nama Penjual <span
+                                            style="color: red">*</span></label>
+                                    <input type="text" th:field="*{namaPenjual}"
+                                           class="form-control input-text border-success rounded-start border border-2"
+                                           id="formGroupExampleInput3" placeholder="Masukkan nama penjual..." required>
+                                    <div class="valid-feedback">
+                                        Looks good!
+                                    </div>
+                                    <div class="invalid-feedback">
+                                        Masukkan Nama Penjual.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-1"></div>
+                        </div>
+                    </div>
+
+                    <div class="col-6">
+                        <div class="row">
+                            <div class="col-1"></div>
+                            <div class="col-10">
+                                <div class="mb-3">
+                                    <label for="formGroupExampleInput4" class="form-label">Kontak Penjual <span
+                                            style="color: red">*</span></label>
+                                    <input type="text" th:field="*{kontakPenjual}"
+                                           class="form-control input-text border-success rounded-start border border-2"
+                                           id="formGroupExampleInput4" placeholder="Masukkan kontak penjual..." required>
+                                    <div class="valid-feedback">
+                                        Looks good!
+                                    </div>
+                                    <div class="invalid-feedback">
+                                        Masukkan Kontak Penjual.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-1"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!--Baris 3-->
+                <div class="row my-3">
+                    <div class="col-12">
+                        <div class="container-fluid mx-1">
+                            <div class="mb-3 mx-3 px-2">
+                                <label for="upload" class="form-label">Gambar Produk <span
+                                        style="color: red">*</span></label>
+<!--                                <input type="file" th:field="*{gambarUsaha}" multiple accept="image/png, image/jpeg"-->
+<!--                                       class="form-control input-photo border-success rounded-start border border-2"-->
+<!--                                       id="formGroupExampleInput5" placeholder="Masukkan gambar produk..." required>-->
+                                <input type="file" name="upload" id="upload" multiple
+                                       class="form-control input-photo border-success rounded-start border border-2"
+                                       placeholder="Masukkan gambar produk..." required
+                                       accept="image/png, image/jpeg"/>
+                                <div class="valid-feedback">
+                                    Looks good!
+                                </div>
+                                <div class="invalid-feedback">
+                                    Masukkan setidaknya 1 Gambar Produk.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!--Baris 4-->
+                <div class="row my-3">
+                    <div class="col-12">
+                        <div class="container-fluid mx-1">
+                            <div class="mb-3 mx-3 px-2">
+                                <label for="formGroupExampleInput6" class="form-label">Deskripsi Produk <span
+                                        style="color: red">*</span></label>
+                                <textarea type="text" th:field="*{deskripsiProduk}" placeholder="Masukkan deskripsi produk..."
+                                          class="form-control input-text border-success rounded-3 border border-2"
+                                          id="formGroupExampleInput6"></textarea>
+                                <div class="valid-feedback">
+                                    Looks good!
+                                </div>
+                                <div class="invalid-feedback">
+                                    Masukkan Deskripsi Produk.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mt-5 mb-3">
+                    <div class="col-5"></div>
+                    <div class="col-2">
+                        <button type="submit" class="btn btn-success btn-lg">Tambah</button>
+                    </div>
+                    <div class="col-5"></div>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    $('.input-text').change((e) => {
+        if (e.target.value === '') {
+            $(e.target).addClass("is-invalid");
+            $(e.target).addClass("border-danger");
+
+            $(e.target).removeClass("border-success");
+            $(e.target).removeClass("is-valid");
+        } else {
+            $(e.target).removeClass("is-invalid");
+            $(e.target).removeClass("border-danger");
+
+            $(e.target).addClass("border-success");
+            $(e.target).addClass("is-valid");
+        }
+    });
+
+    $('.input-photo').change((e) => {
+        if (e.target.files.length === 0) {
+            $(e.target).addClass("is-invalid");
+            $(e.target).addClass("border-danger");
+
+            $(e.target).removeClass("border-success");
+            $(e.target).removeClass("is-valid");
+        } else {
+            $(e.target).removeClass("is-invalid");
+            $(e.target).removeClass("border-danger");
+
+            $(e.target).addClass("border-success");
+            $(e.target).addClass("is-valid");
+        }
+    });
+
+</script>
+
+</body>
+</html>

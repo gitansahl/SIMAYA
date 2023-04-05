@@ -1,11 +1,10 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://thymeleaf.org">
+<html lang="en" xmlns:th="http://thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>Daftar Event</title>
     <object th:include="fragments/fragment :: css" th:remove="tag"></object>
     <object th:include="fragments/fragment :: js" th:remove="tag"></object>
-    <!--    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.css">-->
     <script src="https://code.jquery.com/jquery-3.6.1.min.js"
             integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
     <script type="text/javascript" charset="utf8"
@@ -15,13 +14,34 @@
             src="https://cdn.datatables.net/plug-ins/1.10.16/sorting/datetime-moment.js"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/plug-ins/1.10.21/dataRender/datetime.js"></script>
     <link href="https://nightly.datatables.net/css/jquery.dataTables.css" rel="stylesheet" type="text/css"/>
+
+    <script type="text/javascript"
+            src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.2/moment.min.js"></script>
+
+
     <style>
+        html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+        }
+
         body {
             background-image: url("https://www.linkpicture.com/q/bg_17.png");
             background-position: center;
             background-repeat: no-repeat;
             background-attachment: fixed;
             background-size: cover;
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            position: relative;
+        }
+
+        #container {
+            min-height: 100%;
+            position: relative;
         }
 
         .dataTables_wrapper .dataTables_filter input:focus-visible {
@@ -75,16 +95,60 @@
 </head>
 <body>
 <nav th:replace="fragments/fragment :: navbar('event')"></nav>
-<div class="container my-5">
+<div class="container-xl my-5" id="container">
 
+    <!--    ALERT MSG SUCCESS-->
+    <div class="alert" style="background-color: #37814F; color: white" role="alert" th:if="${success}">
+        <span th:text="${success}"></span>
+        <button type="button" class="close" style="color:white;" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+
+    <!--    ALERT MSG SUCCESS-->
+    <div class="alert alert-danger" role="alert" th:if="${error}">
+        <span th:text="${error}"></span>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+
+
+
+    <!--    ALERT MSG-->
     <div class="card" style="width: 100%;">
         <div class="card-header text-center" style="background-color: #DBEFE1">
             <h3 class="my-auto">Daftar Event</h3>
         </div>
         <div class="card-body">
             <div class="justify-content-center">
+                <div class="row" style="margin-top: 10px">
+                    <div class="col">
+                        <table>
+                            <thead>
+                            <tr>
+                                <h6>Periode Event</h6>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>Tanggal Awal:</td>
+                                <td><input class="form-control" type="datetime-local" id="min" name="min"></td>
+                            </tr>
+                            <tr>
+                                <td>Tanggal Akhir:</td>
+                                <td><input class="form-control" type="datetime-local" id="max" name="max"></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="col" style="text-align: right" sec:authorize="hasAuthority('SDM_OPERASIONAL')">
+                        <a class="btn btn-success" th:href="@{/tambah-event}">Tambah Event</a>
+                    </div>
+                </div>
                 <br>
-                <table id="table_event" class="hover row-border stripe">
+                <table id="table_event" class="hover row-border stripe" style="width:100%">
                     <thead>
                     <tr>
                         <th>Nama Event</th>
@@ -116,20 +180,40 @@
 </div>
 <footer th:replace="fragments/fragment :: footer"></footer>
 <script th:inline="javascript">
+    var minDate, maxDate;
+
+    // Custom filtering function which will search data in column four between two values //
+    $.fn.dataTable.ext.search.push(
+        function (settings, data, dataIndex) {
+            var min = $('#min').val();
+            var max = $('#max').val();
+
+            if (min !== "" && max !== "") {
+                var min = new Date(min);
+                var max = new Date(max);
+            }
+
+            var dateAwal = new Date(data[1]);
+
+            if ((min === "" && max === "") ||
+                (min === "" && dateAwal <= max) ||
+                (min <= dateAwal && max === "") ||
+                (min <= dateAwal && dateAwal <= max)) {
+                return true;
+            }
+            return false;
+
+        }
+    );
 
     $(document).ready(function () {
 
-        $('#table_event thead tr')
-            .clone(true)
-            .addClass('filters')
-            .appendTo('#table_event thead');
-
-        $('#table_event').DataTable({
+        var table = $('#table_event').DataTable({
             "ajax": {
                 "url": "/api/event/viewall",
                 "dataSrc": ''
             },
-            "searching": false,
+            "searching": true,
             "ordering": true,
             columnDefs: [{
                 targets: 1,
@@ -138,8 +222,10 @@
                 targets: 2,
                 render: $.fn.dataTable.render.moment('YYYY-MM-DDTHH:mm:ss', 'DD MMM YYYY HH:mm')
             },
-                {targets: 6,
-                orderable: false}
+                {
+                    targets: 6,
+                    orderable: false
+                }
             ],
             "columns": [
                 {"data": "namaEvent"},
@@ -162,65 +248,18 @@
                 {
                     "data": null,
                     "render": function (data, type) {
-                        return '<a class="btn btn-success" href="/event/'+ data.idEvent +'">' + 'Detail' + '</a>';
+                        return '<a class="btn btn-outline-success" href="/event/' + data.idEvent + '">' + 'Detail' + '</a>';
                     }
                 }
             ],
-            initComplete: function () {
-                var api = this.api();
-
-                // For each column
-                api
-                    .columns()
-                    .eq(0)
-                    .each(function (colIdx) {
-                        // Set the header cell to contain the input element
-                        var cell = $('.filters th').eq(
-                            $(api.column(colIdx).header()).index()
-                        );
-                        var title = $(cell).text();
-
-                        if (title != "Action"){
-                            $(cell).html('<input class="form-control" type="text" placeholder="' + title + '" />');
-                        } else{
-                            $(cell).html('<p></p>');
-                        }
-
-                        // On every keypress in this input
-                        $(
-                            'input',
-                            $('.filters th').eq($(api.column(colIdx).header()).index())
-                        )
-                            .off('keyup change')
-                            .on('change', function (e) {
-                                // Get the search value
-                                $(this).attr('title', $(this).val());
-                                var regexr = '({search})'; //$(this).parents('th').find('select').val();
-
-                                var cursorPosition = this.selectionStart;
-                                // Search the column for that value
-                                api
-                                    .column(colIdx)
-                                    .search(
-                                        this.value != ''
-                                            ? regexr.replace('{search}', '(((' + this.value + ')))')
-                                            : '',
-                                        this.value != '',
-                                        this.value == ''
-                                    )
-                                    .draw();
-                            })
-                            .on('keyup', function (e) {
-                                e.stopPropagation();
-
-                                $(this).trigger('change');
-                                $(this)
-                                    .focus()[0]
-                                    .setSelectionRange(cursorPosition, cursorPosition);
-                            });
-                    });
-            },
         });
+
+        // Refilter the table
+        $('#min, #max').change(function () {
+            table.draw();
+        });
+
+        // $.fn.dataTable.ext.search.pop();
     })
 </script>
 

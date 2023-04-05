@@ -16,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -92,6 +93,10 @@ public class AnggotaServiceImpl implements AnggotaService {
     }
 
     @Override
+    public AnggotaModel getAnggotaById(String id) {
+        return anggotaDb.findAnggotaModelById(id);
+    }
+    @Override
     public boolean cekPassword(String id, String oldPassword) {
         AnggotaModel anggotaModel = anggotaDb.findAnggotaModelById(id);
         return encoder.matches(oldPassword, anggotaModel.getPassword());
@@ -118,6 +123,11 @@ public class AnggotaServiceImpl implements AnggotaService {
 
         FileUploadUtil.saveFile("src/main/resources/static/user-photos/", username + "." + extension, image);
         return uploadedFileName;
+    }
+
+    @Override
+    public List<AnggotaModel> getListAnggotaBasedonRole(RoleEnum ROLE) {
+        return anggotaDb.findAllByRoleEquals(ROLE);
     }
 
     private AnggotaModel setAnggotaModel(AnggotaDTO anggotaDTO, AnggotaModel anggotaModel) {
@@ -155,5 +165,6 @@ public class AnggotaServiceImpl implements AnggotaService {
 
         return profileModel;
     }
+
 
 }

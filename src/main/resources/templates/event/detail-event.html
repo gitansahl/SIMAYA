@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>Detail Event</title>
@@ -17,6 +17,12 @@
 
 
     <style>
+        html{
+            margin: 0;
+            padding: 0;
+            height: 100%;
+        }
+
         body {
             background-image: url("https://www.linkpicture.com/q/bg_17.png");
             background-position: center;
@@ -24,6 +30,24 @@
             background-attachment: fixed;
             background-size: cover;
             font-family: "Segoe UI", "Segoe UI Semibold", "Segoe UI Black", sans-serif;
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            position: relative;
+        }
+
+        hr {
+            margin-top: 0px;
+            border: none;
+            height: 1px;
+            /* Set the hr color */
+            color: #333;  /* old IE */
+            background-color: #333;  /* Modern Browsers */
+        }
+
+        #container{
+            min-height: 100%;
+            position: relative;
         }
 
         .icon ~ .icon-label {
@@ -57,7 +81,17 @@
 
 <nav th:replace="fragments/fragment :: navbar('event')"></nav>
 
-<div class="container-fluid" th:if="${event.isDeleted.booleanValue() == false}">
+<div class="container-fluid" th:if="${event.isDeleted.booleanValue() == false}" id="container">
+
+    <!--    ALERT MSG ERROR-->
+    <div class="alert alert-danger alert-dismissible fade show" style="margin: 20px 50px -30px 50px" role="alert" th:if="${error}">
+        <span th:text="${error}"></span>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <!--    ALERT MSG-->
+
     <div class="card" style="margin: 50px 50px 0px 50px; padding-bottom:20px;background-color: rgba(255, 255, 255, 0.5)">
         <div class="row">
             <div class="col" style="margin-left: 50px;">
@@ -68,25 +102,14 @@
                                 style="padding-right: 5px; padding-bottom: 5px; border-bottom: 3px solid; display: inline-block"></h1>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col">
-                            <span class="material-symbols-outlined icon">Today</span>
-                            <p class="icon-label"
-                               th:text="${#temporals.format(event.waktuMulai, 'dd MMMM yyyy HH:mm')}"></p>
 
-                        </div>
+                    <div class="row">
                         <div class="col">
                             <span class="material-symbols-outlined icon">person</span>
                             <p class="icon-label"
                                th:text="${event.penanggungJawab.getNamaDepan()} + ' ' + ${event.penanggungJawab.getNamaBelakang()}"></p>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col">
-                            <span class="material-symbols-outlined icon">event_available</span>
-                            <p class="icon-label"
-                               th:text="${#temporals.format(event.waktuAkhir, 'dd MMMM yyyy HH:mm')}"></p>
-                        </div>
+
                         <div class="col">
                             <span class="material-symbols-outlined icon">task</span>
                             <p class="icon-label" th:text="${event.programKerja}"></p>
@@ -107,7 +130,16 @@
                                 Usaha</p>
                         </div>
                     </div>
-                    <div class="row" style="margin-top: 70px">
+                    <div class="row">
+                        <div class="col">
+                            <span class="material-symbols-outlined icon">Today</span>
+                            <p class="icon-label"
+                               th:text="${#temporals.format(event.waktuMulai, 'dd MMMM yyyy, HH:mm')} + ' - ' + ${#temporals.format(event.waktuAkhir, 'dd MMMM yyyy, HH:mm')}"></p>
+
+                        </div>
+
+                    </div>
+                    <div class="row" style="margin-top: 20px">
                         <div class="col">
                             <h4>Deskripsi</h4>
                         </div>
@@ -122,15 +154,34 @@
             <div class="col">
                 <div class="card" style="margin:40px">
                     <div class="card-header text-center" style="background-color: #DBEFE1">
-                        <h5>Progres Event</h5>
+                        <h5>Daftar Progres Event</h5>
                     </div>
                     <div class="card-body">
+
+                        <div class="row">
+                            <div class="col">
+                                <h6>Keterangan:</h6>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-auto">
+                                <span class="material-symbols-outlined icon" style="color: green">check_circle</span>
+                                <p class="icon-label" style="font-size: 16px">Progres telah selesai</p>
+                            </div>
+                            <div class="col-sm-auto">
+                                <span class="material-symbols-outlined icon" style="color: #FECB00">clock_loader_60</span>
+                                <p class="icon-label" style="font-size: 16px">Progres belum selesai</p>
+                            </div>
+                        </div>
+
+                        <hr>
 
                         <table id="table_progres" class="hover row-border stripe">
                             <thead>
                             <tr>
-                                <th>Deskripsi Progres</th>
+                                <th>Progres</th>
                                 <th>Status</th>
+                                <th>Id Progres</th>
                                 <th>Action</th>
                             </tr>
 
@@ -140,32 +191,37 @@
                                 <td>Data 1</td>
                                 <td>Data 2</td>
                                 <td>Data 3</td>
+                                <td>Data 4</td>
                             </tr>
                             </tbody>
                         </table>
 
+
+                        <input id="isRole" sec:authorize="hasAuthority('SDM_OPERASIONAL')" type="hidden" value="true"/>
+                        <input id="isRole" sec:authorize="!hasAuthority('SDM_OPERASIONAL')" type="hidden" value="false"/>
+
                         <div>
                             <input id="idEvent" type="hidden" th:value="${event.idEvent}">
                         </div>
-
-                        <!--                        <div th:unless="${listProgres.size() != 0}">-->
-                        <!--                            <p style="color: dimgray">Belum ada progres...</p>-->
                         <div class="d-flex justify-content-center">
-                            <button type="button" class="btn btn-tambah" data-toggle="modal"
+                            <button type="button" class="btn btn-tambah" data-toggle="modal" sec:authorize="hasAuthority('SDM_OPERASIONAL')"
                                     data-target="#exampleModalCenter">Tambah progres
                             </button>
-                            <!--                                th:href="@{/event/{id}/ubah (id = ${event.idEvent})}"-->
                         </div>
-
-                        <!--                        </div>-->
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
+    <!--    ALERT MSG INFO-->
+    <div class="alert alert-primary" style="margin: 20px 50px -30px 50px" role="alert" sec:authorize="hasAuthority('SDM_OPERASIONAL')" th:if="${event.getListProgres().size() != 0}">
+        <span> <b>[INFO]</b> Event hanya bisa dihapus ketika tidak memiliki progres!</span>
+    </div>
+    <!--    ALERT MSG-->
+
     <div class="d-flex justify-content-center">
-        <button type="button" class="btn btn-danger btn-lg" data-toggle="modal" data-target="#deleteConfirmationModal" style="margin: 20px">Hapus
+        <button th:if="${event.getListProgres().size() == 0}" type="button" class="btn btn-danger btn-lg" data-toggle="modal" data-target="#deleteConfirmationModal" style="margin: 20px" sec:authorize="hasAuthority('SDM_OPERASIONAL')">Hapus
             Event
         </button>
     </div>
@@ -180,7 +236,7 @@
             <img src="https://drive.google.com/uc?id=1OhUIp1PgpWz026RWWxX5fAMFqh2Xt6c-" alt="gif-deleted" style="width: 200px;" class="rounded mx-auto d-block">
             <br>
             <p>Sayang sekali kamu sudah <b>tidak dapat mengakses</b> informasi mengenai event ini. Hal ini karena event telah dihapus oleh <b>SDM & Operasional</b>. Nantikan
-            Event-event kami selanjutnya ya!!</p>
+                Event-event kami selanjutnya ya!!</p>
         </div>
     </div>
 </div>
@@ -224,8 +280,8 @@
             <div class="modal-body">
                 <form id="form-progress">
                     <div class="form-group">
-                        <label for="nama" class="col-form-label">Deskripsi:</label>
-                        <input name="nama" type="text" class="form-control" id="nama">
+                        <label for="nama" class="col-form-label">Progres:</label>
+                        <input name="nama" type="text" class="form-control" id="nama" placeholder="Masukkan deskripsi progres...">
 
                         <input name="event" type="hidden" th:value="${event.idEvent}" id="event">
                     </div>
@@ -241,8 +297,14 @@
 </div>
 <!--MODAL-->
 
+<!--FOOTER-->
+<footer th:replace="fragments/fragment :: footer"></footer>
+<!--FOOTER-->
+
 <!--SCRIPT-->
 <script th:inline="javascript">
+
+    var isRole = $('#isRole').val();
 
     function addProgres() {
         var data = {}
@@ -256,6 +318,7 @@
             data: JSON.stringify(data),
             success: function (data) {
                 window.location.reload();
+                $("#table_progres").DataTable().page('last')
             }
         })
     }
@@ -283,8 +346,20 @@
                 "url": '/api/progres/view/' + id,
                 "dataSrc": ''
             },
+            "order": [ [2,'desc'] ],
+            // "ordering": false,
             "searching": true,
-            "ordering": false,
+            columnDefs: [
+                {
+                    target: 2,
+                    visible: false,
+                    searchable: false,
+                },
+                {
+                    target: 3,
+                    visible: isRole === "true"
+                }
+            ],
             "columns": [
                 {
                     "data": null,
@@ -296,17 +371,20 @@
                     "data": null,
                     "render": function (data) {
                         if (data.status == false) {
-                            return "Belum Selesai"
+                            return '<span class="material-symbols-outlined icon" style="color: #FECB00;">\n' + 'clock_loader_60\n' + '</span>';
                         } else {
-                            return "Selesai"
+                            return '<span class="material-symbols-outlined icon" style="color: green;">\n' + 'check_circle\n' + '</span>';
                         }
                     }
+                },
+                {
+                    "data": "idProgres"
                 },
                 {
                     "data": null,
                     "render": function (data, type) {
                         if (data.status) {
-                            return '<span class="material-symbols-outlined" style="color: green;">\n' + 'check_circle\n' + '</span>';
+                            return '<button id="' + data.idProgres + '" class="btn btn-outline-danger updateButton" onclick="updateClick(this)">' + 'Batalkan' + '</button>';
                         }
 
                         return '<button id="' + data.idProgres + '" class="btn btn-outline-success updateButton" onclick="updateClick(this)">' + 'Selesaikan' + '</button>';

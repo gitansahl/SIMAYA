@@ -7,32 +7,47 @@
     <!--    Fontawesome CDN Link-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"
           integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ=="
-          crossorigin="anonymous" referrerpolicy="no-referrer" />
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
 
     <!-- Link Swiper's CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css"/>
 
     <object th:include="fragments/fragment :: css" th:remove="tag"></object>
     <object th:include="fragments/fragment :: js" th:remove="tag"></object>
 
     <style>
 
-        *{
+        * {
             margin: 0;
             padding: 0;
             font-family: "Segoe UI", "Segoe UI Semibold", "Segoe UI Black", sans-serif;
             box-sizing: border-box;
         }
 
-        body{
+        html{
+            margin: 0;
+            padding: 0;
+            height: 100%;
+        }
+
+        body {
             background-image: url("https://www.linkpicture.com/q/bg_17.png");
             background-position: center;
             background-repeat: no-repeat;
             background-attachment: fixed;
             background-size: cover;
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            position: relative;
         }
 
-        .container{
+        section{
+            min-height: 100%;
+            position: relative;
+        }
+
+        .container {
             position: relative;
             height: 450px;
             width: 1075px;
@@ -40,11 +55,11 @@
             align-items: center;
         }
 
-        .swiper{
+        .swiper {
             width: 950px;
         }
 
-        section .card .image{
+        section .card .image {
             height: 60px;
             width: 60px;
             border-radius: 50%;
@@ -52,7 +67,7 @@
             background: #17A870;
         }
 
-        section .card .image img{
+        section .card .image img {
             height: 50%;
             width: 50%;
             object-fit: cover;
@@ -60,7 +75,7 @@
             border: 3px solid #17A870;
         }
 
-        .card{
+        .card {
             position: relative;
             border-radius: 20px;
             background: #E0EFEF;
@@ -69,7 +84,7 @@
 
         }
 
-        .card::before{
+        .card::before {
             content: "";
             position: absolute;
             height: 55%;
@@ -78,7 +93,7 @@
 
         }
 
-        .card .card-content{
+        .card .card-content {
             padding: 30px;
             display: flex;
             flex-direction: column;
@@ -87,7 +102,7 @@
             z-index: 100;
         }
 
-        .card .name-description{
+        .card .name-description {
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -95,16 +110,16 @@
             color: #373435;
         }
 
-        .name-description .name{
+        .name-description .name {
             font-size: 15px;
             font-weight: bold;
         }
 
-        .name-description .description{
+        .name-description .description {
             font-size: 12px;
         }
 
-        .card .button{
+        .card .button {
             display: flex;
             justify-content: space-around;
             width: 100%;
@@ -123,11 +138,11 @@
             cursor: pointer;
         }
 
-        .button .button:hover{
+        .button .button:hover {
             background: #373435;
         }
 
-        .swiper-pagination-bullet{
+        .swiper-pagination-bullet {
             height: 7px;
             width: 26px;
             border-radius: 25px;
@@ -140,11 +155,12 @@
             border-radius: 20px 20px 0 0;
         }
 
-        h6{
+        h6 {
             font-family: "Segoe UI";
             color: #37814F;
         }
-        p{
+
+        p {
             font-family: "Segoe UI";
             color: #373435;
         }
@@ -156,7 +172,7 @@
 <br>
 <br>
 <div class="d-flex justify-content-center">
-    <h2>Selamat Datang!</h2>
+    <h2 th:text="'Selamat Datang, ' + ${#httpServletRequest.remoteUser} + '!'"></h2>
 </div>
 <br>
 <br>
@@ -168,9 +184,11 @@
                 <div class="card-body">
                     <h5 class="card-title">Manajemen User</h5>
                     <p class="card-text">
-                        Fitur ini merupakan fitur yang digunakan untuk mengelola anggota yang ada di Sistem Informasi Manajemen Yayasan (SIMAYA).
+                        Fitur ini merupakan fitur yang digunakan untuk mengelola anggota yang ada di Sistem Informasi
+                        Manajemen Yayasan (SIMAYA).
                     </p>
-                    <button type="button" class="btn" style="background-color: #37814F; color: white; border-radius: 7px">Klik di sini</button>
+                    <a class="btn" style="background-color: #37814F; color: white; border-radius: 7px"
+                       th:href="@{/anggota/viewall}">Klik di sini</a>
                 </div>
             </div>
             <div class="card swiper-slide">
@@ -178,9 +196,11 @@
                 <div class="card-body">
                     <h5 class="card-title">Event</h5>
                     <p class="card-text">
-                        Fitur ini merupakan fitur yang digunakan untuk mengelola event yang ada di Sistem Informasi Manajemen Yayasan (SIMAYA).
+                        Fitur ini merupakan fitur yang digunakan untuk mengelola event yang ada di Sistem Informasi
+                        Manajemen Yayasan (SIMAYA).
                     </p>
-                    <button type="button" class="btn" style="background-color: #37814F; color: white; border-radius: 7px">Klik di sini</button>
+                    <a class="btn" th:href="@{/event/}"
+                       style="background-color: #37814F; color: white; border-radius: 7px">Klik di sini</a>
                 </div>
             </div>
             <div class="card swiper-slide">
@@ -188,9 +208,11 @@
                 <div class="card-body">
                     <h5 class="card-title">Katalog Usaha</h5>
                     <p class="card-text">
-                        Fitur ini merupakan fitur yang digunakan untuk mengelola usaha yang ada di Sistem Informasi Manajemen Yayasan (SIMAYA).
+                        Fitur ini merupakan fitur yang digunakan untuk mengelola usaha yang ada di Sistem Informasi
+                        Manajemen Yayasan (SIMAYA).
                     </p>
-                    <button type="button" class="btn" style="background-color: #37814F; color: white; border-radius: 7px">Klik di sini</button>
+                    <a type="button" class="btn" style="background-color: #37814F; color: white; border-radius: 7px">Klik
+                        di sini</a>
                 </div>
             </div>
             <div class="card swiper-slide">
@@ -198,9 +220,12 @@
                 <div class="card-body">
                     <h5 class="card-title">Donasi Ziswaf</h5>
                     <p class="card-text">
-                        Fitur ini merupakan fitur yang digunakan untuk mengelola donasi yang ada di Sistem Informasi Manajemen Yayasan (SIMAYA).
+                        Fitur ini merupakan fitur yang digunakan untuk mengelola donasi yang ada di Sistem Informasi
+                        Manajemen Yayasan (SIMAYA).
                     </p>
-                    <button type="button" class="btn" style="background-color: #37814F; color: white; border-radius: 7px">Klik di sini</button>
+                    <button type="button" class="btn"
+                            style="background-color: #37814F; color: white; border-radius: 7px">Klik di sini
+                    </button>
                 </div>
             </div>
             <div class="card swiper-slide">
@@ -208,15 +233,18 @@
                 <div class="card-body">
                     <h5 class="card-title">Keuangan</h5>
                     <p class="card-text">
-                        Fitur ini digunakan untuk mengelola keuangan yang ada di Sistem Informasi Manajemen Yayasan (SIMAYA).
+                        Fitur ini digunakan untuk mengelola keuangan yang ada di Sistem Informasi Manajemen Yayasan
+                        (SIMAYA).
                     </p>
-                    <button type="button" class="btn" style="background-color: #37814F; color: white; border-radius: 7px">Klik di sini</button>
+                    <button type="button" class="btn"
+                            style="background-color: #37814F; color: white; border-radius: 7px">Klik di sini
+                    </button>
                 </div>
             </div>
         </div>
         <div class="swiper-button-next"></div>
         <div class="swiper-button-prev"></div>
-<!--        <div class="swiper-pagination"></div>-->
+        <!--        <div class="swiper-pagination"></div>-->
         <div class="swiper-scrollbar"></div>
     </div>
 </section>
@@ -230,10 +258,12 @@
             <a href="https://satuasapeduli.id/" class="btn btn-outline-success btn-floating m-1" role="button">
                 <i class="fab fa-google"></i>
             </a>
-            <a href="https://www.facebook.com/satuasapeduli" class="btn btn-outline-success btn-floating m-1" role="button">
+            <a href="https://www.facebook.com/satuasapeduli" class="btn btn-outline-success btn-floating m-1"
+               role="button">
                 <i class="fab fa-facebook-f"></i>
             </a>
-            <a href="https://www.instagram.com/satuasapeduli/" class="btn btn-outline-success btn-floating m-1" role="button">
+            <a href="https://www.instagram.com/satuasapeduli/" class="btn btn-outline-success btn-floating m-1"
+               role="button">
                 <i class="fab fa-instagram"></i>
             </a>
         </div>
@@ -270,7 +300,6 @@
     </section>
     <!-- Section: Tentang dan Lokasi Kami -->
 
-    <!-- Copyright -->
     <div class="text-center p-4 fw-bold" style="color: #37814F">
         © 2023 Rosan Solutions - Sistem Informasi Manajemen Yayasan
     </div>

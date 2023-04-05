@@ -6,7 +6,10 @@ import com.a05.simaya.event.payload.CreateEventDTO;
 import java.util.List;
 
 public interface EventService {
-    void tambahEvent(CreateEventDTO eventDTO);
+    Boolean tambahEvent(CreateEventDTO eventDTO);
+
+    EventModel getEventById(Long idEvent);
+
     List<EventModel> getListOngoing();
     List<EventModel> getListUpcoming();
     Integer countDone();
@@ -14,6 +17,5 @@ public interface EventService {
 
     List<EventModel> getListEvent();
 
-    EventModel getEventById(Long idEvent);
-    void deleteEvent(Long idEvent);
+    Boolean deleteEvent(Long idEvent);
 }
