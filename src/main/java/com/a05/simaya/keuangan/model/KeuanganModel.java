@@ -1,4 +1,4 @@
-package com.a05.simaya.keuangan;
+package com.a05.simaya.keuangan.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -8,6 +8,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
@@ -44,4 +45,9 @@ public class KeuanganModel {
     @Column(name = "waktu_dicatat")
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
     private LocalDateTime waktuDicatat;
+
+    @NotNull
+    @Column(name = "tanggal_transaksi")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate tanggalTransaksi;
 }
