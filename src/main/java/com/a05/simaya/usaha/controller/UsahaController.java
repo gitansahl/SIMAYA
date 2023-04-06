@@ -16,6 +16,10 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.IOException;
 import java.security.Principal;
+import java.time.Duration;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Controller
@@ -35,7 +39,8 @@ public class UsahaController {
 
     @PostMapping(value = "/tambah-usaha")
     public String tambahUsaha(UsahaDTO usahaDTO,
-                              @RequestParam("upload") MultipartFile[] images) throws IOException {
+                              @RequestParam("upload") MultipartFile[] images,
+                              RedirectAttributes redirectAttributes) throws IOException {
         UsahaModel usahaModel = usahaService.tambahUsaha(usahaDTO);
 
         List<GambarUsahaModel> files = usahaService.uploadPhoto(images, usahaModel);
@@ -44,14 +49,21 @@ public class UsahaController {
             usahaService.simpanPhoto(usahaModel, files);
         }
 
+        String currentDate = usahaModel.getLastEdit().plusMinutes(10).format(DateTimeFormatter.ofPattern("HH:mm"));
+
+        redirectAttributes.addFlashAttribute("success", String.format("Data usaha %s berhasil ditambahkan. " +
+                        "Anda memiliki waktu 10 menit untuk mengubah atau menghapus data usaha sampai pukul %s.",
+                usahaModel.getNamaProduk(), currentDate));
+
         return "redirect:/daftar-usaha";
     }
 
     @GetMapping(value = "/ubah-usaha/{id}")
     public String formUbahUsaha(Model model, @PathVariable("id") String id) {
         UsahaModel usahaModel = usahaService.getUsaha(id);
+        Duration duration = Duration.between(usahaModel.getLastEdit(), LocalDateTime.now());
 
-        if (usahaModel.getStatusUsaha() == StatusUsaha.BELUM_TERVERIFIKASI) {
+        if ((usahaModel.getStatusUsaha() == StatusUsaha.BELUM_TERVERIFIKASI) && (duration.getSeconds()/60 > 10)) {
             return "redirect:/detail-usaha/" + id;
         }
 
@@ -61,7 +73,8 @@ public class UsahaController {
 
     @PostMapping(value = "/ubah-usaha")
     public String ubahUsaha(UsahaDTO usahaDTO,
-                            @RequestParam("upload") MultipartFile[] images) throws IOException {
+                            @RequestParam("upload") MultipartFile[] images,
+                            RedirectAttributes redirectAttributes) throws IOException {
         UsahaModel usahaModel = usahaService.ubahUsaha(usahaDTO);
 
         List<GambarUsahaModel> files = usahaService.uploadPhoto(images, usahaModel);
@@ -70,13 +83,24 @@ public class UsahaController {
             usahaService.simpanPhoto(usahaModel, files);
         }
 
+        String currentDate = usahaModel.getLastEdit().plusMinutes(10).format(DateTimeFormatter.ofPattern("HH:mm"));
+
+        redirectAttributes.addFlashAttribute("success", String.format("Data usaha %s berhasil diubah. " +
+                        "Anda memiliki waktu untuk mengubah atau menghapus data usaha sampai pukul %s.",
+                usahaModel.getNamaProduk(), currentDate));
+
         return "redirect:/detail-usaha/" + usahaDTO.getIdUsaha();
     }
 
     @GetMapping(value = "/detail-usaha/{id}")
     public String detailUsaha(Principal principal, Model model, @PathVariable("id") String id) {
+        UsahaModel usaha = usahaService.getUsaha(id);
+        Duration duration = Duration.between(usaha.getLastEdit(), LocalDateTime.now());
+
         model.addAttribute("anggota", anggotaService.getAnggotaByUsername(principal.getName()));
-        model.addAttribute("usaha", usahaService.getUsaha(id));
+        model.addAttribute("usaha", usaha);
+        model.addAttribute("waktu", duration.getSeconds()/60);
+
         return "usaha/detail-usaha";
     }
 
