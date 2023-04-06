@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://thymeleaf.org">
 <head>
   <meta charset="UTF-8">
-  <title>Tambah Usaha</title>
+  <title>Detail Usaha</title>
   <object th:include="fragments/fragment :: css" th:remove="tag"></object>
   <object th:include="fragments/fragment :: js" th:remove="tag"></object>
   <script src="https://code.jquery.com/jquery-3.6.1.min.js"
@@ -71,7 +71,16 @@
 </head>
 <body>
 
-  <div class="container">
+<!--    ALERT MSG SUCCESS-->
+<div class="alert" style="background-color: #37814F; color: white" role="alert" th:if="${success}">
+  <span th:text="${success}"></span>
+  <button type="button" class="close" style="color:white;" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<!--    ALERT MSG-->
+
+<div class="container">
     <span th:if="${anggota.role.name() == 'PENGEMBANGAN_USAHA'}">
       <input style="display: none" th:field="${usaha.idUsaha}" id="idUsaha">
       <span th:switch="${usaha.statusUsaha.name()}">
@@ -126,6 +135,68 @@
         </div>
 
         </span>
+      </span>
+    </span>
+
+  <span th:if="${anggota.role.name() == 'ANGGOTA'}">
+      <input style="display: none" th:field="${usaha.idUsaha}" id="idUsahaAnggota">
+      <span th:switch="${usaha.statusUsaha.name()}">
+        <!--Belum terverifikasi-->
+        <span th:case="BELUM_TERVERIFIKASI">
+
+          <span th:if="${waktu <= 10.0}">
+
+            <!--Label-->
+            <div class="row">
+              <div class="col-2"></div>
+              <div class="col-8">
+                <h3>Tindakan</h3>
+              </div>
+              <div class="col-2"></div>
+            </div>
+
+            <!--Button-->
+            <div class="row">
+              <div class="col-2"></div>
+              <div class="col-8">
+                <div class="row">
+
+                  <!--Hapus-->
+                  <div class="col-6">
+                    <button data-bs-toggle="modal" data-bs-target="#hapusModal1" type="button" class="btn btn-success btn-sm" style="width: 100%;">Hapus</button>
+
+                    <!-- Modal -->
+                    <div class="modal fade" id="hapusModal1" tabindex="-1" aria-labelledby="hapusModalLabel1" aria-hidden="true">
+                      <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h5 class="modal-title" id="hapusModalLabel1">Hapus Usaha?</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                          </div>
+                          <div class="modal-body"><p
+                                  th:text="'Apakah Anda yakin untuk menghapus usaha?'"></p></div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <a type="button" class="btn btn-success" th:href="@{/hapus-usaha/} + ${usaha.idUsaha}">Hapus</a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!--Ubah-->
+                  <div class="col-6">
+                    <a th:href="@{/ubah-usaha/} + ${usaha.idUsaha}" type="button" class="btn btn-success btn-sm" style="width: 100%;">Ubah</a>
+                  </div>
+
+                </div>
+              </div>
+              <div class="col-2"></div>
+            </div>
+
+          </span>
+
+        </span>
 
         <!--Sudah/tidak terverifikasi-->
         <span th:case="*">
@@ -158,7 +229,7 @@
                           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body"><p
-                                        th:text="'Apakah Anda yakin untuk menghapus usaha?'"></p></div>
+                                th:text="'Apakah Anda yakin untuk menghapus usaha?'"></p></div>
                         <div class="modal-footer">
                           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                           <a type="button" class="btn btn-success" th:href="@{/hapus-usaha/} + ${usaha.idUsaha}">Hapus</a>
@@ -181,24 +252,24 @@
         </span>
       </span>
     </span>
-  </div>
+</div>
 
-  <script th:inline="javascript">
+<script th:inline="javascript">
 
-    function verifikasiUsaha() {
-      const id = document.getElementById("idUsaha").value;
+  function verifikasiUsaha() {
+    const id = document.getElementById("idUsaha").value;
 
-      $.ajax({
-        url: '/api/usaha/verifikasi',
-        data: JSON.stringify({ "id": id }),
-        contentType: "application/json",
-        type: 'PUT',
-        success: function () {
-          window.location.reload();
-        }
-      })
-    }
+    $.ajax({
+      url: '/api/usaha/verifikasi',
+      data: JSON.stringify({ "id": id }),
+      contentType: "application/json",
+      type: 'PUT',
+      success: function () {
+        window.location.reload();
+      }
+    })
+  }
 
-  </script>
+</script>
 </body>
 </html>
