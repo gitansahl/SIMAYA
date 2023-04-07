@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Tambah Pengeluaran</title>
+    <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+    <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+    <style>
+        .form-control:focus {
+            border-color: #28a745;
+            box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.25);
+        }
+
+        .form-select:focus {
+            border-color: #28a745;
+            box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.25);
+        }
+
+        option:checked {
+            background-color: #28a745;
+            color: white;
+            box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.25);
+        }
+
+        option:hover {
+            background-color: #28a745;
+            box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.25);
+        }
+
+        .form-check-input:checked {
+            background-color: #28a745;
+            border-color: #28a745;
+        }
+
+        html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+        }
+
+        body {
+            background-image: url("https://www.linkpicture.com/q/bg_17.png");
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-size: cover;
+            font-family: "Segoe UI", "Segoe UI Semibold", "Segoe UI Black", sans-serif;
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            position: relative;
+        }
+
+        #container {
+            min-height: 100%;
+            position: relative;
+        }
+
+    </style>
+</head>
+<body>
+<nav th:replace="fragments/fragment :: navbar('anggota')"></nav>
+<div class="container my-5" id="container">
+    <div class="card" style="width: 100%;">
+        <div class="card-header text-center" style="background-color: #DBEFE1">
+            <h3 class="my-auto">Menambahkan Data Pengeluaran</h3>
+        </div>
+        <div class="card-body">
+            <form th:action="@{/tambah-pengeluaran}" th:object="${keuangan}" method="POST" class="needs-validation">
+
+                <!--Baris 1-->
+                <div class="row my-3">
+                    <div class="row">
+                        <div class="col-1"></div>
+                        <div class="col-10">
+                            <div class="mb-3">
+                                <label for="formGroupExampleInput6" class="form-label">Tanggal Pengeluaran <span
+                                        style="color: red">*</span></label>
+                                <input type="date" th:field="*{tanggalTransaksi}"
+                                       class="form-control input-text border-success rounded-3 border border-2"
+                                       id="formGroupExampleInput6" placeholder="Masukkan tanggal pemasukan..." required>
+                                <div class="valid-feedback">
+                                    Looks good!
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-1"></div>
+                    </div>
+                </div>
+
+                <!--Baris 2-->
+                <div class="row my-3">
+                    <div class="row">
+                        <div class="col-1"></div>
+                        <div class="col-10">
+                            <div class="mb-3">
+                                <label for="formGroupExampleInput1" class="form-label">Nominal <span
+                                        style="color: red">*</span></label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text border-success">Rp</span>
+                                    </div>
+                                    <input type="number" th:field="*{jumlah}"
+                                           class="form-control input-text border-success rounded-right-3 border border-2"
+                                           id="formGroupExampleInput1" placeholder="Masukkan nominal pengeluaran..."
+                                           required>
+                                    <div class="valid-feedback">
+                                        Looks good!
+                                    </div>
+                                    <div class="invalid-feedback">
+                                        Masukkan nominal pengeluaran.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-1"></div>
+                    </div>
+                </div>
+
+                <!--Baris 4-->
+                <div class="row my-3">
+                    <div class="row">
+                        <div class="col-1"></div>
+                        <div class="col-10">
+                            <div class="mb-3">
+                                <label for="formGroupExampleInput4" class="form-label">Jenis <span
+                                        style="color: red">*</span></label>
+                                <select id="formGroupExampleInput4" th:field="*{jenis}"
+                                        class="form-select input-text border-success rounded-3 border border-2"
+                                        aria-label="Default select example" required>
+                                    <option value="" selected>Pilih jenis...</option>
+                                    <option value="PROGRAM_KERJA">Keperluan Program Kerja</option>
+                                    <option value="SANTUNAN">Santunan</option>
+                                    <option value="BANTUAN_BENCANA">Bantuan Bencana</option>
+                                    <option value="ZISWAF">ZISWAF</option>
+                                </select>
+                                <div class="valid-feedback">
+                                    Looks good!
+                                </div>
+                                <div class="invalid-feedback">
+                                    Pilih Jenis.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-1"></div>
+                    </div>
+                </div>
+
+                <!--Baris 3-->
+                <div class="row my-3">
+                    <div class="row">
+                        <div class="col-1"></div>
+                        <div class="col-10">
+                            <div class="mb-3">
+                                <label for="formGroupExampleInput5" class="form-label">Deskripsi <span
+                                        style="color: red">*</span></label>
+                                <textarea th:field="*{deskripsi}"
+                                          class="form-control border-success input-text rounded-3 border border-2"
+                                          id="formGroupExampleInput5" placeholder="Deskripsi pengeluaran..."
+                                          required></textarea>
+                                <div class="valid-feedback">
+                                    Looks good!
+                                </div>
+                                <div class="invalid-feedback">
+                                    Masukkan Deskripsi.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mt-5 mb-3">
+                    <div class="col-5"></div>
+                    <div class="col-2">
+                        <button type="submit" class="btn btn-success btn-lg">Tambah</button>
+                    </div>
+                    <div class="col-5"></div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<footer th:replace="fragments/fragment :: footer"></footer>
+
+<script>
+
+    $('.input-text').change((e) => {
+        if (e.target.value === '') {
+            $(e.target).addClass("is-invalid");
+            $(e.target).addClass("border-danger");
+
+            $(e.target).removeClass("border-success");
+            $(e.target).removeClass("is-valid");
+        } else {
+            $(e.target).removeClass("is-invalid");
+            $(e.target).removeClass("border-danger");
+
+            $(e.target).addClass("border-success");
+            $(e.target).addClass("is-valid");
+        }
+    });
+</script>
+</body>
+</html>
