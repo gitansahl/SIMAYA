@@ -1,15 +1,177 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Daftar Usaha</title>
     <object th:include="fragments/fragment :: css" th:remove="tag"></object>
     <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+            crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+        }
+
+        body {
+            background-image: url("https://www.linkpicture.com/q/bg_17.png");
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-size: cover;
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            position: relative;
+        }
+
+        .container {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        section .card .image img {
+            height: 50%;
+            width: 50%;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 3px solid #17A870;
+        }
+
+        .card-content {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            margin: 30px;
+        }
+
+        .card{
+            position: relative;
+            background: #FFFFFF;
+            max-width: 325px;
+            width: 325px;
+            height: auto;
+            margin: 25px;
+            box-shadow: 0 5px 25px rgb(1 1 1 / 20%);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .card-image {
+            max-height: 200px;
+        }
+
+        .card-image img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        .card-info {
+            position: relative;
+            color: #373435;
+            padding: 10px 20px 20px;
+        }
+
+        .card-info h3 {
+            font-size: 1.8em;
+            font-weight: 800;
+            margin-bottom: 5px;
+        }
+
+        .card-info p {
+            font-size: 1em;
+            margin-bottom: 5px;
+        }
+
+        .pagination{
+            text-align: center;
+            margin: 30px 30px 60px;
+            user-select: none;
+        }
+
+        .pagination li{
+            display: inline-block;
+            margin: 5px;
+            box-shadow: 0 5px 25px rgb(1 1 1 / 10%);
+        }
+
+        .pagination li a{
+            color: #FFFFFF;
+            text-decoration: none;
+            font-size: 1.2em;
+            line-height: 45px;
+        }
+
+        .previous-page, .next-page{
+            color: #17A870;
+            background: #17A870;
+            width: 80px;
+            border-radius: 45px;
+            cursor: pointer;
+            transition: 0.3s ease;
+        }
+
+        .previous-page:hover{
+            transform: translateX(-5px);
+        }
+
+        .next-page:hover{
+            transform: translateX(5px);
+        }
+
+        .current-page, .dots{
+            color: #17A870;
+            background: #FFFFFF;
+            width: 45px;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        /*.active{*/
+        /*    background: #0AB1CE;*/
+        /*}*/
+
+        .disable{
+            background: #FFFFFF;
+        }
+
+        .btn {
+            background: transparent;
+            border-color: #28a745;
+            border-style: ridge;
+            color: #28a745;
+            border-radius: 7px;
+        }
+
+        .btn:hover {
+            background-color: #37814F;
+            color: #FFFFFF;
+            border-radius: 7px;
+        }
+
+    </style>
 </head>
 <body>
+<nav th:replace="fragments/fragment :: navbar('usaha')"></nav>
 
 <!--    ALERT MSG ERROR-->
-<div class="alert alert-danger alert-dismissible fade show" style="margin: 20px 50px -30px 50px" role="alert" th:if="${error}">
+<div class="alert alert-danger alert-dismissible fade show" style="margin: 20px 50px -30px 50px" role="alert"
+     th:if="${error}">
     <span th:text="${error}"></span>
     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
         <span aria-hidden="true">&times;</span>
@@ -25,6 +187,114 @@
     </button>
 </div>
 <!--    ALERT MSG-->
+
+<section>
+    <div class="container">
+        <div th:if="${listUsaha != null}" th:each="usaha, iterationStatus: ${listUsaha}">
+            <div class="card-content">
+                <div class="card">
+                    <div class="card-image"><img class="card-img-top" src="https://www.linkpicture.com/q/Frame-3_5.png" alt=""></div>
+                    <div class="card-info">
+                        <h3 th:text="${usaha.namaProduk}" style="font-weight: bold"></h3>
+                        <h4 th:text="${usaha.hargaProduk}"></h4>
+                        <a class="btn" th:href="@{/detail-usaha/}+${usaha.idUsaha}">Detail</a>
+                    </div>
+                </div>
+<!--                <div class="pagination">-->
+<!--                    &lt;!&ndash;<li class="page-item previous-page disable"><a class="page-link" href="#">Prev</a></li>-->
+<!--                    <li class="page-item current-page active"><a class="page-link" href="#">1</a></li>-->
+<!--                    <li class="page-item dots"><a class="page-link" href="#">...</a></li>-->
+<!--                    <li class="page-item current-page"><a class="page-link" href="#">5</a></li>-->
+<!--                    <li class="page-item current-page"><a class="page-link" href="#">6</a></li>-->
+<!--                    <li class="page-item dots"><a class="page-link" href="#">...</a></li>-->
+<!--                    <li class="page-item current-page"><a class="page-link" href="#">10</a></li>-->
+<!--                    <li class="page-item next-page"><a class="page-link" href="#">Next</a></li>&ndash;&gt;-->
+<!--                </div>-->
+            </div>
+        </div>
+        <div th:unless="${listUsaha != null}">
+            <h6 class="no-event">Tidak ada usaha yang telah diverifikasi</h6>
+        </div>
+    </div>
+</section>
+
+<!--FOOTER-->
+<footer th:replace="fragments/fragment :: footer"></footer>
+<!--FOOTER-->
+
+<!--<script type="text/javascript">-->
+<!--    function getPageList(totalPages, page, maxLength){-->
+<!--        function range(start, end){-->
+<!--            return Array.from(Array(end - start + 1), (_, i) => i + start);-->
+<!--        }-->
+
+<!--        var sideWidth = maxLength < 9 ? 1 : 2;-->
+<!--        var leftWidth = (maxLength - sideWidth * 2 - 3) >> 1;-->
+<!--        var rightWidth = (maxLength - sideWidth * 2 - 3) >> 1;-->
+
+<!--        if(totalPages <= maxLength){-->
+<!--            return range(1, totalPages);-->
+<!--        }-->
+
+<!--        if(page <= maxLength - sideWidth - 1 - rightWidth){-->
+<!--            return range(1, maxLength - sideWidth - 1).concat(0, range(totalPages - sideWidth + 1, totalPages));-->
+<!--        }-->
+
+<!--        if(page >= totalPages - sideWidth - 1 - rightWidth){-->
+<!--            return range(1, sideWidth).concat(0, range(totalPages- sideWidth - 1 - rightWidth - leftWidth, totalPages));-->
+<!--        }-->
+
+<!--        return range(1, sideWidth).concat(0, range(page - leftWidth, page + rightWidth), 0, range(totalPages - sideWidth + 1, totalPages));-->
+<!--    }-->
+
+<!--    $(function(){-->
+<!--        var numberOfItems = $(".card-content .card").length;-->
+<!--        var limitPerPage = 3; //How many card items visible per a page-->
+<!--        var totalPages = Math.ceil(numberOfItems / limitPerPage);-->
+<!--        var paginationSize = 7; //How many page elements visible in the pagination-->
+<!--        var currentPage;-->
+
+<!--        function showPage(whichPage){-->
+<!--            if(whichPage < 1 || whichPage > totalPages) return false;-->
+
+<!--            currentPage = whichPage;-->
+
+<!--            $(".card-content .card").hide().slice((currentPage - 1) * limitPerPage, currentPage * limitPerPage).show();-->
+
+<!--            $(".pagination li").slice(1, -1).remove();-->
+
+<!--            getPageList(totalPages, currentPage, paginationSize).forEach(item => {-->
+<!--                $("<li>").addClass("page-item").addClass(item ? "current-page" : "dots")-->
+<!--                    .toggleClass("active", item === currentPage).append($("<a>").addClass("page-link")-->
+<!--                    .attr({href: "javascript:void(0)"}).text(item || "...")).insertBefore(".next-page");-->
+<!--            });-->
+
+<!--            $(".previous-page").toggleClass("disable", currentPage === 1);-->
+<!--            $(".next-page").toggleClass("disable", currentPage === totalPages);-->
+<!--            return true;-->
+<!--        }-->
+
+<!--        $(".pagination").append(-->
+<!--            $("<li>").addClass("page-item").addClass("previous-page").append($("<a>").addClass("page-link").attr({href: "javascript:void(0)"}).text("Prev")),-->
+<!--            $("<li>").addClass("page-item").addClass("next-page").append($("<a>").addClass("page-link").attr({href: "javascript:void(0)"}).text("Next"))-->
+<!--        );-->
+
+<!--        $(".card-content").show();-->
+<!--        showPage(1);-->
+
+<!--        $(document).on("click", ".pagination li.current-page:not(.active)", function(){-->
+<!--            return showPage(+$(this).text());-->
+<!--        });-->
+
+<!--        $(".next-page").on("click", function(){-->
+<!--            return showPage(currentPage + 1);-->
+<!--        });-->
+
+<!--        $(".previous-page").on("click", function(){-->
+<!--            return showPage(currentPage - 1);-->
+<!--        });-->
+<!--    });-->
+<!--</script>-->
 
 </body>
 </html>

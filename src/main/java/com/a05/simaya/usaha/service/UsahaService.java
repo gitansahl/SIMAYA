@@ -18,4 +18,6 @@ public interface UsahaService {
     UsahaDTO getDataUsaha(String id);
     UsahaDTO getDataPenjual(String name);
     void simpanPhoto(UsahaModel usahaModel, List<GambarUsahaModel> files);
+
+    List<UsahaModel> getListUsaha();
 }

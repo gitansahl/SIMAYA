@@ -169,4 +169,9 @@ public class UsahaServiceImpl implements UsahaService {
 
         return usahaModel;
     }
+
+    @Override
+    public List<UsahaModel> getListUsaha(){
+        return usahaDb.findAll();
+    }
 }
