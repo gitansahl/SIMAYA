@@ -24,6 +24,12 @@ public class UsahaRestController {
         return "redirect:/detail-usaha/" + mapRequest.get("id");
     }
 
+    @PutMapping(value="usaha/tolak")
+    public String tolakUsaha(@RequestBody Map<String, String> mapRequest){
+        usahaService.tolakUsaha(mapRequest.get("idUsaha"), mapRequest.get("catatan"));
+        return "redirect:/detail-usaha/" + mapRequest.get("id");
+    }
+
     @GetMapping(value = "/daftar-usaha")
     private ResponseEntity getAllUsaha(){
         ResponseEntity responseEntity = null;

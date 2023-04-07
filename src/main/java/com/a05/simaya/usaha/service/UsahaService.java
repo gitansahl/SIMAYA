@@ -20,4 +20,6 @@ public interface UsahaService {
     void simpanPhoto(UsahaModel usahaModel, List<GambarUsahaModel> files);
 
     List<UsahaModel> getListUsaha();
+
+    void tolakUsaha(String id, String catatan);
 }

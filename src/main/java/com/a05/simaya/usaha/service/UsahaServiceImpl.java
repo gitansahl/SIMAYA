@@ -2,10 +2,12 @@ package com.a05.simaya.usaha.service;
 
 import com.a05.simaya.anggota.model.AnggotaModel;
 import com.a05.simaya.anggota.repository.AnggotaDb;
+import com.a05.simaya.usaha.model.CatatanModel;
 import com.a05.simaya.usaha.model.GambarUsahaModel;
 import com.a05.simaya.usaha.model.StatusUsaha;
 import com.a05.simaya.usaha.model.UsahaModel;
 import com.a05.simaya.usaha.payload.UsahaDTO;
+import com.a05.simaya.usaha.repository.CatatanDb;
 import com.a05.simaya.usaha.repository.GambarUsahaDb;
 import com.a05.simaya.usaha.repository.UsahaDb;
 import com.a05.simaya.usaha.util.FileUploadUtil;
@@ -31,6 +33,9 @@ public class UsahaServiceImpl implements UsahaService {
 
     @Autowired
     private AnggotaDb anggotaDb;
+
+    @Autowired
+    private CatatanDb catatanDb;
 
     @Override
     public UsahaModel tambahUsaha(UsahaDTO usahaDTO) {
@@ -80,6 +85,17 @@ public class UsahaServiceImpl implements UsahaService {
         UsahaModel usahaModel = usahaDb.getByIdUsaha(id);
         usahaModel.setStatusUsaha(StatusUsaha.TERVERIFIKASI);
         usahaDb.save(usahaModel);
+    }
+
+    @Override
+    public void tolakUsaha(String id, String catatan) {
+        UsahaModel usahaModel = usahaDb.getByIdUsaha(id);
+        usahaModel.setStatusUsaha(StatusUsaha.TIDAK_TERVERIFIKASI);
+
+        CatatanModel catatanModel = new CatatanModel();
+        catatanModel.setCatatan(catatan);
+        catatanModel.setUsaha(usahaModel);
+        catatanDb.save(catatanModel);
     }
 
     @Override
