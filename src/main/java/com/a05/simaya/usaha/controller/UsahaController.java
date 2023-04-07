@@ -17,7 +17,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.io.IOException;
 import java.security.Principal;
 import java.time.Duration;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -40,7 +39,9 @@ public class UsahaController {
     @PostMapping(value = "/tambah-usaha")
     public String tambahUsaha(UsahaDTO usahaDTO,
                               @RequestParam("upload") MultipartFile[] images,
-                              RedirectAttributes redirectAttributes) throws IOException {
+                              RedirectAttributes redirectAttributes,
+                              Principal principal) throws IOException {
+        usahaDTO.setUsername(principal.getName());
         UsahaModel usahaModel = usahaService.tambahUsaha(usahaDTO);
 
         List<GambarUsahaModel> files = usahaService.uploadPhoto(images, usahaModel);
