@@ -250,7 +250,7 @@
                         <div class="col">
                                 <button data-bs-toggle="modal" data-bs-target="#verifikasiModal" type="button"
                                         class="btn btn-success" style="width: 15%; margin-right: 5px">Terima</button>
-                                <button type="button" class="btn btn-danger float" style="width: 15%;">Tolak</button>
+                                <button data-bs-toggle="modal" data-bs-target="#tolakModal" type="button" class="btn btn-danger float" style="width: 15%;">Tolak</button>
                         </div>
                     </div>
 
@@ -280,8 +280,71 @@
                   </div>
                 </div>
 
+            <!-- Modal Tolak -->
+            <div class="modal fade" id="tolakModal" tabindex="-1" role="dialog" aria-labelledby="tolakModal"
+                 aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header text-center">
+                            <h5 class="modal-title w-100" id="exampleModalLongTitle" th:text=" 'Menolak Usaha ' + ${usaha.namaProduk}"></h5>
+                        </div>
+                        <div class="modal-body">
+                            <form id="form-progress">
+                                <div class="form-group">
+                                    <label for="catatan" class="col-form-label">Catatan:</label>
+                                    <textarea name="catatan" class="form-control input-text" id="catatan" placeholder="Masukkan catatan penolakan..." required oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"'></textarea>
+                                    <div class="valid-feedback">
+                                            Looks good!
+                                        </div>
+                                        <div class="invalid-feedback">
+                                            Masukkan catatan penolakan!.
+                                        </div>
+
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                            <button type="submit" class="btn btn-danger" data-dismiss="modal" onclick="tolakUsaha()">Tolak
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+          <!--MODAL-->
+
+          <span th:case="TIDAK_TERVERIFIKASI">
+
+              <div class="row my-4">
+                <div class="col mx-3">
+                    <h4>Tindakan</h4>
+                    <hr>
+                    <div class="row">
+                        <div class="col">
+                            <a th:href="@{/ubah-usaha/} + ${usaha.idUsaha}" type="button" class="btn btn-success"
+                               style="width: 32%; margin-right: 5px">Ubah</a>
+                            <button data-bs-toggle="modal" data-bs-target="#hapusModal" type="button"
+                                    class="btn btn-danger float" style="width: 32%;">Hapus</button>
+                        </div>
+                    </div>
+                </div>
+                   <div class="col mx-3">
+                      <div class="card border-danger">
+                          <div class="card-header bg-danger">
+                              <h5 class="text-white mb-0">Catatan Penolakan</h5>
+                          </div>
+                          <div class="card-body">
+                              <p th:text="${usaha.catatan.catatan}" class="mb-0"></p>
+                          </div>
+                      </div>
+                </div>
+            </div>
+
+
+          </span>
+
         <!--Sudah/tidak terverifikasi-->
-        <span th:case="*">
+        <span th:case="TERVERIVIKASI">
             <div class="row my-4">
                 <div class="col mx-3">
                     <h4>Tindakan</h4>
@@ -367,16 +430,39 @@
   function verifikasiUsaha() {
     const id = document.getElementById("idUsaha").value;
 
-    $.ajax({
-      url: '/api/usaha/verifikasi',
-      data: JSON.stringify({"id": id}),
-      contentType: "application/json",
-      type: 'PUT',
-      success: function () {
-        window.location.reload();
-      }
-    })
+
   }
+
+  function tolakUsaha(){
+      var data = {};
+      data["catatan"] = $("#catatan").val();
+      data["idUsaha"] = document.getElementById("idUsaha").value;
+      $.ajax({
+          url: '/api/usaha/tolak',
+          data: JSON.stringify(data),
+          contentType: "application/json",
+          type: 'PUT',
+          success: function () {
+              window.location.reload();
+          }
+      })
+  }
+
+  $('.input-text').change((e) => {
+      if (e.target.value === '') {
+          $(e.target).addClass("is-invalid");
+          $(e.target).addClass("border-danger");
+
+          $(e.target).removeClass("border-success");
+          $(e.target).removeClass("is-valid");
+      } else {
+          $(e.target).removeClass("is-invalid");
+          $(e.target).removeClass("border-danger");
+
+          $(e.target).addClass("border-success");
+          $(e.target).addClass("is-valid");
+      }
+  });
 
 </script>
 </body>
