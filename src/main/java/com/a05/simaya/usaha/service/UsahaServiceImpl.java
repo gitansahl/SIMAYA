@@ -18,7 +18,6 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Date;
 import java.util.Optional;
 
 @Service
@@ -46,6 +45,7 @@ public class UsahaServiceImpl implements UsahaService {
     public UsahaModel ubahUsaha(UsahaDTO usahaDTO) {
         UsahaModel pastUsahaModel = usahaDb.getByIdUsaha(usahaDTO.getIdUsaha());
         UsahaModel usahaModel = setUsahaModel(usahaDTO, pastUsahaModel);
+        usahaModel.setIdUsaha(usahaDTO.getIdUsaha());
         if (usahaModel.getStatusUsaha() != StatusUsaha.BELUM_TERVERIFIKASI) {
             usahaModel.setLastEdit(LocalDateTime.now());
             usahaModel.setStatusUsaha(StatusUsaha.BELUM_TERVERIFIKASI);
@@ -160,7 +160,7 @@ public class UsahaServiceImpl implements UsahaService {
     }
 
     private UsahaModel setUsahaModel(UsahaDTO usahaDTO, UsahaModel usahaModel) {
-        usahaModel.setIdUsaha(usahaDTO.getIdUsaha());
+        usahaModel.setUsername(usahaDTO.getUsername());
         usahaModel.setNamaProduk(usahaDTO.getNamaProduk());
         usahaModel.setHargaProduk(usahaDTO.getHargaProduk());
         usahaModel.setNamaPenjual(usahaDTO.getNamaPenjual());

@@ -19,11 +19,14 @@ import java.util.List;
 @Getter
 @Table(name = "usaha")
 public class UsahaModel {
-
     @Id
     @GeneratedValue(generator = "system-uuid")
     @GenericGenerator(name = "system-uuid", strategy = "uuid")
     private String idUsaha;
+
+    @NotNull
+    @Column(name = "username")
+    private String username;
 
     @NotNull
     @Column(name = "last_edit")
