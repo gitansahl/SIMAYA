@@ -1,5 +1,6 @@
 package com.a05.simaya.usaha.controller;
 
+import com.a05.simaya.usaha.model.StatusUsaha;
 import com.a05.simaya.usaha.model.UsahaModel;
 import com.a05.simaya.usaha.service.UsahaService;
 import lombok.extern.slf4j.Slf4j;
@@ -22,6 +23,19 @@ public class UsahaRestController {
     public String verifikasiUsaha(@RequestBody Map<String, String> mapRequest) {
         usahaService.verifikasiUsaha(mapRequest.get("id"));
         return "redirect:/detail-usaha/" + mapRequest.get("id");
+    }
+
+    @GetMapping(value = "/usaha/daftar-usaha-verifikasi")
+    public ResponseEntity getUsahaPerluVerifikasi() {
+        ResponseEntity responseEntity = null;
+        try {
+            List<UsahaModel> listUsaha = usahaService.getUsahaByStatus(StatusUsaha.BELUM_TERVERIFIKASI);
+            responseEntity = ResponseEntity.ok(listUsaha);
+        } catch (Exception e) {
+            e.printStackTrace();
+            responseEntity = ResponseEntity.badRequest().body(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        return responseEntity;
     }
 
     @PutMapping(value="usaha/tolak")
