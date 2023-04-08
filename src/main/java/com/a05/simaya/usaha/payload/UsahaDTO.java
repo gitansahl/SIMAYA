@@ -7,6 +7,7 @@ import java.util.List;
 @Data
 public class UsahaDTO {
     private String idUsaha;
+    private String username;
     private String namaProduk;
     private int hargaProduk;
     private String namaPenjual;

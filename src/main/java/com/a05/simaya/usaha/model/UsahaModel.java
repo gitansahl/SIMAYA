@@ -1,5 +1,6 @@
 package com.a05.simaya.usaha.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,11 +20,14 @@ import java.util.List;
 @Getter
 @Table(name = "usaha")
 public class UsahaModel {
-
     @Id
     @GeneratedValue(generator = "system-uuid")
     @GenericGenerator(name = "system-uuid", strategy = "uuid")
     private String idUsaha;
+
+    @NotNull
+    @Column(name = "username")
+    private String username;
 
     @NotNull
     @Column(name = "last_edit")
@@ -50,11 +54,16 @@ public class UsahaModel {
     @Column(name = "deskripsi_produk")
     private String deskripsiProduk;
 
+    @JsonIgnore
     @OneToMany(mappedBy="usahaModel")
     private List<GambarUsahaModel> gambar;
 
     @Column(name = "status_usaha")
     @Enumerated(EnumType.STRING)
     private StatusUsaha statusUsaha = StatusUsaha.BELUM_TERVERIFIKASI;
+
+    @JsonIgnore
+    @OneToOne(mappedBy = "usaha", optional = true)
+    private CatatanModel catatan;
 
 }

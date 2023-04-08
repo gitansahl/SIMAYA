@@ -2,10 +2,12 @@ package com.a05.simaya.usaha.service;
 
 import com.a05.simaya.anggota.model.AnggotaModel;
 import com.a05.simaya.anggota.repository.AnggotaDb;
+import com.a05.simaya.usaha.model.CatatanModel;
 import com.a05.simaya.usaha.model.GambarUsahaModel;
 import com.a05.simaya.usaha.model.StatusUsaha;
 import com.a05.simaya.usaha.model.UsahaModel;
 import com.a05.simaya.usaha.payload.UsahaDTO;
+import com.a05.simaya.usaha.repository.CatatanDb;
 import com.a05.simaya.usaha.repository.GambarUsahaDb;
 import com.a05.simaya.usaha.repository.UsahaDb;
 import com.a05.simaya.usaha.util.FileUploadUtil;
@@ -18,7 +20,6 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Date;
 import java.util.Optional;
 
 @Service
@@ -33,6 +34,9 @@ public class UsahaServiceImpl implements UsahaService {
     @Autowired
     private AnggotaDb anggotaDb;
 
+    @Autowired
+    private CatatanDb catatanDb;
+
     @Override
     public UsahaModel tambahUsaha(UsahaDTO usahaDTO) {
         UsahaModel usahaModel = setUsahaModel(usahaDTO, new UsahaModel());
@@ -46,6 +50,7 @@ public class UsahaServiceImpl implements UsahaService {
     public UsahaModel ubahUsaha(UsahaDTO usahaDTO) {
         UsahaModel pastUsahaModel = usahaDb.getByIdUsaha(usahaDTO.getIdUsaha());
         UsahaModel usahaModel = setUsahaModel(usahaDTO, pastUsahaModel);
+        usahaModel.setIdUsaha(usahaDTO.getIdUsaha());
         if (usahaModel.getStatusUsaha() != StatusUsaha.BELUM_TERVERIFIKASI) {
             usahaModel.setLastEdit(LocalDateTime.now());
             usahaModel.setStatusUsaha(StatusUsaha.BELUM_TERVERIFIKASI);
@@ -80,6 +85,22 @@ public class UsahaServiceImpl implements UsahaService {
         UsahaModel usahaModel = usahaDb.getByIdUsaha(id);
         usahaModel.setStatusUsaha(StatusUsaha.TERVERIFIKASI);
         usahaDb.save(usahaModel);
+    }
+
+    @Override
+    public void tolakUsaha(String id, String catatan) {
+        UsahaModel usahaModel = usahaDb.getByIdUsaha(id);
+        usahaModel.setStatusUsaha(StatusUsaha.TIDAK_TERVERIFIKASI);
+
+        CatatanModel catatanModel = new CatatanModel();
+        catatanModel.setCatatan(catatan);
+        catatanModel.setUsaha(usahaModel);
+        catatanDb.save(catatanModel);
+    }
+
+    @Override
+    public List<UsahaModel> getUsahaByUsername(String username) {
+        return usahaDb.findAllByUsernameIs(username);
     }
 
     @Override
@@ -160,12 +181,12 @@ public class UsahaServiceImpl implements UsahaService {
     }
 
     @Override
-    public List<UsahaModel> getUsahaByStatus(String status) {
+    public List<UsahaModel> getUsahaByStatus(StatusUsaha status) {
         return usahaDb.findAllByStatusUsahaIs(status);
     }
 
     private UsahaModel setUsahaModel(UsahaDTO usahaDTO, UsahaModel usahaModel) {
-        usahaModel.setIdUsaha(usahaDTO.getIdUsaha());
+        usahaModel.setUsername(usahaDTO.getUsername());
         usahaModel.setNamaProduk(usahaDTO.getNamaProduk());
         usahaModel.setHargaProduk(usahaDTO.getHargaProduk());
         usahaModel.setNamaPenjual(usahaDTO.getNamaPenjual());
@@ -173,5 +194,10 @@ public class UsahaServiceImpl implements UsahaService {
         usahaModel.setDeskripsiProduk(usahaDTO.getDeskripsiProduk());
 
         return usahaModel;
+    }
+
+    @Override
+    public List<UsahaModel> getListUsaha(){
+        return usahaDb.findAll();
     }
 }

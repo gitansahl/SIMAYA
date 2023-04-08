@@ -81,7 +81,6 @@
             background: #E0EFEF;
             margin: 20px 10px;
             width: 280px;
-
         }
 
         .card::before {
@@ -90,7 +89,6 @@
             height: 55%;
             width: 100%;
             border-radius: 20px 20px 0 0;
-
         }
 
         .card .card-content {
@@ -164,6 +162,20 @@
             font-family: "Segoe UI";
             color: #373435;
         }
+
+        .btn{
+            background: transparent;
+            border-color: #28a745;
+            border-style: ridge;
+            color: #28a745;
+            border-radius: 7px;
+        }
+
+        .btn:hover{
+            background-color: #37814F;
+            color: white;
+            border-radius: 7px;
+        }
     </style>
 
 </head>
@@ -187,8 +199,7 @@
                         Fitur ini merupakan fitur yang digunakan untuk mengelola anggota yang ada di Sistem Informasi
                         Manajemen Yayasan (SIMAYA).
                     </p>
-                    <a class="btn" style="background-color: #37814F; color: white; border-radius: 7px"
-                       th:href="@{/anggota/viewall}">Klik di sini</a>
+                    <a class="btn" th:href="@{/anggota/viewall}">Klik di sini</a>
                 </div>
             </div>
             <div class="card swiper-slide">
@@ -199,8 +210,7 @@
                         Fitur ini merupakan fitur yang digunakan untuk mengelola event yang ada di Sistem Informasi
                         Manajemen Yayasan (SIMAYA).
                     </p>
-                    <a class="btn" th:href="@{/event/}"
-                       style="background-color: #37814F; color: white; border-radius: 7px">Klik di sini</a>
+                    <a class="btn" th:href="@{/event/}">Klik di sini</a>
                 </div>
             </div>
             <div class="card swiper-slide">
@@ -211,8 +221,7 @@
                         Fitur ini merupakan fitur yang digunakan untuk mengelola usaha yang ada di Sistem Informasi
                         Manajemen Yayasan (SIMAYA).
                     </p>
-                    <a type="button" class="btn" style="background-color: #37814F; color: white; border-radius: 7px">Klik
-                        di sini</a>
+                    <a type="button" class="btn" th:href="@{/daftar-usaha}">Klik di sini</a>
                 </div>
             </div>
             <div class="card swiper-slide">
@@ -223,9 +232,8 @@
                         Fitur ini merupakan fitur yang digunakan untuk mengelola donasi yang ada di Sistem Informasi
                         Manajemen Yayasan (SIMAYA).
                     </p>
-                    <button type="button" class="btn"
-                            style="background-color: #37814F; color: white; border-radius: 7px">Klik di sini
-                    </button>
+                    <a type="button" class="btn" th:href="@{/}">Klik di sini
+                    </a>
                 </div>
             </div>
             <div class="card swiper-slide">
@@ -236,9 +244,8 @@
                         Fitur ini digunakan untuk mengelola keuangan yang ada di Sistem Informasi Manajemen Yayasan
                         (SIMAYA).
                     </p>
-                    <button type="button" class="btn"
-                            style="background-color: #37814F; color: white; border-radius: 7px">Klik di sini
-                    </button>
+                    <a type="button" class="btn" th:href="@{/}">Klik di sini
+                    </a>
                 </div>
             </div>
         </div>

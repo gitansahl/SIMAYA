@@ -10,12 +10,18 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
+import java.util.List;
 
 @Service
 public class KeuanganServiceImpl implements KeuanganService{
 
     @Autowired
     KeuanganDb keuanganDb;
+
+    @Override
+    public List<KeuanganModel> getListKeuangan() {
+        return keuanganDb.findAll();
+    }
 
     @Override
     public void tambahPemasukan(KeuanganDTO keuanganDTO) {

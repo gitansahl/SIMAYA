@@ -17,7 +17,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.io.IOException;
 import java.security.Principal;
 import java.time.Duration;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -40,7 +39,9 @@ public class UsahaController {
     @PostMapping(value = "/tambah-usaha")
     public String tambahUsaha(UsahaDTO usahaDTO,
                               @RequestParam("upload") MultipartFile[] images,
-                              RedirectAttributes redirectAttributes) throws IOException {
+                              RedirectAttributes redirectAttributes,
+                              Principal principal) throws IOException {
+        usahaDTO.setUsername(principal.getName());
         UsahaModel usahaModel = usahaService.tambahUsaha(usahaDTO);
 
         List<GambarUsahaModel> files = usahaService.uploadPhoto(images, usahaModel);
@@ -97,9 +98,12 @@ public class UsahaController {
         UsahaModel usaha = usahaService.getUsaha(id);
         Duration duration = Duration.between(usaha.getLastEdit(), LocalDateTime.now());
 
+        List<GambarUsahaModel> listGambar = usaha.getGambar();
+
         model.addAttribute("anggota", anggotaService.getAnggotaByUsername(principal.getName()));
         model.addAttribute("usaha", usaha);
         model.addAttribute("waktu", duration.getSeconds()/60);
+        model.addAttribute("listGambar", listGambar);
 
         return "usaha/detail-usaha";
     }
@@ -119,13 +123,23 @@ public class UsahaController {
     }
 
     @GetMapping(value = "/daftar-usaha")
-    public String daftarUsaha() {
+    public String daftarUsaha(Model model) {
+        List<UsahaModel> listUsaha = usahaService.getListUsaha();
+        model.addAttribute("listUsaha", listUsaha);
         return "usaha/daftar-usaha";
     }
 
-    @GetMapping(value = "/daftar-usaha-verifiaksi")
+    @GetMapping(value = "/daftar-usaha-verifikasi")
     public String getDaftarUsahaYangPerluDiverifikasi() {
         return "usaha/daftar-usaha-perlu-diverifikasi";
+    }
+
+    @GetMapping(value = "/daftar-usaha-saya")
+    public String getDaftarUsahaSaya(Model model,
+                                     Principal principal) {
+        List<UsahaModel> listUsaha = usahaService.getUsahaByUsername(principal.getName());
+        model.addAttribute("listUsaha", listUsaha);
+        return "usaha/daftar-usaha-saya";
     }
 
 }

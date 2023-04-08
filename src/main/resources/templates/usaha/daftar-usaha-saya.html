@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <title>Daftar Event</title>
+    <title>Daftar Usaha Saya</title>
     <object th:include="fragments/fragment :: css" th:remove="tag"></object>
     <object th:include="fragments/fragment :: js" th:remove="tag"></object>
     <script src="https://code.jquery.com/jquery-3.6.1.min.js"
@@ -94,69 +94,43 @@
 
 </head>
 <body>
-<nav th:replace="fragments/fragment :: navbar('event')"></nav>
+<nav th:replace="fragments/fragment :: navbar('usaha')"></nav>
 <div class="container-xl my-5" id="container">
 
-    <!--    ALERT MSG SUCCESS-->
-    <div class="alert" style="background-color: #37814F; color: white" role="alert" th:if="${success}">
-        <span th:text="${success}"></span>
-        <button type="button" class="close" style="color:white;" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-        </button>
-    </div>
+    <!--    &lt;!&ndash;    ALERT MSG SUCCESS&ndash;&gt;-->
+    <!--    <div class="alert" style="background-color: #37814F; color: white" role="alert" th:if="${success}">-->
+    <!--        <span th:text="${success}"></span>-->
+    <!--        <button type="button" class="close" style="color:white;" data-dismiss="alert" aria-label="Close">-->
+    <!--            <span aria-hidden="true">&times;</span>-->
+    <!--        </button>-->
+    <!--    </div>-->
 
-    <!--    ALERT MSG SUCCESS-->
-    <div class="alert alert-danger" role="alert" th:if="${error}">
-        <span th:text="${error}"></span>
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-        </button>
-    </div>
+    <!--    &lt;!&ndash;    ALERT MSG SUCCESS&ndash;&gt;-->
+    <!--    <div class="alert alert-danger" role="alert" th:if="${error}">-->
+    <!--        <span th:text="${error}"></span>-->
+    <!--        <button type="button" class="close" data-dismiss="alert" aria-label="Close">-->
+    <!--            <span aria-hidden="true">&times;</span>-->
+    <!--        </button>-->
+    <!--    </div>-->
 
 
 
     <!--    ALERT MSG-->
     <div class="card" style="width: 100%;">
         <div class="card-header text-center" style="background-color: #DBEFE1">
-            <h3 class="my-auto">Daftar Usaha</h3>
+            <h3 class="my-auto">Daftar Usaha Saya</h3>
         </div>
         <div class="card-body">
             <div class="justify-content-center">
-                <div class="row" style="margin-top: 10px">
-                    <div class="col">
-                        <table>
-                            <thead>
-                            <tr>
-                                <h6>Periode Event</h6>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr>
-                                <td>Tanggal Awal:</td>
-                                <td><input class="form-control" type="datetime-local" id="min" name="min"></td>
-                            </tr>
-                            <tr>
-                                <td>Tanggal Akhir:</td>
-                                <td><input class="form-control" type="datetime-local" id="max" name="max"></td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
-
-                    <div class="col" style="text-align: right" sec:authorize="hasAuthority('SDM_OPERASIONAL')">
-                        <a class="btn btn-success" th:href="@{/tambah-event}">Tambah Event</a>
-                    </div>
-                </div>
-                <br>
-                <table id="table_event" class="hover row-border stripe" style="width:100%">
+                <table id="table_usaha" class="hover row-border stripe" style="width:100%">
                     <thead>
                     <tr>
-                        <th>Nama Event</th>
-                        <th>Tanggal Mulai</th>
-                        <th>Tanggal Berakhir</th>
-                        <th>Tempat</th>
-                        <th>Program Kerja</th>
-                        <th>Departemen</th>
+                        <th>Last Edit</th>
+                        <th>Nama Produk</th>
+                        <th>Nama Penjual</th>
+                        <th>Harga</th>
+                        <th>Kontak</th>
+                        <th>Status Usaha</th>
                         <th>Action</th>
                     </tr>
 
@@ -180,86 +154,47 @@
 </div>
 <footer th:replace="fragments/fragment :: footer"></footer>
 <script th:inline="javascript">
-    var minDate, maxDate;
-
-    // Custom filtering function which will search data in column four between two values //
-    $.fn.dataTable.ext.search.push(
-        function (settings, data, dataIndex) {
-            var min = $('#min').val();
-            var max = $('#max').val();
-
-            if (min !== "" && max !== "") {
-                var min = new Date(min);
-                var max = new Date(max);
-            }
-
-            var dateAwal = new Date(data[1]);
-
-            if ((min === "" && max === "") ||
-                (min === "" && dateAwal <= max) ||
-                (min <= dateAwal && max === "") ||
-                (min <= dateAwal && dateAwal <= max)) {
-                return true;
-            }
-            return false;
-
-        }
-    );
 
     $(document).ready(function () {
 
-        var table = $('#table_event').DataTable({
-            "ajax": {
-                "url": "/api/event/viewall",
-                "dataSrc": ''
-            },
+        $('#table_usaha').DataTable({
+            "data": [[${listUsaha}]],
             "searching": true,
             "ordering": true,
             columnDefs: [{
-                targets: 1,
-                render: $.fn.dataTable.render.moment('YYYY-MM-DDTHH:mm:ss', 'DD MMM YYYY HH:mm')
-            }, {
-                targets: 2,
+                targets: 0,
                 render: $.fn.dataTable.render.moment('YYYY-MM-DDTHH:mm:ss', 'DD MMM YYYY HH:mm')
             },
                 {
                     targets: 6,
                     orderable: false
-                }
-            ],
+                }],
             "columns": [
-                {"data": "namaEvent"},
-                {"data": "waktuMulai"},
-                {"data": "waktuAkhir"},
-                {"data": "tempatPelaksanaan"},
-                {"data": "programKerja"},
+                {"data": 'lastEdit'},
+                {"data": 'namaProduk'},
+                {"data": 'namaPenjual'},
+                {"data": 'hargaProduk'},
+                {"data": 'kontakPenjual'},
                 {
                     "data": null,
                     "render": function (data) {
-                        if (data.direktorat == 'SDM_OPERASIONAL') {
-                            return "SDM & Operasional"
-                        } else if (data.direktorat == "KEUANGAN_PROGRAM") {
-                            return "Keuangan & Program"
+                        if (data.statusUsaha == 'BELUM_TERVERIFIKASI') {
+                            return "Belum Terverivikasi"
+                        } else if (data.statusUsaha == "TIDAK_TERVERIFIKASI") {
+                            return "Tidak Tervefikasi"
                         } else {
-                            return "Pengembangan Usaha"
+                            return "Terverifikasi"
                         }
                     }
                 },
                 {
                     "data": null,
-                    "render": function (data, type) {
-                        return '<a class="btn btn-outline-success" href="/event/' + data.idEvent + '">' + 'Detail' + '</a>';
+                    "render": function (data) {
+                        return '<a class="btn btn-outline-success" href="/detail-usaha/' + data.idUsaha + '">' + 'Detail' + '</a>';
                     }
                 }
             ],
         });
-
-        // Refilter the table
-        $('#min, #max').change(function () {
-            table.draw();
-        });
-
-        // $.fn.dataTable.ext.search.pop();
     })
 </script>
 

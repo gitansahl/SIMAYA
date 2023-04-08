@@ -16,6 +16,11 @@ public class KeuanganController {
     @Autowired
     private KeuanganService keuanganService;
 
+    @GetMapping(value = "/keuangan")
+    public String ringkasanKeuangan() {
+        return "keuangan/daftar-keuangan";
+    }
+
     @GetMapping(value = "/tambah-pemasukan")
     public String getTambahPemasukan(Model model) {
         KeuanganDTO keuangan = new KeuanganDTO();
