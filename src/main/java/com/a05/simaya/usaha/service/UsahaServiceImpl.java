@@ -99,6 +99,11 @@ public class UsahaServiceImpl implements UsahaService {
     }
 
     @Override
+    public List<UsahaModel> getUsahaByUsername(String username) {
+        return usahaDb.findAllByUsernameIs(username);
+    }
+
+    @Override
     public List<GambarUsahaModel> uploadPhoto(MultipartFile[] images, UsahaModel usahaModel) throws IOException {
         deletePhotosFiles(usahaModel);
         return savePhotosFiles(images, usahaModel);
@@ -173,6 +178,11 @@ public class UsahaServiceImpl implements UsahaService {
     public void simpanPhoto(UsahaModel usahaModel, List<GambarUsahaModel> files) {
         usahaModel.setGambar(files);
         usahaDb.save(usahaModel);
+    }
+
+    @Override
+    public List<UsahaModel> getUsahaByStatus(StatusUsaha status) {
+        return usahaDb.findAllByStatusUsahaIs(status);
     }
 
     private UsahaModel setUsahaModel(UsahaDTO usahaDTO, UsahaModel usahaModel) {

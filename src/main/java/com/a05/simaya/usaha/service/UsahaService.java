@@ -1,6 +1,7 @@
 package com.a05.simaya.usaha.service;
 
 import com.a05.simaya.usaha.model.GambarUsahaModel;
+import com.a05.simaya.usaha.model.StatusUsaha;
 import com.a05.simaya.usaha.model.UsahaModel;
 import com.a05.simaya.usaha.payload.UsahaDTO;
 import org.springframework.web.multipart.MultipartFile;
@@ -18,8 +19,8 @@ public interface UsahaService {
     UsahaDTO getDataUsaha(String id);
     UsahaDTO getDataPenjual(String name);
     void simpanPhoto(UsahaModel usahaModel, List<GambarUsahaModel> files);
-
+    List<UsahaModel> getUsahaByStatus(StatusUsaha status);
     List<UsahaModel> getListUsaha();
-
     void tolakUsaha(String id, String catatan);
+    List<UsahaModel> getUsahaByUsername(String username);
 }

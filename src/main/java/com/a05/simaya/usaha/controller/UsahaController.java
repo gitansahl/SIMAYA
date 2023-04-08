@@ -129,4 +129,17 @@ public class UsahaController {
         return "usaha/daftar-usaha";
     }
 
+    @GetMapping(value = "/daftar-usaha-verifikasi")
+    public String getDaftarUsahaYangPerluDiverifikasi() {
+        return "usaha/daftar-usaha-perlu-diverifikasi";
+    }
+
+    @GetMapping(value = "/daftar-usaha-saya")
+    public String getDaftarUsahaSaya(Model model,
+                                     Principal principal) {
+        List<UsahaModel> listUsaha = usahaService.getUsahaByUsername(principal.getName());
+        model.addAttribute("listUsaha", listUsaha);
+        return "usaha/daftar-usaha-saya";
+    }
+
 }
