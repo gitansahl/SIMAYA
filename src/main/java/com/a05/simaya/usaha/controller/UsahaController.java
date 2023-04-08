@@ -123,4 +123,9 @@ public class UsahaController {
         return "usaha/daftar-usaha";
     }
 
+    @GetMapping(value = "/daftar-usaha-verifiaksi")
+    public String getDaftarUsahaYangPerluDiverifikasi() {
+        return "usaha/daftar-usaha-perlu-diverifikasi";
+    }
+
 }

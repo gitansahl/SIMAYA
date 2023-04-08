@@ -159,6 +159,11 @@ public class UsahaServiceImpl implements UsahaService {
         usahaDb.save(usahaModel);
     }
 
+    @Override
+    public List<UsahaModel> getUsahaByStatus(String status) {
+        return usahaDb.findAllByStatusUsahaIs(status);
+    }
+
     private UsahaModel setUsahaModel(UsahaDTO usahaDTO, UsahaModel usahaModel) {
         usahaModel.setIdUsaha(usahaDTO.getIdUsaha());
         usahaModel.setNamaProduk(usahaDTO.getNamaProduk());
