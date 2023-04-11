@@ -214,13 +214,13 @@
                         </li>
 
                         <section th:if="${search} != '' ">
-                            <li class="page-item disabled"><a class="page-link" th:if="${page}+1 > ${listUsaha.size()}">Next</a></li>
-                            <li class="page-item"><a class="page-link" th:unless="${page}+1 > ${listUsaha.size()}" th:with="var=${page + 1}" th:href="@{${var}(search=${search})}">Next</a></li>
+                            <li class="page-item disabled"><a class="page-link" th:if="${page}+1 >= ${listUsaha.size()}">Next</a></li>
+                            <li class="page-item"><a class="page-link" th:unless="${page}+1 >= ${listUsaha.size()}" th:with="var=${page + 1}" th:href="@{${var}(search=${search})}">Next</a></li>
                         </section>
 
                         <section th:unless="${search} != '' ">
-                            <li class="page-item disabled"><a class="page-link" th:if="${page}+1 > ${listUsaha.size()}">Next</a></li>
-                            <li class="page-item"><a class="page-link" th:unless="${page}+1 > ${listUsaha.size()}" th:with="var=${page + 1}" th:href="@{${var}}">Next</a></li>
+                            <li class="page-item disabled"><a class="page-link" th:if="${page}+1 >= ${listUsaha.size()}">Next</a></li>
+                            <li class="page-item"><a class="page-link" th:unless="${page}+1 >= ${listUsaha.size()}" th:with="var=${page + 1}" th:href="@{${var}}">Next</a></li>
                         </section>
                     </ul>
                 </nav>
