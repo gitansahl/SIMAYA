@@ -54,11 +54,11 @@
                     Usaha
                 </a>
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarUsaha">
-                    <a class="dropdown-item" th:href="@{/daftar-usaha}"
+                    <a class="dropdown-item" th:href="@{/daftar-usaha/1}"
                        style="font-family: 'Segoe UI'; font-size: 15px">Lihat Daftar Usaha</a>
-                    <a class="dropdown-item" th:href="@{/}"
+                    <a class="dropdown-item" th:href="@{/daftar-usaha-saya}"
                        style="font-family: 'Segoe UI'; font-size: 15px">Lihat Usaha Saya</a>
-                    <a class="dropdown-item" th:href="@{/}" sec:authorize="hasAuthority('PENGEMBANGAN_USAHA')"
+                    <a class="dropdown-item" th:href="@{/daftar-usaha-verifikasi}" sec:authorize="hasAuthority('PENGEMBANGAN_USAHA')"
                        style="font-family: 'Segoe UI'; font-size: 15px">Lihat Usaha Menunggu Verifikasi</a>
                 </div>
             </div>
