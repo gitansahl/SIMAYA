@@ -199,7 +199,7 @@ public class UsahaServiceImpl implements UsahaService {
     }
 
     @Override
-    public List<UsahaModel> getListUsaha(){
-        return usahaDb.findAll();
+    public List<UsahaModel> getListUsahaByName(String name) {
+        return usahaDb.findAllByNamaProdukContains(name);
     }
 }

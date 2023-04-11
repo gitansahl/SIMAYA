@@ -20,8 +20,7 @@ public interface UsahaService {
     UsahaDTO getDataPenjual(String name);
     void simpanPhoto(UsahaModel usahaModel, List<GambarUsahaModel> files);
     List<UsahaModel> getUsahaByStatus(StatusUsaha status);
-    List<UsahaModel> getListUsaha();
-
     void tolakUsaha(String id, String catatan);
     List<UsahaModel> getUsahaByUsername(String username);
+    List<UsahaModel> getListUsahaByName(String name);
 }

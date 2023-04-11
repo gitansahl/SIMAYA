@@ -43,16 +43,4 @@ public class UsahaRestController {
         usahaService.tolakUsaha(mapRequest.get("idUsaha"), mapRequest.get("catatan"));
         return "redirect:/detail-usaha/" + mapRequest.get("id");
     }
-
-    @GetMapping(value = "/daftar-usaha")
-    private ResponseEntity getAllUsaha(){
-        ResponseEntity responseEntity = null;
-        try{
-            List<UsahaModel> listUsaha = usahaService.getListUsaha();
-            responseEntity = ResponseEntity.ok(listUsaha);
-        } catch (Exception e) {
-            responseEntity = ResponseEntity.badRequest().body(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-        return responseEntity;
-    }
 }

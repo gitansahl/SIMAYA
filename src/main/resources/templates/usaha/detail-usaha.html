@@ -253,10 +253,7 @@
                                 <button data-bs-toggle="modal" data-bs-target="#tolakModal" type="button" class="btn btn-danger float" style="width: 15%;">Tolak</button>
                         </div>
                     </div>
-
-
                 </div>
-
             </div>
 
         </span>
@@ -280,6 +277,9 @@
                   </div>
                 </div>
 
+        <!--Sudah/tidak terverifikasi-->
+        <span th:case="*">
+            <div class="row my-4">
             <!-- Modal Tolak -->
             <div class="modal fade" id="tolakModal" tabindex="-1" role="dialog" aria-labelledby="tolakModal"
                  aria-hidden="true">
@@ -380,7 +380,9 @@
                 </div>
             </div>
         </span>
-      </span>
+      </div>
+    </span>
+    </span>
     </span>
   </div>
 
@@ -439,7 +441,6 @@
               window.location.reload();
           }
       })
-
 
   }
 
