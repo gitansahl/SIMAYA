@@ -122,6 +122,33 @@
         </div>
         <div class="card-body">
             <div class="justify-content-center">
+                <div class="row mb-3" style="margin-top: 10px">
+                    <div class="col-3">
+                        <table>
+                            <thead>
+                            <tr>
+                                <h6>Status Usaha</h6>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <select name="idEvent" id="dropDownStatusUsaha"
+                                        class="form-select border-success input-text rounded-3 border border-2"
+                                        aria-label="Default select example" required>
+                                    <option value="ANY">Any</option>
+                                    <option value="TIDAK_TERVERIFIKASI">Tidak Terverifikasi</option>
+                                    <option value="BELUM_TERVERIFIKASI">Belum Terverifikasi</option>
+                                    <option value="TERVERIFIKASI">Terverifikasi</option>
+                                </select>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="col" style="text-align: right">
+                        <a class="btn btn-success" th:href="@{/tambah-usaha}">Tambah Usaha</a>
+                    </div>
+                </div>
                 <table id="table_usaha" class="hover row-border stripe" style="width:100%">
                     <thead>
                     <tr>
@@ -155,9 +182,19 @@
 <footer th:replace="fragments/fragment :: footer"></footer>
 <script th:inline="javascript">
 
+    $.fn.dataTable.ext.search.push(
+        function (settings, data, dataIndex) {
+            var choosen = $('#dropDownStatusUsaha').val();
+            // console.log(data)
+            // console.log(choosen.replace("_", " "))
+            // console.log()
+            return choosen == "ANY" || choosen.replace("_", " ") == data[5].toUpperCase()
+        }
+    );
+
     $(document).ready(function () {
 
-        $('#table_usaha').DataTable({
+        const table = $('#table_usaha').DataTable({
             "data": [[${listUsaha}]],
             "searching": true,
             "ordering": true,
@@ -179,9 +216,9 @@
                     "data": null,
                     "render": function (data) {
                         if (data.statusUsaha == 'BELUM_TERVERIFIKASI') {
-                            return "Belum Terverivikasi"
+                            return "Belum Terverifikasi"
                         } else if (data.statusUsaha == "TIDAK_TERVERIFIKASI") {
-                            return "Tidak Tervefikasi"
+                            return "Tidak Terverifikasi"
                         } else {
                             return "Terverifikasi"
                         }
@@ -194,6 +231,9 @@
                     }
                 }
             ],
+        });
+        $('#dropDownStatusUsaha').change(function () {
+            table.draw();
         });
     })
 </script>

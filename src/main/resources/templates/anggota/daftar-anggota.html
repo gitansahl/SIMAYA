@@ -126,10 +126,100 @@
         </div>
         <div class="card-body">
             <div class="justify-content-center">
-                <div sec:authorize="hasAuthority('ADMIN')">
-                    <a  class="btn btn-success float-right" style="margin:10px 0px 40px 0px" th:href="@{/tambah-anggota}">Tambah Anggota</a>
+                <div class="row">
+                    <div sec:authorize="hasAuthority('ADMIN')">
+                        <a  class="btn btn-success float-right" style="margin:10px 0px 0px 0px" th:href="@{/tambah-anggota}">Tambah Anggota</a>
+                    </div>
                 </div>
-
+                <div class="row mb-3" style="margin-top: 10px">
+                    <div class="col">
+                        <table>
+                            <thead>
+                            <tr>
+                                <h6>Status Keanggotaan</h6>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <select id="dropDownStatusKeanggotaan"
+                                        class="form-select border-success input-text rounded-3 border border-2"
+                                        aria-label="Default select example" required>
+                                    <option value="ANY">Any</option>
+                                    <option value="AKTIF">Aktif</option>
+                                    <option value="TIDAK_AKTIF">Tidak Aktif</option>
+                                </select>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col">
+                        <table>
+                            <thead>
+                            <tr>
+                                <h6>Pekerjaan</h6>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <select id="dropDownPekerjaan"
+                                        class="form-select border-success input-text rounded-3 border border-2"
+                                        aria-label="Default select example" required>
+                                    <option value="ANY">Any</option>
+                                    <option value="ASN">ASN</option>
+                                    <option value="SWASTA">Swasta</option>
+                                    <option value="WIRAUSAHA">Wirausaha</option>
+                                    <option value="IRT">Ibu Rumah Tangga</option>
+                                    <option value="LAINNYA">Lainnya</option>
+                                </select>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col">
+                        <table>
+                            <thead>
+                            <tr>
+                                <h6>Golongan Darah</h6>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <select id="dropDownGolonganDarah"
+                                        class="form-select border-success input-text rounded-3 border border-2"
+                                        aria-label="Default select example" required>
+                                    <option value="ANY">Any</option>
+                                    <option value="O">O</option>
+                                    <option value="A">A</option>
+                                    <option value="B">B</option>
+                                    <option value="AB">AB</option>
+                                </select>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col">
+                        <table>
+                            <thead>
+                            <tr>
+                                <h6>Aset</h6>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <select id="dropDownAset"
+                                        class="form-select border-success input-text rounded-3 border border-2"
+                                        aria-label="Default select example" required>
+                                    <option value="ANY">Any</option>
+                                    <option value="MOTOR">Motor</option>
+                                    <option value="MOBIL">Mobil</option>
+                                    <option value="RUMAH">Rumah</option>
+                                    <option value="VILA">Vila</option>
+                                </select>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
                 <br>
                 <table id="table_anggota" class="hover row-border stripe">
                     <thead>
@@ -153,6 +243,9 @@
                         <td>Data 5</td>
                         <td>Data 6</td>
                         <td>Data 7</td>
+                        <td>Data 8</td>
+                        <td>Data 9</td>
+                        <td>Data 10</td>
                     </tr>
                     </tbody>
                 </table>
@@ -163,10 +256,37 @@
 </div>
 <footer th:replace="fragments/fragment :: footer"></footer>
 <script th:inline="javascript">
+
+    $.fn.dataTable.ext.search.push(
+        function (settings, data, dataIndex) {
+            const statusKeanggotaan = $('#dropDownStatusKeanggotaan').val();
+            const pekerjaan = $('#dropDownPekerjaan').val();
+            const golonganDarah = $('#dropDownGolonganDarah').val();
+            const aset = $('#dropDownAset').val()
+
+            if (statusKeanggotaan !== "ANY") {
+                if (data[4].toUpperCase() !== statusKeanggotaan.replace("_", " ")) return false
+            }
+
+            if (pekerjaan !== "ANY") {
+                if (data[8] !== pekerjaan) return false
+            }
+
+            if (golonganDarah !== "ANY") {
+                if (data[9] !== golonganDarah) return false
+            }
+
+            if (aset !== "ANY") {
+                if (!data[7].toUpperCase().includes(aset)) return false
+            }
+            return true
+        }
+    );
+
     $(document).ready(function () {
         $('#staticBackdrop').modal('show');
 
-        $('#table_anggota').DataTable({
+        const table = $('#table_anggota').DataTable({
             "ajax": {
                 "url": "/api/anggota/viewall",
                 "dataSrc": ''
@@ -212,9 +332,40 @@
                     "render": function (data, type) {
                         return '<a class="btn btn-outline-success" href="/profil/' + data.id + '">' + 'Detail' + '</a>';
                     }
+                },
+                {
+                    "data": null,
+                    "visible": false,
+                    "render": function (data) {
+                        var res = "-"
+                        if (data.profile.isPunyaMotor === true) {
+                            res = "Motor"
+                        }
+                        if (data.profile.isPunyaMobil === true) {
+                            res === "-" ? res = "Mobil" : res += ", Mobil"
+                        }
+                        if (data.profile.isPunyaRumah === true) {
+                            res === "-" ? res = "Rumah" : res += ", Rumah"
+                        }
+                        if (data.profile.isPunyaVila === true) {
+                            res === "-" ? res = "Vila" : res += ", Vila"
+                        }
+                        return res
+                    }
+                },
+                {
+                    "data": "profile.pekerjaan",
+                    "visible": false
+                },
+                {
+                    "data": "golonganDarah",
+                    "visible": false
                 }
-
             ],
+        });
+
+        $('#dropDownStatusKeanggotaan, #dropDownPekerjaan, #dropDownGolonganDarah, #dropDownAset').change(function () {
+            table.draw();
         });
     });
 </script>
