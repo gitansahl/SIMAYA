@@ -62,6 +62,7 @@ public class UsahaModel {
     @Enumerated(EnumType.STRING)
     private StatusUsaha statusUsaha = StatusUsaha.BELUM_TERVERIFIKASI;
 
+
     @JsonIgnore
     @OneToOne(mappedBy = "usaha", optional = true)
     private CatatanModel catatan;
