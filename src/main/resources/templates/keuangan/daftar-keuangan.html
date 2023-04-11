@@ -112,21 +112,18 @@
                             </thead>
                             <tbody>
                             <tr>
-                                <td>Tanggal Awal:</td>
-                                <td><input class="form-control" type="date" id="fromDate"></td>
+                                <td><b></b>Tanggal Awal</td>
+                                <td style="padding-left: 20px">Tanggal Akhir</td>
                             </tr>
                             <tr>
-                                <td>Tanggal Akhir:</td>
-                                <td><input class="form-control" type="date" id="toDate"></td>
+                                <td><input class="form-control" type="date" id="fromDate"></td>
+                                <td style="padding-left: 20px"><input class="form-control" type="date" id="toDate"></td>
                             </tr>
                             </tbody>
                         </table>
                     </div>
-
-                    <div class="col" style="text-align: right" sec:authorize="hasAuthority('Keuangan_Program')">
+                    <div class="col" style="text-align: right" sec:authorize="hasAuthority('KEUANGAN_PROGRAM')">
                         <a class="btn btn-success" th:href="@{/tambah-pemasukan}">Tambah Pemasukan</a>
-                    </div>
-                    <div class="col" style="text-align: right" sec:authorize="hasAuthority('Keuangan_Program')">
                         <a class="btn btn-success" th:href="@{/tambah-pengeluaran}">Tambah Pengeluaran</a>
                     </div>
                 </div>
@@ -153,7 +150,8 @@
                     </tbody>
                     <tfoot>
                     <tr>
-                        <th colspan="5" style="text-align: right"></th>
+                        <th colspan="3" style="text-align: right"> Total: </th>
+                        <th colspan="2" style="text-align: center"></th>
                     </tr>
                     </tfoot>
                 </table>
@@ -179,12 +177,33 @@
             "columns": [
                 {"data": "tanggalTransaksi"},
                 {"data": "deskripsi"},
-                {"data": "jenis"},
+                {
+                    "data": null,
+                    "render": function (data) {
+                        if (data.jenis == 'PROGRAM_KERJA') {
+                            return "Keperluan Program Kerja"
+                        } else if (data.jenis == "SANTUNAN") {
+                            return "Santunan"
+                        } else if (data.jenis == "BANTUAN_BENCANA") {
+                            return "Bantuan Bencana"
+                        } else if (data.jenis == "ZISWAF") {
+                            return "ZISWAF"
+                        } else if (data.jenis == "SPONSOR") {
+                            return "Sponsor"
+                        } else if (data.jenis == "DONATUR") {
+                            return "Donatur"
+                        } else if (data.jenis == "PENDANAAN") {
+                            return "Pendanaan Pemerintah"
+                        } else {
+                            return "Event"
+                        }
+                    }
+                },
                 {
                     "data": null,
                     "render": function (data) {
                         if (data.tipe == 1){
-                            return data.jumlah;
+                            return 'Rp ' + data.jumlah.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
                         } return "";
                     }
                 },
@@ -193,7 +212,7 @@
                     "render": function (data) {
                         if (data.tipe == 0
                         ){
-                            return data.jumlah;
+                            return 'Rp ' + data.jumlah.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
                         } return "";
                     }
                 },
@@ -203,6 +222,8 @@
 
                 // Get filtered data
                 var filteredData = api.column(4, { page: 'current' }).data();
+                var filteredDataTotal = api.column(4, { filter: 'applied' }).data();
+                console.log(api);
 
                 // Calculate total for the filtered data
                 var filteredTotal = 0;
@@ -216,7 +237,7 @@
 
                 // Calculate total for all data
                 var total = 0;
-                $.each(data, function(index, row) {
+                $.each(filteredDataTotal, function(index, row) {
                     if (row.tipe == 1) {
                         total += row.jumlah;
                     } else {
@@ -225,17 +246,15 @@
                 });
 
                 // Update footer
-                $(api.column(4).footer()).html('Total: Rp ' + filteredTotal + ' ( Rp ' + total + '  Total)');
+                $(api.column(4).footer()).html('Rp ' + filteredTotal.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + ' ( Rp' + total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + ' )');
             }
         });
-        $('#fromDate, #toDate').on('change', function () {
-            table.draw();
-        });
+
         $.fn.dataTable.ext.search.push(
             function (settings, data, dataIndex) {
                 var fromDate = $('#fromDate').val();
                 var toDate = $('#toDate').val();
-                var date = data[7];
+                var date = data[0];
 
                 if ((fromDate === '' && toDate === '') || (moment(date).isBetween(fromDate, toDate, null, '[]'))) {
                     return true;
@@ -243,6 +262,10 @@
                 return false;
             }
         );
+
+        $('#fromDate, #toDate').on('change', function () {
+            table.draw();
+        });
     })
 </script>
 
