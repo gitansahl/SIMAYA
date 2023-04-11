@@ -21,6 +21,7 @@ public interface UsahaService {
     void simpanPhoto(UsahaModel usahaModel, List<GambarUsahaModel> files);
     List<UsahaModel> getUsahaByStatus(StatusUsaha status);
     List<UsahaModel> getListUsaha();
+
     void tolakUsaha(String id, String catatan);
     List<UsahaModel> getUsahaByUsername(String username);
 }
