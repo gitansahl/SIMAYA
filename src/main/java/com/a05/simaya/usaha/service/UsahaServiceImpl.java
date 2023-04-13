@@ -74,7 +74,9 @@ public class UsahaServiceImpl implements UsahaService {
         if (usaha != null){
             List<GambarUsahaModel> gambarUsahaModels = gambarUsahaDb.findAllByUsahaModel(usaha);
             CatatanModel catatanModel = catatanDb.findCatatanModelByUsaha(usaha);
-            catatanDb.delete(catatanModel);
+            if(catatanModel != null){
+                catatanDb.delete(catatanModel);
+            }
             gambarUsahaDb.deleteAll(gambarUsahaModels);
             usahaDb.delete(usahaModel);
             return true;
