@@ -57,7 +57,7 @@ public class UsahaController {
                         "Anda memiliki waktu 10 menit untuk mengubah atau menghapus data usaha sampai pukul %s.",
                 usahaModel.getNamaProduk(), currentDate));
 
-        return "redirect:/daftar-usaha";
+        return "redirect:/daftar-usaha/1";
     }
 
     @GetMapping(value = "/ubah-usaha/{id}")
@@ -120,7 +120,7 @@ public class UsahaController {
         } else {
             redirectAttributes.addFlashAttribute("error", String.format("Produk dengan id %s gagal dihapus! karena id tersebut tidak ditemukan", id));
         }
-        return "redirect:/daftar-usaha";
+        return "redirect:/daftar-usaha/1";
     }
 
     @GetMapping(value = "/daftar-usaha/{page}")
