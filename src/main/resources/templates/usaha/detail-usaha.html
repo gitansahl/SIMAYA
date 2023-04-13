@@ -392,22 +392,23 @@
 
           </span>
 
-        <!--terverifikasi-->
-        <span th:case="*">
-            <div class="row my-4">
-                <div class="col mx-3">
-                    <h4>Tindakan</h4>
-                    <hr>
-                    <div class="row">
-                        <div class="col">
-                            <a th:href="@{/ubah-usaha/} + ${usaha.idUsaha}" type="button" class="btn btn-success"
-                               style="width: 15%; margin-right: 5px">Ubah</a>
-                            <button data-bs-toggle="modal" data-bs-target="#hapusModal" type="button"
-                                    class="btn btn-danger float" style="width: 15%;">Hapus</button>
+            <!--terverifikasi-->
+            <span th:case="*">
+                <div class="row my-4">
+                    <div class="col mx-3">
+                        <h4>Tindakan</h4>
+                        <hr>
+                        <div class="row">
+                            <div class="col">
+                                <a th:href="@{/ubah-usaha/} + ${usaha.idUsaha}" type="button" class="btn btn-success"
+                                   style="width: 15%; margin-right: 5px">Ubah</a>
+                                <button data-bs-toggle="modal" data-bs-target="#hapusModal" type="button"
+                                        class="btn btn-danger float" style="width: 15%;">Hapus</button>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            </span>
         </span>
 
       <span th:unless="${anggota.role.name() == 'PENGEMBANGAN_USAHA'}">
