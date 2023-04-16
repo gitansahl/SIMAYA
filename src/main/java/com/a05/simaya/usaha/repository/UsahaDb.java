@@ -14,4 +14,5 @@ public interface UsahaDb extends JpaRepository<UsahaModel, String> {
     Optional<UsahaModel> findByIdUsaha(String id);
     List<UsahaModel> findAllByStatusUsahaIs(StatusUsaha status);
     List<UsahaModel> findAllByUsernameIs(String username);
+    List<UsahaModel> findAllByNamaProdukContains(String nama);
 }

@@ -19,6 +19,7 @@ import java.security.Principal;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -56,7 +57,7 @@ public class UsahaController {
                         "Anda memiliki waktu 10 menit untuk mengubah atau menghapus data usaha sampai pukul %s.",
                 usahaModel.getNamaProduk(), currentDate));
 
-        return "redirect:/daftar-usaha";
+        return "redirect:/daftar-usaha/1";
     }
 
     @GetMapping(value = "/ubah-usaha/{id}")
@@ -119,14 +120,46 @@ public class UsahaController {
         } else {
             redirectAttributes.addFlashAttribute("error", String.format("Produk dengan id %s gagal dihapus! karena id tersebut tidak ditemukan", id));
         }
-        return "redirect:/daftar-usaha";
+        return "redirect:/daftar-usaha/1";
     }
 
-    @GetMapping(value = "/daftar-usaha")
-    public String daftarUsaha(Model model) {
-        List<UsahaModel> listUsaha = usahaService.getListUsaha();
-        model.addAttribute("listUsaha", listUsaha);
+    @GetMapping(value = "/daftar-usaha/{page}")
+    public String daftarUsaha(Model model, @PathVariable("page") int page) {
+        List<UsahaModel> listUsaha = usahaService.getUsahaByStatus(StatusUsaha.TERVERIFIKASI);
+        Integer seq = 4; // Sequential 4
+        List<UsahaModel> listUsahaPage = assignPagination(listUsaha, page, seq);
+        String search = "";
+
+        model.addAttribute("listUsaha", listUsahaPage);
+        model.addAttribute("totalPage",  (Math.ceil(listUsaha.size()/ seq.floatValue())) -1);
+        model.addAttribute("page", page);
+        model.addAttribute("search", search);
         return "usaha/daftar-usaha";
+    }
+
+    @GetMapping(value = "/daftar-usaha/search/{page}")
+    public String daftarUsahaSearch(Model model, @RequestParam("search") String name, @PathVariable("page") int page){
+        List<UsahaModel> listUsaha = usahaService.getListUsahaByName(name);
+        Integer seq = 4; // Sequential 4
+        List<UsahaModel> listUsahaPage = assignPagination(listUsaha, page, seq);
+
+        model.addAttribute("listUsaha", listUsahaPage);
+        model.addAttribute("totalPage",  (Math.ceil(listUsaha.size()/ seq.floatValue())) -1);
+        model.addAttribute("page", page);
+        model.addAttribute("search", name);
+        return "usaha/daftar-usaha";
+    }
+
+    private List<UsahaModel> assignPagination(List<UsahaModel> listUsaha, int page, int seq){
+        List<UsahaModel> listUsahaPage = new ArrayList<>();
+
+        for (int i = page*seq - seq ; i < seq*page ; i++ ) {
+            if (listUsaha.size() == i){
+                break;
+            }
+            listUsahaPage.add(listUsaha.get(i));
+        }
+        return listUsahaPage;
     }
 
     @GetMapping(value = "/daftar-usaha-verifikasi")
