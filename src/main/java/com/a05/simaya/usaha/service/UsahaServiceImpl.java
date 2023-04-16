@@ -51,6 +51,10 @@ public class UsahaServiceImpl implements UsahaService {
         UsahaModel pastUsahaModel = usahaDb.getByIdUsaha(usahaDTO.getIdUsaha());
         UsahaModel usahaModel = setUsahaModel(usahaDTO, pastUsahaModel);
         usahaModel.setIdUsaha(usahaDTO.getIdUsaha());
+        if (usahaModel.getCatatan() != null){
+            CatatanModel catatanModel = usahaModel.getCatatan();
+            catatanDb.delete(catatanModel);
+        }
         if (usahaModel.getStatusUsaha() != StatusUsaha.BELUM_TERVERIFIKASI) {
             usahaModel.setLastEdit(LocalDateTime.now());
             usahaModel.setStatusUsaha(StatusUsaha.BELUM_TERVERIFIKASI);
