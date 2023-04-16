@@ -57,7 +57,7 @@ public class UsahaController {
                         "Anda memiliki waktu 10 menit untuk mengubah atau menghapus data usaha sampai pukul %s.",
                 usahaModel.getNamaProduk(), currentDate));
 
-        return "redirect:/daftar-usaha/1";
+        return "redirect:/daftar-usaha-saya";
     }
 
     @GetMapping(value = "/ubah-usaha/{id}")
@@ -76,7 +76,8 @@ public class UsahaController {
     @PostMapping(value = "/ubah-usaha")
     public String ubahUsaha(UsahaDTO usahaDTO,
                             @RequestParam("upload") MultipartFile[] images,
-                            RedirectAttributes redirectAttributes) throws IOException {
+                            RedirectAttributes redirectAttributes, Principal principal) throws IOException {
+        usahaDTO.setUsername(principal.getName());
         UsahaModel usahaModel = usahaService.ubahUsaha(usahaDTO);
 
         List<GambarUsahaModel> files = usahaService.uploadPhoto(images, usahaModel);
@@ -120,7 +121,7 @@ public class UsahaController {
         } else {
             redirectAttributes.addFlashAttribute("error", String.format("Produk dengan id %s gagal dihapus! karena id tersebut tidak ditemukan", id));
         }
-        return "redirect:/daftar-usaha/1";
+        return "redirect:/daftar-usaha-saya";
     }
 
     @GetMapping(value = "/daftar-usaha/{page}")
