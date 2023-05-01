@@ -35,7 +35,7 @@ public class KeuanganController {
         redirectAttributes.addFlashAttribute("success", "Data pemasukan berhasil ditambahkan!");
 
         // TODO: Menyesuaikan redirect ke halaman ringkasan pemasukan & pengeluaran
-        return "redirect:/anggota/viewall";
+        return "redirect:/keuangan";
     }
 
     @GetMapping(value = "/tambah-pengeluaran")
@@ -51,7 +51,6 @@ public class KeuanganController {
         keuanganService.tambahPengeluaran(keuanganDTO);
         redirectAttributes.addFlashAttribute("success", "Data pengeluaran berhasil ditambahkan!");
 
-        // TODO: Menyesuaikan redirect ke halaman ringkasan pemasukan & pengeluaran
-        return "redirect:/anggota/viewall";
+        return "redirect:/keuangan";
     }
 }

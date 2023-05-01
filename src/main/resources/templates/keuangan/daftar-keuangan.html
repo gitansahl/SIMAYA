@@ -96,6 +96,26 @@
 <body>
 <nav th:replace="fragments/fragment :: navbar('keuangan')"></nav>
 <div class="container-xl my-5" id="container">
+
+    <!--    ALERT MSG ERROR-->
+    <div class="alert alert-danger alert-dismissible fade show" style="margin: 20px 50px -30px 50px" role="alert"
+         th:if="${error}">
+        <span th:text="${error}"></span>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <!--    ALERT MSG-->
+
+    <!--    ALERT MSG SUCCESS-->
+    <div class="alert" style="background-color: #37814F; color: white" role="alert" th:if="${success}">
+        <span th:text="${success}"></span>
+        <button type="button" class="close" style="color:white;" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <!--    ALERT MSG-->
+
     <div class="card" style="width: 100%;">
         <div class="card-header text-center" style="background-color: #DBEFE1">
             <h3 class="my-auto">Daftar Pemasukan dan Pengeluaran</h3>
@@ -156,6 +176,21 @@
                     </tfoot>
                 </table>
                 <br>
+
+                <div class="row mb-3">
+                    <div class="col-12">
+                        <div class="container-fluid mx-1" style="font-size:17px;">
+                            <div class="mb-3 mx-3 px-2">
+                                <span><b>Keterangan Total:</b></span>
+                                <ul>
+                                    <li>Untuk angka total di luar tanda kurung merupakan total pemasukan dan pengeluaran pada halaman tersebut.</li>
+                                    <li>Untuk angka total di dalam tanda kurung merupakan total pemasukan dan pengeluaran pada seluruh halaman.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>
@@ -246,7 +281,7 @@
                 });
 
                 // Update footer
-                $(api.column(4).footer()).html('Rp ' + filteredTotal.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + ' ( Rp' + total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + ' )');
+                $(api.column(4).footer()).html('Rp ' + filteredTotal.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + ' ( Rp ' + total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + ' )');
             }
         });
 
