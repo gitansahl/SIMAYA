@@ -33,6 +33,10 @@ public class ZiswafModel {
     @Column(name = "jumlah")
     private Long jumlah;
 
+    @NotNull
+    @Column(name= "no_telp")
+    private String noTelp;
+
     @Enumerated(EnumType.STRING)
     @Column(name = "jenis_ziswaf")
     private JenisZiswafEnum jenisZiswaf;
