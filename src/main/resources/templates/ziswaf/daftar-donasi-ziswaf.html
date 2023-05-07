@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Daftar Donasi Ziswaf</title>
+    <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+    <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js"
+            integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+    <script type="text/javascript" charset="utf8"
+            src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.8.4/moment.min.js"></script>
+    <script type="text/javascript"
+            src="https://cdn.datatables.net/plug-ins/1.10.16/sorting/datetime-moment.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/plug-ins/1.10.21/dataRender/datetime.js"></script>
+    <link href="https://nightly.datatables.net/css/jquery.dataTables.css" rel="stylesheet" type="text/css"/>
+
+    <script type="text/javascript"
+            src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.2/moment.min.js"></script>
+
+
+    <style>
+        html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+        }
+
+        body {
+            background-image: url("https://www.linkpicture.com/q/bg_17.png");
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-size: cover;
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            position: relative;
+        }
+
+        #container {
+            min-height: 100%;
+            position: relative;
+        }
+
+        .dataTables_wrapper .dataTables_filter input:focus-visible {
+            box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.25);
+            border-color: #28a745;
+        }
+
+        .dataTables_wrapper .dataTables_filter input {
+            border-color: #28a745;
+            margin-left: 10px;
+        }
+
+        table.dataTable.hover tbody tr:hover {
+            background-color: #DBEFE1;
+        }
+
+        .dataTables_wrapper .dataTables_paginate .paginate_button.current {
+            background-color: #E0EFEF !important;
+        }
+
+        .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+            background-color: #E0EFEF !important;
+            background: -webkit-gradient(linear, left top, left bottom, color-stop(30%, #FFF), color-stop(100%, #E0EFEF));
+            color: black !important;
+            border-color: #28a745;
+        }
+
+        .dataTables_wrapper .dataTables_paginate .paginate_button.disabled:hover {
+            background-color: transparent !important;
+        }
+
+        tbody, td, tfoot, th, thead, tr {
+            border-color: #28a745 !important;
+        }
+
+        .dataTables_wrapper .dataTables_length select {
+            border-color: #28a745;
+        }
+
+        .dataTables_wrapper .dataTables_length select:focus-visible {
+            border-color: #28a745;
+            box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.25);
+        }
+
+        th.sorting.sorting_desc, th.sorting.sorting_asc {
+            color: #37814F;
+        }
+
+    </style>
+</head>
+<body>
+<nav th:replace="fragments/fragment :: navbar('ziswaf')"></nav>
+<div class="container-xl my-5" id="container">
+
+    <!--    ALERT MSG SUCCESS-->
+    <div class="alert" style="background-color: #37814F; color: white" role="alert" th:if="${success}">
+        <span th:text="${success}"></span>
+        <button type="button" class="close" style="color:white;" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <!--    ALERT MSG-->
+
+</div>
+</body>
+</html>

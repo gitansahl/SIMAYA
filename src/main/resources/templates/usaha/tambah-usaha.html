@@ -120,14 +120,14 @@
                                     <div class="input-group mb-3">
                                         <span class="input-group-text" id="basic-addon1">Rp.</span>
                                         <input type="number" th:field="*{hargaProduk}" min="0"
-                                               class="form-control input-text border-success rounded-end border border-2"
+                                               class="form-control input-number border-success rounded-end border border-2"
                                                id="formGroupExampleInput2" placeholder="Masukkan harga produk..." required>
-                                    </div>
-                                    <div class="valid-feedback">
-                                        Looks good!
-                                    </div>
-                                    <div class="invalid-feedback">
-                                        Masukkan Harga Produk.
+                                        <div class="valid-feedback">
+                                            Looks good!
+                                        </div>
+                                        <div class="invalid-feedback">
+                                            Masukkan Harga Produk dengan harga yang sesuai.
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -188,8 +188,11 @@
                     <div class="col-12">
                         <div class="container-fluid mx-1">
                             <div class="mb-3 mx-3 px-2">
-                                <label for="upload" class="form-label">Gambar Produk <span
+                                <label for="upload" class="form-label" style="margin-bottom: 0 !important;">Gambar Produk <span
                                         style="color: red">*</span></label>
+                                <div style="font-size:13px; color:#ED3237; margin-bottom: 0.5rem;">
+                                    <strong>Pastikan ukuran setiap foto yang diunggah tidak lebih dari 1 MB.</strong>
+                                </div>
                                 <!--                                <input type="file" th:field="*{gambarUsaha}" multiple accept="image/png, image/jpeg"-->
                                 <!--                                       class="form-control input-photo border-success rounded-start border border-2"-->
                                 <!--                                       id="formGroupExampleInput5" placeholder="Masukkan gambar produk..." required>-->
@@ -262,6 +265,22 @@
 
     $('.input-photo').change((e) => {
         if (e.target.files.length === 0) {
+            $(e.target).addClass("is-invalid");
+            $(e.target).addClass("border-danger");
+
+            $(e.target).removeClass("border-success");
+            $(e.target).removeClass("is-valid");
+        } else {
+            $(e.target).removeClass("is-invalid");
+            $(e.target).removeClass("border-danger");
+
+            $(e.target).addClass("border-success");
+            $(e.target).addClass("is-valid");
+        }
+    });
+
+    $('.input-number').change((e) => {
+        if (e.target.value === '' || Number(e.target.value) < 0) {
             $(e.target).addClass("is-invalid");
             $(e.target).addClass("border-danger");
 
