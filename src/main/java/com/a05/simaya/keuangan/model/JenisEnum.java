@@ -5,7 +5,6 @@ public enum JenisEnum {
     PROGRAM_KERJA,
     SANTUNAN,
     BANTUAN_BENCANA,
-    ZISWAF,
     SPONSOR,
     DONATUR,
     PENDANAAN,
