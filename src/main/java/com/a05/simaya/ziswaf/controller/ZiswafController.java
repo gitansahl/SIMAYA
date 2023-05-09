@@ -1,5 +1,6 @@
 package com.a05.simaya.ziswaf.controller;
 
+import com.a05.simaya.event.model.EventModel;
 import com.a05.simaya.ziswaf.model.JenisZiswafEnum;
 import com.a05.simaya.ziswaf.model.ZiswafModel;
 import com.a05.simaya.ziswaf.payload.ZiswafDTO;
@@ -11,6 +12,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.util.List;
 
 @Controller
 @Slf4j
@@ -48,5 +51,16 @@ public class ZiswafController {
     @GetMapping(value = "/daftar-ziswaf")
     public String getDaftarUsahaSaya() {
         return "ziswaf/daftar-donasi-ziswaf";
+    }
+
+    @GetMapping(value = "/ziswaf")
+    public String getDashboardEvent(Model model) {
+        Long countZiswafToday = ziswafService.getZiswafToday();
+        Long countZiswafLastWeek = ziswafService.getZiswafLastWeek();
+        Long countZiswafLastMonth = ziswafService.getZiswafLastMonth();
+        model.addAttribute("today", countZiswafToday);
+        model.addAttribute("week", countZiswafLastWeek);
+        model.addAttribute("month", countZiswafLastMonth);
+        return "ziswaf/dashboard-ziswaf";
     }
 }
