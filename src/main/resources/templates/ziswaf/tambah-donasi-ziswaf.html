@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Tambah Donasi</title>
+    <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+    <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+    <style>
+        .form-control:focus {
+            border-color: #28a745;
+            box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.25);
+        }
+
+        .form-select:focus {
+            border-color: #28a745;
+            box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.25);
+        }
+
+        option:checked {
+            background-color: #28a745;
+            color: white;
+            box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.25);
+        }
+
+        option:hover {
+            background-color: #28a745;
+            box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.25);
+        }
+
+        .form-check-input:checked {
+            background-color: #28a745;
+            border-color: #28a745;
+        }
+
+        html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+        }
+
+        body {
+            background-image: url("https://www.linkpicture.com/q/bg_17.png");
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-size: cover;
+            font-family: "Segoe UI", "Segoe UI Semibold", "Segoe UI Black", sans-serif;
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            position: relative;
+        }
+
+        #container {
+            min-height: 100%;
+            position: relative;
+        }
+
+    </style>
+
+</head>
+<body>
+<nav th:replace="fragments/fragment :: navbar('ziswaf')"></nav>
+<div class="container my-5" id="container">
+    <div class="card" style="width: 100%;">
+        <div class="card-header text-center" style="background-color: #DBEFE1">
+            <h3 class="my-auto">Tambah Data Donasi ZISWAF</h3>
+        </div>
+        <div class="card-body">
+            <form th:action="@{/tambah-ziswaf}" th:object="${ziswaf}" method="POST" class="needs-validation">
+
+                <!--Baris 1-->
+                <div class="row my-3">
+                    <div class="row">
+                        <div class="col-1"></div>
+                        <div class="col-10">
+                            <div class="mb-3">
+                                <label for="formGroupExampleInput1" class="form-label">Tanggal Donasi <span
+                                        style="color: red">*</span></label>
+                                <input type="date" th:field="*{donatedDate}"
+                                       class="form-control input-text border-success rounded-start border border-2"
+                                       id="formGroupExampleInput1" required>
+                                <div class="valid-feedback">
+                                    Looks good!
+                                </div>
+                                <div class="invalid-feedback">
+                                    Masukkan Tanggal Donasi.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-1"></div>
+                    </div>
+                </div>
+
+                <!--Baris 2-->
+                <div class="row my-3">
+                    <div class="row">
+                        <div class="col-1"></div>
+                        <div class="col-10">
+                            <div class="mb-3">
+                                <label for="formGroupExampleInput2" class="form-label">Nama Donatur <span
+                                        style="color: red">*</span></label>
+                                <input type="text" th:field="*{donatur}"
+                                       class="form-control input-text border-success rounded-start border border-2"
+                                       id="formGroupExampleInput2" placeholder="Masukkan nama donatur..." required>
+                                <div class="valid-feedback">
+                                    Looks good!
+                                </div>
+                                <div class="invalid-feedback">
+                                    Masukkan Nama Donatur.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-1"></div>
+                    </div>
+                </div>
+
+                <!--Baris 3-->
+                <div class="row my-3">
+                    <div class="row">
+                        <div class="col-1"></div>
+                        <div class="col-10">
+                            <div class="mb-3">
+                                <label for="formGroupExampleInput3" class="form-label">Kontak Donatur <span
+                                        style="color: red">*</span></label>
+                                <input type="number" th:field="*{noTelp}"
+                                       class="form-control input-text border-success rounded-start border border-2"
+                                       id="formGroupExampleInput3" placeholder="Masukkan kontak donatur..." required>
+                                <div class="valid-feedback">
+                                    Looks good!
+                                </div>
+                                <div class="invalid-feedback">
+                                    Masukkan Kontak Donatur.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-1"></div>
+                    </div>
+                </div>
+
+                <!--Baris 4-->
+                <div class="row my-3">
+                    <div class="row">
+                        <div class="col-1"></div>
+                        <div class="col-10">
+                            <div class="mb-3">
+                                <label for="formGroupExampleInput4" class="form-label">Jumlah Donasi <span
+                                        style="color: red">*</span></label>
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text" id="basic-addon1">Rp.</span>
+                                    <input type="number" th:field="*{jumlah}" min="0"
+                                           class="form-control input-number border-success rounded-end border border-2"
+                                           id="formGroupExampleInput4" placeholder="Masukkan jumlah donasi..." required>
+                                    <div class="valid-feedback">
+                                        Looks good!
+                                    </div>
+                                    <div class="invalid-feedback">
+                                        Masukkan Jumlah Donasi dengan jumlah yang sesuai.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-1"></div>
+                    </div>
+                </div>
+
+                <!--Baris 5-->
+                <div class="row my-3">
+                    <div class="row">
+                        <div class="col-1"></div>
+                        <div class="col-10">
+                            <div class="mb-3">
+                                <label for="formGroupExampleInput5" class="form-label">Jenis Donasi <span
+                                        style="color: red">*</span></label>
+                                <select id="formGroupExampleInput5" th:field="*{jenisZiswaf}"
+                                        class="form-select border-success input-text rounded-3 border border-2"
+                                        aria-label="Default select example" required>
+                                    <option value="" selected>Pilih jenis donasi..</option>
+                                    <option value="ZAKAT_PENGHASILAN">Zakat Penghasilan</option>
+                                    <option value="ZAKAT_MAAL">Zakat Maal</option>
+                                    <option value="ZAKAT_FITRAH">Zakat Fitrah</option>
+                                    <option value="INFAQ">Infaq</option>
+                                    <option value="SEDEKAH">Sedekah</option>
+                                    <option value="KAFALAH_YATIM">Kafalah Yatim</option>
+                                    <option value="WAKAF">Wakaf</option>
+                                </select>
+                                <div class="valid-feedback">
+                                    Looks good!
+                                </div>
+                                <div class="invalid-feedback">
+                                    Pilih Jenis Donasi.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-1"></div>
+                    </div>
+                </div>
+
+                <div class="row mt-5 mb-3">
+                    <div class="col-5"></div>
+                    <div class="col-2">
+                        <button type="submit" class="btn btn-success btn-lg">Tambah</button>
+                    </div>
+                    <div class="col-5"></div>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    $('.input-text').change((e) => {
+        if (e.target.value === '') {
+            $(e.target).addClass("is-invalid");
+            $(e.target).addClass("border-danger");
+
+            $(e.target).removeClass("border-success");
+            $(e.target).removeClass("is-valid");
+        } else {
+            $(e.target).removeClass("is-invalid");
+            $(e.target).removeClass("border-danger");
+
+            $(e.target).addClass("border-success");
+            $(e.target).addClass("is-valid");
+        }
+    });
+
+    $('.input-number').change((e) => {
+        if (e.target.value === '' || Number(e.target.value) < 0) {
+            $(e.target).addClass("is-invalid");
+            $(e.target).addClass("border-danger");
+
+            $(e.target).removeClass("border-success");
+            $(e.target).removeClass("is-valid");
+        } else {
+            $(e.target).removeClass("is-invalid");
+            $(e.target).removeClass("border-danger");
+
+            $(e.target).addClass("border-success");
+            $(e.target).addClass("is-valid");
+        }
+    });
+
+</script>
+
+</body>
+</html>
