@@ -2,6 +2,7 @@ package com.a05.simaya.usaha.service;
 
 import com.a05.simaya.anggota.model.AnggotaModel;
 import com.a05.simaya.anggota.repository.AnggotaDb;
+import com.a05.simaya.anggota.util.FileUploadUtil;
 import com.a05.simaya.usaha.model.CatatanModel;
 import com.a05.simaya.usaha.model.GambarUsahaModel;
 import com.a05.simaya.usaha.model.StatusUsaha;
@@ -10,10 +11,8 @@ import com.a05.simaya.usaha.payload.UsahaDTO;
 import com.a05.simaya.usaha.repository.CatatanDb;
 import com.a05.simaya.usaha.repository.GambarUsahaDb;
 import com.a05.simaya.usaha.repository.UsahaDb;
-import com.a05.simaya.usaha.util.FileUploadUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -36,6 +35,9 @@ public class UsahaServiceImpl implements UsahaService {
 
     @Autowired
     private CatatanDb catatanDb;
+
+    @Autowired
+    private FileUploadUtil fileUploadUtil;
 
     @Override
     public UsahaModel tambahUsaha(UsahaDTO usahaDTO) {
@@ -120,11 +122,10 @@ public class UsahaServiceImpl implements UsahaService {
     private void deletePhotosFiles(UsahaModel usahaModel) throws IOException {
         List<GambarUsahaModel> pastUploadedFiles = gambarUsahaDb.findAllByUsahaModel(usahaModel);
         for (GambarUsahaModel pastGambar : pastUploadedFiles) {
-            System.out.println("src/main/resources/static" + pastGambar.getPhotosImagePath());
-            FileUploadUtil.deleteFile("src/main/resources/static" + pastGambar.getPhotosImagePath());
+//            System.out.println("src/main/resources/static" + pastGambar.getPhotosImagePath());
+//            FileUploadUtil.deleteFile("src/main/resources/static" + pastGambar.getPhotosImagePath());
             gambarUsahaDb.delete(pastGambar);
         }
-
     }
 
     private List<GambarUsahaModel> savePhotosFiles(MultipartFile[] images, UsahaModel usahaModel) throws IOException {
@@ -134,19 +135,15 @@ public class UsahaServiceImpl implements UsahaService {
             if (image.isEmpty())
                 return null;
 
-            String fileName = StringUtils.cleanPath(image.getOriginalFilename());
+            String uploadedFileName = usahaModel.getIdUsaha() + "-" + i;
+            String urlGambar = fileUploadUtil.saveFile(uploadedFileName, image);
 
-            String[] stringSplitted = fileName.split("\\.");
-            String extension = stringSplitted[stringSplitted.length-1];
-
-            String uploadedFileName = usahaModel.getIdUsaha() + "-" + i + "." + extension;
             GambarUsahaModel gambarUsahaModel = new GambarUsahaModel();
-            gambarUsahaModel.setGambarUsaha(uploadedFileName);
+            gambarUsahaModel.setGambarUsaha(urlGambar);
             gambarUsahaModel.setUsahaModel(usahaModel);
             gambarUsahaDb.save(gambarUsahaModel);
-            uploadedFileNames.add(gambarUsahaModel);
 
-            FileUploadUtil.saveFile("src/main/resources/static/usaha-photos/", usahaModel.getIdUsaha() + "-" + i + "." + extension, image);
+            uploadedFileNames.add(gambarUsahaModel);
         }
 
         return uploadedFileNames;
