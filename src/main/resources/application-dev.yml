@@ -37,3 +37,7 @@ spring:
   main:
     allow-circular-references: true
     allow-bean-definition-overriding: true
+cloudinary:
+  api_key: ${CLOUDINARY_API_KEY}
+  secret_key: ${CLOUDINARY_SECRET_KEY}
+  cloud_name: ${CLOUDINARY_CLOUD_NAME}

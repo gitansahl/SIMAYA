@@ -29,6 +29,9 @@ public class AnggotaServiceImpl implements AnggotaService {
     @Autowired
     ProfileAnggotaDb profileAnggotaDb;
 
+    @Autowired
+    FileUploadUtil fileUploadUtil;
+
     BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
     @Override
@@ -114,15 +117,8 @@ public class AnggotaServiceImpl implements AnggotaService {
         if (image.isEmpty())
             return pastUrl;
 
-        String fileName = StringUtils.cleanPath(image.getOriginalFilename());
-
-        String[] stringSplitted = fileName.split("\\.");
-        String extension = stringSplitted[stringSplitted.length-1];
-
-        String uploadedFileName = username + "." + extension;
-
-        FileUploadUtil.saveFile("src/main/resources/static/user-photos/", username + "." + extension, image);
-        return uploadedFileName;
+        String uploadedUrl = fileUploadUtil.saveFile(username, image);
+        return uploadedUrl;
     }
 
     @Override

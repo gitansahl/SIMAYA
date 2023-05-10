@@ -190,7 +190,7 @@
         <div class="slideshow-container">
           <div th:each="gambar, iteration: ${listGambar}">
             <div class="mySlides">
-              <img th:src="@{${'/usaha-photos/' + gambar.gambarUsaha}}"
+              <img th:src="@{${gambar.gambarUsaha}}"
                    style="height:360px; width: 100%; object-fit: cover;" class="border">
               <div class="numbertext" th:text="${iteration.count} + ' / ' + ${listGambar.size()} "></div>
             </div>
