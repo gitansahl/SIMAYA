@@ -31,6 +31,6 @@ public class GambarUsahaModel {
 
     @Transient
     public String getPhotosImagePath() {
-        return "/usaha-photos/" + gambarUsaha;
+        return gambarUsaha;
     }
 }

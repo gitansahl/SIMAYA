@@ -54,7 +54,7 @@ public class ProfileModel {
     public String getPhotosImagePath() {
         if (photoUrl == null) return null;
 
-        return "/user-photos/" + photoUrl;
+        return photoUrl;
     }
 
     @OneToOne(fetch = FetchType.LAZY, mappedBy = "profile")
