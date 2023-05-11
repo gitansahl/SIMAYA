@@ -24,6 +24,18 @@ public class UserDetailServiceImpl implements UserDetailsService {
         AnggotaModel anggota = anggotaDb.findByUsername(username);
         Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
         grantedAuthorities.add(new SimpleGrantedAuthority(anggota.getRole().toString()));
-        return new User(anggota.getUsername(), anggota.getPassword(), grantedAuthorities);
+        return new CustomUserDetails(anggota.getUsername(), anggota.getPassword(), anggota.getProfile().getPhotoUrl(), grantedAuthorities);
+    }
+
+    private final static class CustomUserDetails extends User implements UserDetails {
+        private String imageUrl;
+        private CustomUserDetails(String username, String password, String imageUrl, Set<GrantedAuthority> grantedAuthorities) {
+            super(username, password, grantedAuthorities);
+            this.imageUrl = imageUrl;
+        }
+
+        public String getImageUrl() {
+            return imageUrl;
+        }
     }
 }
