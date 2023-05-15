@@ -129,9 +129,160 @@
         </div>
       </div>
     </div>
-
   </div>
-
+  <div class="container-fluid" style="display: flex;justify-content: center">
+    <div class="row my-5" style="height: 500px; width: 80%; align-self: center; text-align: center">
+      <h2 class="mb-5">Total Dana Terkumpul Berdasarkan Kategori ZISWAF</h2>
+      <canvas id="bar_chart"></canvas>
+    </div>
+  </div>
+  <div class="container-fluid mt-5" style="display: flex;justify-content: center">
+    <div class="row my-5" style="height: 500px; width: 80%; align-self: center; text-align: center">
+      <h2 class="mb-2">ZISWAF Terkumpul Berdasarkan Periode</h2>
+      <select id="dropDownPeriod" class="form-select border-success input-text rounded-3 border border-2 mb-3" style="width: 120px; margin-left: auto; margin-right: 0" required>
+        <option value="DAILY">Harian</option>
+        <option value="MONTHLY">Bulanan</option>
+      </select>
+      <canvas id="line_chart"></canvas>
+    </div>
+  </div>
 </div>
+
+<footer th:replace="fragments/fragment :: footer"></footer>
 </body>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script th:inline="javascript">
+  let barLabel = {};
+  let barData = {};
+
+  let lineLabel = {};
+  let lineData = {};
+
+  let lineChart = null;
+  let barChart = null;
+  $(document).ready(function () {
+    getBarChart();
+    getLineChart();
+
+    $('#dropDownPeriod').change(function () {
+      const period = $('#dropDownPeriod').val();
+      updateLineChart(period)
+    })
+  });
+
+  function updateLineChart(period) {
+    lineLabel = {}
+    lineData = {}
+    if (period === 'DAILY') {
+      getLineChart()
+    } else {
+      getLineChartMonthly()
+    }
+  }
+
+  function getLineChartMonthly() {
+    $.ajax({
+      url: "/api/ziswaf/line_chart_monthly",
+      method: 'GET',
+      dataType: 'json',
+      success: function (data) {
+        lineLabel = data['label'];
+        lineData = data['jumlah'];
+        drawLineChart();
+      }
+    })
+  }
+
+  function getBarChart() {
+    $.ajax({
+      url: "/api/ziswaf/bar_chart",
+      method: 'GET',
+      dataType: 'json',
+      success: function (data) {
+        barLabel = data['label']
+        barData = data['jumlah']
+        drawBarChart()
+      }
+    })
+  }
+
+  function drawBarChart() {
+    const data = {
+      labels: barLabel,
+      datasets: [{
+        label: "Jumlah Ziswaf",
+        data: barData,
+        borderWidth: 1,
+      }]
+    };
+
+    const config = {
+      type: 'bar',
+      data: data,
+      options: {
+        plugins: {
+          legend: {
+            display: false
+          }
+        },
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      },
+    };
+
+    barChart = new Chart(
+            document.getElementById('bar_chart'),
+            config
+    );
+  }
+
+  function getLineChart() {
+    $.ajax({
+      url: "/api/ziswaf/line_chart",
+      method: 'GET',
+      dataType: 'json',
+      success: function (data) {
+        lineLabel = data['label'];
+        lineData = data['jumlah'];
+        drawLineChart();
+      }
+    })
+  }
+
+  function drawLineChart() {
+    const data = {
+      labels: lineLabel,
+      datasets: [{
+        label: 'Jumlah Ziswaf',
+        data: lineData,
+        fill: true,
+        borderColor: 'rgb(75, 192, 192)',
+        tension: 0.1
+      }]
+    };
+
+    const config = {
+      type: 'line',
+      data: data,
+      options: {
+        plugins: {
+          legend: {
+            display: false
+          }
+        }
+      }
+    };
+
+    if (lineChart !== null) {
+      lineChart.destroy()
+    }
+    lineChart = new Chart(
+            document.getElementById('line_chart'),
+            config
+    );
+  }
+</script>
 </html>
