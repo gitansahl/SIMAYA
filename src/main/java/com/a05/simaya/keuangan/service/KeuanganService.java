@@ -8,4 +8,5 @@ public interface KeuanganService {
     void tambahPemasukan(KeuanganDTO keuanganDTO);
     void tambahPengeluaran(KeuanganDTO keuanganDTO);
     List<KeuanganModel> getListKeuangan();
+    List<KeuanganModel> getListPengeluaranZiswaf();
 }

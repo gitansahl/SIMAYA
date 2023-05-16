@@ -12,7 +12,7 @@ public interface ZiswafService {
     Long getZiswafLastWeek();
     Long getZiswafLastMonth();
     Object getBarChartData();
-
     Object getLineChartDataDaily();
     Object getLineChartDataMonthly();
+    List<ZiswafModel> getListPemasukan();
 }
