@@ -24,6 +24,11 @@ public class KeuanganServiceImpl implements KeuanganService{
     }
 
     @Override
+    public List<KeuanganModel> getListPengeluaranZiswaf() {
+        return keuanganDb.findPengeluaranZiswaf();
+    }
+
+    @Override
     public void tambahPemasukan(KeuanganDTO keuanganDTO) {
         KeuanganModel keuanganModel = setKeuanganModel(keuanganDTO, new KeuanganModel(), true);
         keuanganDb.save(keuanganModel);

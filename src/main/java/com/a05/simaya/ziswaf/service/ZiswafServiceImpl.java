@@ -33,6 +33,11 @@ public class ZiswafServiceImpl implements ZiswafService {
         return usahaModel;
     }
 
+    @Override
+    public List<ZiswafModel> getListPemasukan() {
+        return ziswafDb.findAll();
+    }
+
     private ZiswafModel setZiswafModel(ZiswafDTO zizwafDTO, ZiswafModel ziswafModel) {
         ziswafModel.setDonatur(zizwafDTO.getDonatur());
         ziswafModel.setJumlah(zizwafDTO.getJumlah());

@@ -50,7 +50,7 @@
         }
 
         .dataTables_wrapper .dataTables_filter input {
-            border-color: #28a745;
+            border-color: #28a745 !important;
             margin-left: 10px;
         }
 
@@ -73,12 +73,12 @@
             background-color: transparent !important;
         }
 
-        tbody, td, tfoot, th, thead, tr {
+        tbody, td, tfoot, th, thead, tr, input, select {
             border-color: #28a745 !important;
         }
 
         .dataTables_wrapper .dataTables_length select {
-            border-color: #28a745;
+            border-color: #28a745 !important;
         }
 
         .dataTables_wrapper .dataTables_length select:focus-visible {
@@ -104,7 +104,154 @@
         </button>
     </div>
     <!--    ALERT MSG-->
+    <div class="card" style="width: 100%;">
+        <div class="card-header text-center" style="background-color: #DBEFE1">
+            <h3 class="my-auto">Daftar Pemasukan dan Pengeluaran ZISWAF</h3>
+        </div>
+        <div class="card-body">
+            <div class="justify-content-center">
+                <div class="row" style="margin-top: 10px">
+                    <div class="col">
+                        <table>
+                            <thead>
+                            <tr>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col" style="text-align: right" sec:authorize="hasAuthority('KEUANGAN_PROGRAM')">
+                        <a class="btn btn-success" th:href="@{/tambah-ziswaf}">Tambah ZISWAF</a>
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col" style="padding-right: 20px;">
+                        <table id="table_keuangan" class="hover row-border stripe" style="width:100%">
+                            <thead>
+                            <tr>
+                                <th>Tanggal</th>
+                                <th>Jenis</th>
+                                <th>Jumlah</th>
+                                <th>Donatur</th>
+                            </tr>
 
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>Data 1</td>
+                                <td>Data 2</td>
+                                <td>Data 3</td>
+                                <td>Data 4</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col" style="padding-left: 20px;">
+                        <table id="table_keluar" class="hover row-border stripe" style="width:100%">
+                            <thead>
+                            <tr>
+                                <th>Tanggal</th>
+                                <th>Deskripsi</th>
+                                <th>Jumlah</th>
+                            </tr>
+
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>Data 1</td>
+                                <td>Data 2</td>
+                                <td>Data 3</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+
+                <br>
+
+            </div>
+        </div>
+    </div>
 </div>
+<script th:inline="javascript">
+    $(document).ready(function () {
+        var table = $('#table_keuangan').DataTable({
+            "ajax": {
+                "url": "/api/pemasukan-ziswaf",
+                "dataSrc": ''
+            },
+            "searching": true,
+            "ordering": true,
+            columnDefs: [{
+                targets: 0,
+                render: $.fn.dataTable.render.moment('DD MMMM YYYY')
+            }],
+            "columns": [
+                {"data": "donatedDate"},
+                {
+                    "data": null,
+                    "render": function (data) {
+                        if (data.jenisZiswaf == 'ZAKAT_PENGHASILAN') {
+                            return "Zakat Penghasilan";
+                        } else if (data.jenisZiswaf == "ZAKAT_MAAL") {
+                            return "Zakat Maal";
+                        } else if (data.jenisZiswaf == "ZAKAT_FITRAH") {
+                            return "Zakat Fitrah";
+                        } else if (data.jenisZiswaf == "INFAQ") {
+                            return "Infaq";
+                        } else if (data.jenisZiswaf == "SEDEKAH") {
+                            return "Sedekah";
+                        } else if (data.jenisZiswaf == "KAFALAH_YATIM") {
+                            return "Kafalah Yatim";
+                        } else if (data.jenisZiswaf == "WAKAF") {
+                            return "Wakaf";
+                        }
+                    }
+                },
+                {
+                    "data": null,
+                    "render": function (data) {
+                        return 'Rp ' + data.jumlah.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                    }
+                },
+                {"data": "donatur"}
+        ]
+    })
+    });
+
+    $(document).ready(function () {
+        var table = $('#table_keluar').DataTable({
+            "ajax": {
+                "url": "/api/pengeluaran-ziswaf",
+                "dataSrc": ''
+            },
+            "searching": true,
+            "ordering": true,
+            columnDefs: [{
+                targets: 0,
+                render: $.fn.dataTable.render.moment('DD MMMM YYYY')
+            }],
+            "columns": [
+                {"data": "tanggalTransaksi"},
+                {
+                    "data": "deskripsi"
+                },
+                {
+                    "data": null,
+                    "render": function (data) {
+                        return 'Rp -' + data.jumlah.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                    }
+                }
+
+            ]
+        });
+    })
+
+
+</script>
+
 </body>
 </html>
