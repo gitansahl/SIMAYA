@@ -49,7 +49,7 @@ public class ZiswafController {
     }
 
     @GetMapping(value = "/daftar-ziswaf")
-    public String getDaftarUsahaSaya() {
+    public String getDaftarZiswaf() {
         return "ziswaf/daftar-donasi-ziswaf";
     }
 
