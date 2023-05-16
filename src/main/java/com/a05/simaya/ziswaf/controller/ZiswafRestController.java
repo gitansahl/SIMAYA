@@ -47,7 +47,7 @@ public class ZiswafRestController {
         return responseEntity;
     }
 
-    @GetMapping(value = "/bar_chart")
+    @GetMapping(value = "/ziswaf/bar_chart")
     public ResponseEntity getBarChartData() {
         ResponseEntity response;
 
@@ -61,7 +61,7 @@ public class ZiswafRestController {
         return response;
     }
 
-    @GetMapping(value = "/line_chart")
+    @GetMapping(value = "/ziswaf/line_chart")
     public ResponseEntity getLineChartDataDaily() {
         ResponseEntity response;
 
@@ -75,7 +75,7 @@ public class ZiswafRestController {
         return response;
     }
 
-    @GetMapping(value = "/line_chart_monthly")
+    @GetMapping(value = "/ziswaf/line_chart_monthly")
     public ResponseEntity getLineChartMonthly() {
         ResponseEntity response;
 

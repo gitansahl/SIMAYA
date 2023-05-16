@@ -10,5 +10,4 @@ public enum JenisEnum {
     DONATUR,
     PENDANAAN,
     EVENT,
-    ZISWAF
 }
