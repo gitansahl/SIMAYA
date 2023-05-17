@@ -134,7 +134,7 @@
                         <div class="col">
                             <span class="material-symbols-outlined icon">Today</span>
                             <p class="icon-label"
-                               th:text="${#temporals.format(event.waktuMulai, 'dd MMMM yyyy, HH:mm')} + ' - ' + ${#temporals.format(event.waktuAkhir, 'dd MMMM yyyy, HH:mm')}"></p>
+                               th:text="${#temporals.format(event.waktuMulai, 'dd MMMM yyyy, HH:mm', new java.util.Locale('id', 'ID'))} + ' - ' + ${#temporals.format(event.waktuAkhir, 'dd MMMM yyyy, HH:mm', new java.util.Locale('id', 'ID'))}"></p>
 
                         </div>
 
