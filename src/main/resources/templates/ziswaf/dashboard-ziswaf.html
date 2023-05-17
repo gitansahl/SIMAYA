@@ -100,7 +100,7 @@
     <div class="col">
       <div class="card">
         <div class="card-header font-weight-bold" style="background-color: #DBEFE1">
-          Ziswaf Terkumpul hari ini
+          ZISWAF Terkumpul hari ini
         </div>
         <div class="card-body">
           <h5 th:text="'Rp ' + ${#numbers.formatDecimal(today, 0, 'COMMA', 2, 'POINT')}"></h5>
@@ -111,7 +111,7 @@
     <div class="col">
       <div class="card">
         <div class="card-header font-weight-bold" style="background-color: #DBEFE1">
-          Ziswaf Terkumpul 7 hari terakhir
+          ZISWAF Terkumpul 7 hari terakhir
         </div>
         <div class="card-body">
           <h5 th:text="'Rp ' + ${#numbers.formatDecimal(week, 0, 'COMMA', 2, 'POINT')}"></h5>
@@ -122,7 +122,7 @@
     <div class="col">
       <div class="card">
         <div class="card-header font-weight-bold" style="background-color: #DBEFE1">
-          Ziswaf Terkumpul 30 hari terakhir
+          ZISWAF Terkumpul 30 hari terakhir
         </div>
         <div class="card-body">
           <h5 th:text="'Rp ' + ${#numbers.formatDecimal(month, 0, 'COMMA', 2, 'POINT')}"></h5>
@@ -210,7 +210,7 @@
     const data = {
       labels: barLabel,
       datasets: [{
-        label: "Jumlah Ziswaf",
+        label: "Jumlah ZISWAF",
         data: barData,
         borderWidth: 1,
       }]
@@ -256,7 +256,7 @@
     const data = {
       labels: lineLabel,
       datasets: [{
-        label: 'Jumlah Ziswaf',
+        label: 'Jumlah ZISWAF',
         data: lineData,
         fill: true,
         borderColor: 'rgb(75, 192, 192)',
