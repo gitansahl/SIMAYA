@@ -118,6 +118,28 @@
                             </tr>
                             </thead>
                             <tbody>
+                            <tr>
+                                <td><b></b>Tanggal Awal</td>
+                                <td style="padding-left: 20px">Tanggal Akhir</td>
+                                <td style="padding-left: 20px">Jenis ZISWAF</td>
+                            </tr>
+                            <tr>
+                                <td><input class="form-control" type="date" id="fromDate"></td>
+                                <td style="padding-left: 20px"><input class="form-control" type="date" id="toDate"></td>
+                                <td style="padding-left: 20px"><select id="jenisFilter"
+                                                                       class="form-select"
+                                                                       aria-label="Default select example" required>
+                                    <option value="ANY">Semua</option>
+                                    <option value="ZAKAT_PENGHASILAN">Zakat Penghasilan</option>
+                                    <option value="ZAKAT_MAAL">Zakat Maal</option>
+                                    <option value="ZAKAT_FITRAH">Zakat Fitrah</option>
+                                    <option value="INFAQ">Infaq</option>
+                                    <option value="SEDEKAH">Sedekah</option>
+                                    <option value="KAFALAH_YATIM">Kafalah Yatim</option>
+                                    <option value="WAKAF">Wakaf</option>
+                                </select>
+                                </td>
+                            </tr>
                             </tbody>
                         </table>
                     </div>
@@ -218,8 +240,29 @@
                     }
                 },
                 {"data": "donatur"}
-        ]
-    })
+            ]
+        })
+        $.fn.dataTable.ext.search.push(
+            function(settings, data, dataIndex) {
+                var fromDate = $('#fromDate').val();
+                var toDate = $('#toDate').val();
+                var jenisFilter = $('#jenisFilter').val().replace("_", " ");
+                var date = data[0];
+                var jenis = data[1].toUpperCase();
+                console.log(jenisFilter);
+                console.log(jenis);
+                if ((fromDate === '' && toDate === '') || (moment(date).isBetween(fromDate, toDate, null, '[]'))) {
+                    if (jenisFilter === "ANY" || jenis === jenisFilter) {
+                        return true;
+                    }
+                }
+                return false;
+            }
+        );
+
+        $('#fromDate, #toDate, #jenisFilter').on('change', function() {
+            table.draw();
+        });
     });
 
     $(document).ready(function () {
@@ -247,6 +290,22 @@
                 }
 
             ]
+        });
+        $.fn.dataTable.ext.search.push(
+            function(settings, data, dataIndex) {
+                var fromDate = $('#fromDate').val();
+                var toDate = $('#toDate').val();
+                var date = data[0];
+
+                if ((fromDate === '' && toDate === '') || (moment(date).isBetween(fromDate, toDate, null, '[]'))) {
+                    return true;
+                }
+                return false;
+            }
+        );
+
+        $('#fromDate, #toDate').on('change', function() {
+            table.draw();
         });
     })
 
