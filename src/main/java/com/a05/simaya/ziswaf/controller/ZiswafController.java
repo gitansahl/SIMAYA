@@ -1,6 +1,5 @@
 package com.a05.simaya.ziswaf.controller;
 
-import com.a05.simaya.event.model.EventModel;
 import com.a05.simaya.ziswaf.model.JenisZiswafEnum;
 import com.a05.simaya.ziswaf.model.ZiswafModel;
 import com.a05.simaya.ziswaf.payload.ZiswafDTO;
@@ -13,7 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.List;
+import java.text.DecimalFormat;
 
 @Controller
 @Slf4j
@@ -42,8 +41,11 @@ public class ZiswafController {
             result.append(" ");
         }
 
-        redirectAttributes.addFlashAttribute("success", String.format("Donasi Ziswaf dengan jenis %s sebesar Rp %d berhasil ditambahkan",
-                result, ziswafModel.getJumlah()));
+        DecimalFormat decimalFormat = new DecimalFormat("Rp#,###");
+        String formattedValue = decimalFormat.format(ziswafModel.getJumlah());
+
+        redirectAttributes.addFlashAttribute("success", String.format("Donasi Ziswaf dengan jenis %s sebesar Rp %s berhasil ditambahkan",
+                result, formattedValue));
 
         return "redirect:/daftar-ziswaf";
     }
