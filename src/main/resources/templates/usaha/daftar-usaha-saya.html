@@ -135,7 +135,7 @@
                                 <select name="idEvent" id="dropDownStatusUsaha"
                                         class="form-select border-success input-text rounded-3 border border-2"
                                         aria-label="Default select example" required>
-                                    <option value="ANY">Any</option>
+                                    <option value="ANY">Semua</option>
                                     <option value="TIDAK_TERVERIFIKASI">Tidak Terverifikasi</option>
                                     <option value="BELUM_TERVERIFIKASI">Belum Terverifikasi</option>
                                     <option value="TERVERIFIKASI">Terverifikasi</option>
@@ -207,7 +207,10 @@
                     orderable: false
                 }],
             "columns": [
-                {"data": 'lastEdit'},
+                {
+                    "data": 'lastEdit',
+                    "visible": false,
+                },
                 {"data": 'namaProduk'},
                 {"data": 'namaPenjual'},
                 {"data": 'hargaProduk'},
